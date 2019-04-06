@@ -1,0 +1,31 @@
+{
+  "name": "wynntils-bot",
+  "version": "1.0.0",
+  "description": "Discord bot for the Wynntils Server",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wynntils/Wynntils-Bot.git"
+  },
+  "keywords": [
+    "Discord",
+    "Bot",
+    "Eris"
+  ],
+  "author": "Scyu_",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Wynntils/Wynntils-Bot/issues"
+  },
+  "homepage": "https://wynntils.com",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "dateformat": "^3.0.3",
+    "eris": "^0.8.6",
+    "rethinkdbdash": "^2.3.31",
+    "util": "^0.11.1"
+  }
+}
