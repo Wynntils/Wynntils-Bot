@@ -12,7 +12,10 @@ module.exports = {
     execute: (bot, r, msg, args) => {
         var e = {
             embed: {
-                title: 'Wynntils Help',
+                author: {
+                    name: 'Wynntils Help',
+                    icon_url: msg.author.avatarURL
+                },
                 color: 7531934,
                 fields: [],
                 footer: {
