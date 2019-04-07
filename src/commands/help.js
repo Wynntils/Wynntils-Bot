@@ -3,6 +3,7 @@ module.exports = {
         name: 'Help',
         desc: 'Help command',
         help: 'help',
+        category: "General",
         uses: [
             'help',
             'commands'
@@ -20,12 +21,22 @@ module.exports = {
                 }
             }
         };
-
+        var categories = {};
         bot.commands.map(cmd => {
-            e.embed.fields.push({
-                name: bot.config.prefix + cmd.info.help.toLowerCase(),
-                value: cmd.info.desc
-            });
+            if (cmd.info.category !== "Hidden") {
+                categories[`**${cmd.info.category}**`] += ` \`${cmd.info.help.toLowerCase()}\` `
+            }
+        });
+
+        var helpMessage = "";
+        for ((k, v) in categories) {
+            helpMessage += `${k}${v}\n`;
+        }
+        helpMessage.replace("  ", ", ");
+
+        e.embed.fields.push({
+            name: "Categories",
+            value: helpMessage
         });
 
         msg.channel.createMessage(e);

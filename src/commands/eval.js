@@ -3,6 +3,7 @@ module.exports = {
         name: 'Eval',
         desc: 'Eval JS (Owner Only)',
         help: 'eval',
+        category: "Hidden",
         uses: [
             'e'
         ]
