@@ -22,12 +22,12 @@ module.exports = {
             }
         };
         if (msg.member.roles.includes("394189812816412692")) {
-            let manageableRoles = ["Accepted", "538395171881222159", "Muted", "538503043147235348" , "Translator", "563486497374863361"];
+            let manageableRoles = ["Accepted", 538395171881222159, "Muted", 538503043147235348 , "Translator", 563486497374863361];
             if (args.length === 3) {
                 if (manageableRoles.includes(args[2])) {
-                    var user = msg.channel.guild.members.find(user => user.username === args[1]); //By name
+                    var user = msg.channel.guild.members.find(member => member.username === args[1]); //By name
                     if (user == undefined) {
-                        user = msg.channel.guild.members.find(user => user.id === args[1]); //By id
+                        user = msg.channel.guild.members.find(member => member.id === args[1]); //By id
                         if (user == undefined && msg.mentions.length >= 1) {
                             user = msg.mentions[0]; //By mention
                         }
