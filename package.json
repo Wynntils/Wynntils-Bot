@@ -22,6 +22,7 @@
   },
   "homepage": "https://wynntils.com",
   "dependencies": {
+    "atob": "^2.1.2",
     "chalk": "^2.4.1",
     "dateformat": "^3.0.3",
     "eris": "^0.8.6",
