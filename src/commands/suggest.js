@@ -3,6 +3,7 @@ module.exports = {
         name: 'Suggest',
         desc: 'Add a suggestion to #suggestion-vote',
         help: 'suggest',
+        category: "Moderation",
         uses: [
             'suggest',
             's'

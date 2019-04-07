@@ -3,6 +3,7 @@ module.exports = {
         name: 'Usercount',
         desc: 'Gives the number of users registered to wynntils',
         help: 'usercount',
+        category: "General",
         uses: [
             'usercount',
             'uc'

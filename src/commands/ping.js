@@ -3,6 +3,7 @@ module.exports = {
         name: 'Ping',
         desc: 'Pong!',
         help: 'ping',
+        category: "General",
         uses: [
             'ping'
         ]
