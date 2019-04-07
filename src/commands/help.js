@@ -22,16 +22,20 @@ module.exports = {
             }
         };
         if (args.length === 0) {
-            var categories = {};
+            var categories = [];
             bot.commands.map(cmd => {
                 if (cmd.info.category !== "Hidden") {
-                    categories[`**${cmd.info.category}**`] += ` \`${cmd.info.help.toLowerCase().split()[0]}\` `
+                    if (typeof categories[`**${cmd.info.category}**`] === "undefined") {
+                        categories[`**${cmd.info.category}**`] =  ` \`${cmd.info.help.toLowerCase().split(' ')[0]}\` `;
+                    } else {
+                        categories[`**${cmd.info.category}**`] += ` \`${cmd.info.help.toLowerCase().split(' ')[0]}\` `;
+                    }
                 }
             });
 
-            var helpMessage = "";
-            for ((k, v) in categories) {
-                helpMessage += `${k}${v}\n`;
+            var helpMessage = " ";
+            for (var x in categories) {
+                helpMessage += `${x}\n${categories[x]}\n`;
             }
             helpMessage.replace("  ", ", ");
 
@@ -42,7 +46,7 @@ module.exports = {
         } else if (args.length === 1) {
             var found = false;
             bot.commands.map(cmd => {
-                if (cmd.info.help === args[0] && !found) {
+                if (cmd.info.help.startsWith(args[0]) && !found) {
                     e.embed.fields.push({
                         name: `${bot.config.prefix}${cmd.info.help.toLowerCase()}`,
                         value: cmd.info.desc
