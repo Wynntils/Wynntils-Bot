@@ -22,8 +22,8 @@ module.exports = {
             }
         };
         if (msg.member.roles.includes("394189812816412692")) {
+            let manageableRoles = ["Accepted", "538395171881222159", "Muted", "538503043147235348" , "Translator", "563486497374863361"];
             if (args.length === 3) {
-                let manageableRoles = ["Accepted", "538395171881222159", "Muted", "538503043147235348" , "Translator", "563486497374863361"];
                 if (manageableRoles.includes(args[2])) {
                     var user = msg.channel.guild.members.find("username", args[1]); //By name
                     if (user == undefined) {
