@@ -40,7 +40,7 @@ module.exports = {
                         });
                     } else {
                         var roleId;
-                        if (manageableRoles.indexOf(args[2].toLowerCase()) % 2 == 0) {
+                        if (manageableRoles.indexOf(args[2].toLowerCase()) % 2 == 1) {
                             roleId = args[2];
                         } else {
                             roleId = manageableRoles[manageableRoles.indexOf(args[2].toLowerCase()) + 1];
@@ -57,7 +57,7 @@ module.exports = {
                                     user.addRole(roleId, 10, `Given by ${msg.author.username}#${msg.author.discriminator}`);
                                     e.embed.fields.push({
                                         name: "Role succesfully given",
-                                        value: `${manageableRoles.indexOf(roleId)} succesfully given to ${user.user.username}#${user.user.discriminator} by ${msg.author.username}#${msg.author.discriminator}`
+                                        value: `${manageableRoles[manageableRoles.indexOf(roleId) - 1]} succesfully given to ${user.user.username}#${user.user.discriminator} by ${msg.author.username}#${msg.author.discriminator}`
                                     });
                                 }
                                 break;
@@ -72,7 +72,7 @@ module.exports = {
                                     user.removeRole(roleId, `Removed by ${msg.author.username}#${msg.author.discriminator}`);
                                     e.embed.fields.push({
                                         name:  "Role succesfully removed",
-                                        value: `${manageableRoles.indexOf(roleId)} succesfully removed from ${user.user.username}#${user.user.discriminator} by ${msg.author.username}#${msg.author.discriminator}` 
+                                        value: `${manageableRoles[manageableRoles.indexOf(roleId) - 1]} succesfully removed from ${user.user.username}#${user.user.discriminator} by ${msg.author.username}#${msg.author.discriminator}` 
                                     });
                                 }
                                 break;
