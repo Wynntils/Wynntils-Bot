@@ -1,6 +1,6 @@
 module.exports = (bot, r) => {
     bot.on('raw', async event => {
-        if (!{MESSAGE_REACTION_ADD: 'messageReactionAdd', MESSAGE_REACTION_REMOVE: 'messageReactionRemove'}.hasOwnProperty(event.t)) {
+        if (event.t !== "MESSAGE_REACTION_ADD" || event !== "MESSAGE_REACTION_REMOVE") {
             return;
         }
         
