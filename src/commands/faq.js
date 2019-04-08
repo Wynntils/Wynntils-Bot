@@ -43,7 +43,7 @@ module.exports = {
                 }
             };
             var success = false;
-            switch (args[1].toLowerCase()) {
+            switch (args[0].toLowerCase()) {
                 case "wp":
                 case "waypoint":
                     e.embed.fields.push({
