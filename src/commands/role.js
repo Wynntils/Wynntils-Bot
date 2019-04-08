@@ -21,7 +21,7 @@ module.exports = {
                 }
             }
         };
-        if (msg.member.roles.includes("394189812816412692")) {
+        if (msg.member.roles.includes("394189812816412692") || msg.member.roles.includes("439546118964117534")) {
             let manageableRoles = ["accepted", "538395171881222159", "muted", "538503043147235348" , "translator", "563486497374863361"];
             if (args.length === 3) {
                 if (manageableRoles.includes(args[2].toLowerCase())) {
