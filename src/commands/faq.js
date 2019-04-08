@@ -2,7 +2,7 @@ module.exports = {
     info: {
         name: 'FAQ',
         desc: 'Responds with information regarding a question.\nAvailable tags are:\n\`waypoint\`, \`wp\`, \`install\`, \`capes\`, \`cape\`, \`support\`, \`crash\`, \`bug\`, \`highlights\`, \`highlight\` & \`ban\`',
-        help: 'faq <list|tag>]',
+        help: 'faq <list|tag>',
         category: "General",
         uses: [
             'faq'
