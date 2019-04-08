@@ -38,7 +38,7 @@ module.exports = {
                     },
                     fields: [],
                     footer: {
-                        text: `By: ${msg.author.username} - please read <#495293364803993610>`
+                        text: `By: ${msg.author.username} - Please read #pls-read-me`
                     }
                 }
             };
