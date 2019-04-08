@@ -13,10 +13,9 @@ module.exports = {
         if (args.length === 2) {
             e = {
                 embed: {
-                    title: 'Wynntils FAQ',
                     color: 7531934,
                     author: {
-                        name: "Wynntils",
+                        name: "Wynntils FAQ",
                         icon_url: bot.user.avatarURL
                     },
                     fields: [],
@@ -93,12 +92,11 @@ module.exports = {
             if (args[0].toLowerCase() === "list" || args[0].toLowerCase() === "l") {
                 e = {
                     embed: {
-                        title: 'Wynntils FAQ',
                         color: 7531934,
                         fields: [],
                         footer: {
                             icon_url: bot.user.avatarURL,
-                            text: "Wynntils"
+                            text: "Wynntils FAQ"
                         }
                     }
                 };
