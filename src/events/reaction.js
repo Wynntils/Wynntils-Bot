@@ -7,9 +7,6 @@ module.exports = (bot, r) => {
         const { d: data} = event;
         const wynntilsDiscord = bot.guilds.find(guild => guild.id === "394189072635133952");
         const member = wynntilsDiscord.members.find(user => user.id === data.user_id);
-        const emoji = data.emoji.name;
-
-        if (!possibilities.includes(emoji)) return;
 
         if (data.message_id === "534510390705520650") { //In Welcome - can give: Accepted
             if (event.t === "MESSAGE_REACTION_ADD") {
