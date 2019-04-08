@@ -69,7 +69,7 @@ module.exports = {
                     case "ban":
                         e.embed.fields.push({
                             name: "Is Wynntils Bannable?",
-                            value: `<@${user.id}> - You won't we banned for Wynntils. Though, if you get somehow banned for using Wynntils your appeal will be accepted. You can appeal on [Wynncraft's Forum](https://forums.wynncraft.com/) or send a message to JPresent (if it's regarding Wynntils).`
+                            value: `<@${user.id}> - You won't be banned for using Wynntils. Though, if you get somehow do get banned for using Wynntils your appeal will be accepted. You can appeal on [Wynncraft's Forum](https://forums.wynncraft.com/) or send a message to JPresent (if it's regarding Wynntils).`
                         });
                         success = true;
                         break;
@@ -78,7 +78,7 @@ module.exports = {
                     case "bug":
                         e.embed.fields.push({
                             name: "Crash, Bug or Support",
-                            value: `<@${user.id}> - Go into #bot-commands and use \`-new [Optional message]\` this will create a channel where the Support Team will assist you with your troubles.`
+                            value: `<@${user.id}> - Go into <#425293785338085387> and use \`-new [Optional message]\` this will create a channel where the Support Team will assist you with your troubles.`
                         });
                         success = true;
                         break;
