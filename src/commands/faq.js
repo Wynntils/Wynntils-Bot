@@ -39,7 +39,7 @@ module.exports = {
                     case "waypoint":
                         e.embed.fields.push({
                             name: "Waypoints",
-                            value: `<@${user.id}> - Waypoint are currently in development, and, therefore cannot be created in-game as of yet.`
+                            value: `<@${user.id}> - Waypoints are currently in development, and, therefore cannot be created in-game as of yet.`
                         });
                         succes = true;
                         break;
