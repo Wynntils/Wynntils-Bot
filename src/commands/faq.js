@@ -94,7 +94,7 @@ module.exports = {
                 case "download":
                     e.embed.fields.push({
                         name: "Download",
-                        value: `You can download Wynntils at:\n**Curse Forge** - [Download](https://www.curseforge.com/minecraft/mc-mods/wynntils)\n**Stable Build** - [Download](http://ci.wynntils.com/job/Wynntils/lastSuccessfulBuild/)\n**Cutting Edge Build** - [Download](http://ci.wynntils.com/job/Wynntils-DEV/lastSuccessfulBuild/)`
+                        value: `You can download Wynntils at:\n**Curse Forge** - [Download](https://www.curseforge.com/minecraft/mc-mods/wynntils)\n**Wynntils (Stable)** - [Download](http://ci.wynntils.com/job/Wynntils/lastSuccessfulBuild/)\n**Wynntils (Cutting Edge)** - [Download](http://ci.wynntils.com/job/Wynntils-DEV/lastSuccessfulBuild/)`
                     });
                     success = true;
                     break;
@@ -103,7 +103,7 @@ module.exports = {
                 case "stable":
                     e.embed.fields.push({
                         name: "Update Stream",
-                        value: `Wynntils has two different update stream:\n**Stable**: Gets less frequent updates, and, only update after major changes. Resulting in it having generally less issues/bugs.\n**Cutting Edge (CE)**: Get more frequent updates, and, has the newest features. However, you might experience more bugs using this build.`
+                        value: `Wynntils has two different update streams:\n**Stable**: Gets less frequent updates, and, only updates after major changes. Resulting in it having generally less issues/bugs.\n**Cutting Edge (CE)**: Get more frequent updates, and, has the newest features. However, you might experience more bugs using this build.`
                     });
                     success = true;
                     break;
