@@ -2,7 +2,7 @@ module.exports = (bot, r) => {
     bot.on('messageReactionRemove', async (msg, emoji, user) => {
         if (user === bot.user.id || !msg.channel.guild) return;
         const wynntilsDiscord = bot.guilds.find(guild => guild.id === "394189072635133952");
-        const member = wynntilsDiscord.members.find(user => user.id === data.user_id);
+        const member = msg.channel.guild.members.get(user);
 
         if (msg.id === "534510390705520650") { //In Welcome - can give: Accepted
             member.removeRole("538395171881222159", "Has declined the rules.");
