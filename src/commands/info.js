@@ -57,11 +57,11 @@ module.exports = {
                 } else {
                     if (isNaN(args[2])) {
                         e.embed.description = '```json\n' + atob(cb.configFiles[args[2]]) + ' ```';
-                        e.embed.footer.text = 'Wynntils | `' + args[2] + '`';
+                        e.embed.footer.text = 'Wynntils | ' + args[2];
                     } else {
                         var key = Object.keys(cb.configFiles)[args[2]], value = cb.configFiles[key];
                         e.embed.description = '```json\n' + atob(value) + ' ```';
-                        e.embed.footer.text = 'Wynntils | `' + key + '`';
+                        e.embed.footer.text = 'Wynntils | ' + key;
                     }
                 }
             } else {
