@@ -50,7 +50,7 @@ module.exports = {
                     });
                     for (var y in map) {
                         e.embed.description = map[y];
-                        e.embed.footer.text = "Wynntils | Page " + (y+1);
+                        e.embed.footer.text = "Wynntils | Page " + (Number(y)+1);
                         msg.channel.createMessage(e).catch(e => { bot.error(e);});
                     }
                     return;
