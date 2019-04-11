@@ -85,6 +85,7 @@ module.exports = {
                     inline: true
                 });
             }
+            console.log(e);
             msg.channel.createMessage(e).catch(e => { bot.error(e);});
         };
 
