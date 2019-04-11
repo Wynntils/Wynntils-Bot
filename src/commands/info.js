@@ -35,12 +35,16 @@ module.exports = {
                 if (typeof args[2] === "undefined") {
                     var i = 0;
                     var z = 0;
+                    var count = 0;
                     var map = '';
                     Object.keys(cb.configFiles).forEach((x) => {
-                        if (map[z].length > 1800) {
+                        if (count > 1800) {
                             z++;
+                            count = 0;
                         }
-                        map[z] += i + ': ' + x + '\n';
+                        var str = i + ': ' + x + '\n';
+                        map[z] += str;
+                        count += str.length;
                         i++;
                     });
                     for (var y in map) {
