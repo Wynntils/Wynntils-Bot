@@ -42,6 +42,7 @@ module.exports = {
                             z++;
                             count = 0;
                         }
+                        if (typeof map[z] === "undefined") map[z] = '';
                         var str = i + ': ' + x + '\n';
                         map[z] += str;
                         count += str.length;
