@@ -34,12 +34,20 @@ module.exports = {
                     return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
                 if (typeof args[2] === "undefined") {
                     var i = 0;
+                    var z = 0;
                     var map = '';
                     Object.keys(cb.configFiles).forEach((x) => {
-                        map += i + ': ' + x + '\n';
+                        if (map[z].length > 1800) {
+                            z++;
+                        }
+                        map[z] += i + ': ' + x + '\n';
                         i++;
                     });
-                    e.embed.description = map;
+                    for (var y in map) {
+                        e.embed.description = map[y];
+                        msg.channel.createMessage(e).catch(e => { bot.error(e);});
+                    }
+                    return;
                 } else {
                     if (isNaN(args[2])) {
                         e.embed.description = '```json\n' + atob(cb.configFiles[args[2]]) + ' ```';
@@ -85,7 +93,6 @@ module.exports = {
                     inline: true
                 });
             }
-            console.log(e);
             msg.channel.createMessage(e).catch(e => { bot.error(e);});
         };
 
