@@ -36,7 +36,7 @@ module.exports = {
                     var i = 0;
                     var z = 0;
                     var count = 0;
-                    var map = '';
+                    var map = [];
                     Object.keys(cb.configFiles).forEach((x) => {
                         if (count > 1800) {
                             z++;
