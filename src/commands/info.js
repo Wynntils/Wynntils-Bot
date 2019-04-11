@@ -99,7 +99,11 @@ module.exports = {
                     inline: true
                 });
             }
-            msg.channel.createMessage(e).catch(e => { bot.error(e);});
+            if (e.embed.description.length > 2000) {
+                msg.channel.createMessage('Message would be too long...');
+            } else {
+                msg.channel.createMessage(e).catch(e => { bot.error(e); });
+            }
         };
 
         if (typeof args[0] === "undefined") {
