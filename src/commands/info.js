@@ -85,7 +85,7 @@ module.exports = {
                     inline: true
                 });
             }
-            msg.channel.createMessage(e);
+            msg.channel.createMessage(e).catch(e => { msg.channel.createMessage(e);});
         };
 
         if (typeof args[0] === "undefined") {
