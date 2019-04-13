@@ -6,6 +6,7 @@ const Collection  = require('./structure/Collection.js');
 const Command     = require('./structure/Command.js');
 const Eris        = require('eris');
 const rethink     = require('rethinkdbdash');
+require('eris-embed-builder');
 
 let r = rethink({
   db: 'wynntils',

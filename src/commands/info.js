@@ -15,20 +15,10 @@ module.exports = {
         global.search = (err, cb) => {
             if (typeof cb === "undefined" || cb.length < 1 || cb == undefined) return msg.channel.createMessage('User not found');
             cb = cb[0];
-            var e = {
-                embed: {
-                    author: {
-                        name: cb.name,
-                        icon_url: 'https://minotar.net/helm/' + cb.id + '/100.png'
-                    },
-                    color: 7531934,
-                    fields: [],
-                    footer: {
-                        icon_url: bot.user.avatarURL,
-                        text: "Wynntils"
-                    }
-                }
-            };
+            var e = msg.channel.createEmbed()
+                .author(cb.name, 'https://minotar.net/helm/' + cb.id + '/100.png')
+                .color(7531934)
+                .footer("Wynntils", bot.user.avatarURL);
             if (args[1] === 'config') {
                 if (!msg.member.roles.includes("394189673678766091") && !msg.member.roles.includes("439546118964117534") && !msg.member.roles.includes("394189812816412692"))
                     return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
@@ -49,60 +39,33 @@ module.exports = {
                         i++;
                     });
                     for (var y in map) {
-                        e.embed.description = map[y];
-                        e.embed.footer.text = "Wynntils | Page " + (Number(y)+1);
-                        msg.channel.createMessage(e).catch(e => { bot.error(e);});
+                        e.description(map[y]);
+                        e.footer("Wynntils | Page " + (Number(y)+1), bot.user.avatarURL);
+                        e.send().catch(e => { bot.error(e);});
                     }
                     return;
                 } else {
                     if (isNaN(args[2])) {
-                        e.embed.description = '```json\n' + atob(cb.configFiles[args[2]]) + ' ```';
-                        e.embed.footer.text = 'Wynntils | ' + args[2];
+                        e.description('```json\n' + atob(cb.configFiles[args[2]]) + ' ```');
+                        e.footer('Wynntils | ' + args[2], bot.user.avatarURL);
                     } else {
                         var key = Object.keys(cb.configFiles)[args[2]], value = cb.configFiles[key];
-                        e.embed.description = '```json\n' + atob(value) + ' ```';
-                        e.embed.footer.text = 'Wynntils | ' + key;
+                        e.description('```json\n' + atob(value) + ' ```');
+                        e.footer('Wynntils | ' + key, bot.user.avatarURL);
                     }
                 }
             } else {
-                e.embed.fields.push({
-                    name: 'Account Type',
-                    value: cb.accountType,
-                    inline: true
-                });
-
-                e.embed.fields.push({
-                    name: 'Latest Version',
-                    value: cb.latestVersion,
-                    inline: true
-                });
-
-                e.embed.fields.push({
-                    name: 'Last Online',
-                    value: new Date(cb.lastActivity).toDateString(),
-                    inline: true
-                });
-
-                e.embed.fields.push({
-                    name: 'Cape',
-                    value: cb.activeModels.capeActive,
-                    inline: true
-                });
-                e.embed.fields.push({
-                    name: 'Ears',
-                    value: cb.activeModels.earsActive,
-                    inline: true
-                });
-                e.embed.fields.push({
-                    name: 'Elytra',
-                    value: cb.activeModels.elytraActive,
-                    inline: true
-                });
+                e.field('Account Type',cb.accountType, true);
+                e.field('Latest Version',cb.latestVersion, true);
+                e.field('Last Online',new Date(cb.lastActivity).toDateString(), true);
+                e.field('Cape',cb.activeModels.capeActive, true);
+                e.field('Ears',cb.activeModels.earsActive, true);
+                e.field('Elytra',cb.activeModels.elytraActive, true);
             }
-            if (typeof e.embed.description !== "undefined" && e.embed.description.length > 2000) {
+            if (typeof e.sendable.description !== "undefined" && e.sendable.description.length > 2000) {
                 msg.channel.createMessage('Message would be too long...');
             } else {
-                msg.channel.createMessage(e).catch(e => { bot.error(e); });
+                e.send().catch(e => { bot.error(e); });
             }
         };
 
