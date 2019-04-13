@@ -13,7 +13,7 @@ module.exports = {
     },
     execute: (bot, r, msg, args) => {
         global.search = (err, cb) => {
-            if (cb.length < 1 || cb == undefined) return msg.channel.createMessage(search + ' not found');
+            if (typeof cb === "undefined" || cb.length < 1 || cb == undefined) return msg.channel.createMessage('User not found');
             cb = cb[0];
             var e = {
                 embed: {
@@ -99,7 +99,7 @@ module.exports = {
                     inline: true
                 });
             }
-            if (e.embed.description.length > 2000) {
+            if (typeof e.embed.description !== "undefined" && e.embed.description.length > 2000) {
                 msg.channel.createMessage('Message would be too long...');
             } else {
                 msg.channel.createMessage(e).catch(e => { bot.error(e); });
