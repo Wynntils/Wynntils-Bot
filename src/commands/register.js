@@ -13,26 +13,19 @@ module.exports = {
             // https://account.wynntils.com/register.php?token=
             if (cb.length < 1 || cb == undefined) return msg.channel.createMessage('Discord account not linked to any Wynntils account!');
             cb = cb[0];
-            var e = {
-                embed: {
-                    author: {
-                        name: cb.name,
-                        icon_url: 'https://minotar.net/helm/' + cb.id + '/100.png'
-                    },
-                    color: 7531934,
-                    fields: [],
-                    footer: {
-                        icon_url: bot.user.avatarURL,
-                        text: "Wynntils"
-                    }
-                }
-            };
-            e.embed.description = 'Click [here](https://account.wynntils.com/register.php?token=' + cb.authCode + ') to register an account!';
-            msg.author.getDMChannel().then(channel => {
-                channel.createMessage(e);
-                msg.channel.createMessage('Please check your PMs <@' + msg.author.id + '>')
+            var e = msg.channel.createEmbed()
+                .author(cb.name, 'https://minotar.net/helm/' + cb.id + '/100.png')
+                .color(7531934)
+                .footer("Wynntils", bot.user.avatarURL)
+                .description('Click [here](https://account.wynntils.com/register.php?token=' + cb.authCode + ') to register an account!');
+            msg.member.user.createMessage({ embed: e.sendable }).then(c => {
+                msg.channel.createMessage('Please check your PMs <@' + msg.author.id + '>');
             }).catch(err => {
-                msg.channel.createMessage(err);
+                if (err.code === 50007) {
+                    msg.channel.createMessage('Please allow messages from server members so that I can message you, and try again. <@' + msg.author.id + '>')
+                } else {
+                    msg.channel.createEmbed().title(err.name).description('```xl\n' + err.stack + '```').send();
+                }
             });
         });
     }

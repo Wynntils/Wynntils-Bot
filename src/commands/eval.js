@@ -9,7 +9,8 @@ module.exports = {
         ]
     },
     execute: (bot, r, msg, args) => {
-        if (!msg.member.roles.includes("394189673678766091"))
+        let ownerRole = msg.guild.roles.find(role => role.name === "Owner");
+        if (!msg.member.hasRole(ownerRole))
             return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
         try {
             const code = args.join(" ");

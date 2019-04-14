@@ -4,7 +4,7 @@ const config      = require('./config.json');
 const logger      = require('./util/logger.js');
 const Collection  = require('./structure/Collection.js');
 const Command     = require('./structure/Command.js');
-const Eris        = require('eris');
+const Eris        = require("eris-additions")(require("eris"));
 const rethink     = require('rethinkdbdash');
 require('eris-embed-builder');
 
