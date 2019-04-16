@@ -38,7 +38,7 @@ module.exports = {
                     },
                     fields: [],
                     footer: {
-                        text: `By: ${msg.author.username} - Please read #pls-read-me`
+                        text: `By: ${msg.author.username} - Please read #faq`
                     }
                 }
             };
@@ -48,7 +48,7 @@ module.exports = {
                 case "waypoint":
                     e.embed.fields.push({
                         name: "Waypoints",
-                        value: `Waypoints are currently in development, and, therefore cannot be created in-game as of yet.`
+                        value: `Waypoints are currently in development!\nYou can create waypoints by going to the world map and pressing the big green plus. Viewing and editing your waypoints can be done by clicking on the \`Waypoints\` button on the world map.\n **Right now this can only be done in the CE builds**. Use \`${bot.config.prefix}faq wp\` to learn more.
                     });
                     success = true;
                     break;
@@ -71,7 +71,7 @@ module.exports = {
                 case "highlights":
                     e.embed.fields.push({
                         name: "Item/Player HighLights",
-                        value: `Item and player highlights will not be implemented by Wynntils as Wynncraft does not allow for such functionality. If you're using any other mod that provides this feature do so at your own risk - It's a bannable offense.`
+                        value: `Dropped item and player highlights will not be implemented by Wynntils as Wynncraft does not allow for such functionality. If you're using any other mod that provides this feature do so at your own risk - It's a bannable offense.`
                     });
                     success = true;
                     break;
@@ -103,7 +103,7 @@ module.exports = {
                 case "stable":
                     e.embed.fields.push({
                         name: "Update Stream",
-                        value: `Wynntils has two different update streams:\n**Stable**: Gets less frequent updates, and, only updates after major changes. Resulting in it having generally less issues/bugs.\n**Cutting Edge (CE)**: Get more frequent updates, and, has the newest features. However, you might experience more bugs using this build.`
+                        value: `Wynntils has two different update streams:\n**Stable**: Gets less frequent updates, and, only updates after major changes. Resulting in it having generally less issues/bugs.\n**Cutting Edge (CE)**: Get more frequent updates, and, has the newest features. However, you might experience more bugs using this build.\n\nYou can change your download stream by going into Wynntils' Settings (Default key: \`P\`), and, then under core change the download stream.`
                     });
                     success = true;
                     break;
