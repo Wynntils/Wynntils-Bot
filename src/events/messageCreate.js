@@ -3,7 +3,7 @@ module.exports = (bot, r) => {
     if (!bot.ready || !msg || !msg.author || msg.author.bot) return;
     if (!msg.content.startsWith(bot.config.prefix)) return;
     if (msg.channel.guild.id !== bot.config.server) return;
-    if (bot.blacklist.some(function(string) { return str.indexOf(string.replace(/ |\./gi, "")) >= 0; })) {
+    if (bot.blacklist.some(function(string) { return msg.content.indexOf(string.replace(/ |\./g, "")) >= 0; })) {
       msg.delete().catch(O_o => { });
       var e = msg.channel.createEmbed()
                 .title("Illegal Mod Website Detected")
