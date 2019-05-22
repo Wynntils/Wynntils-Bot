@@ -4,7 +4,6 @@ module.exports = (bot, r) => {
     if (!msg.content.startsWith(bot.config.prefix)) return;
     if (msg.channel.guild.id !== bot.config.server) return;
     if (bot.blacklist.test(msg.content.replace(/[ .]/g, ""))) {
-      bot.guilds.get(394189072635133952).channels.get(541701165730103333).createMessage("I am sending the Embed now!");
       msg.delete().catch(O_o => { });
       var e = msg.channel.createEmbed()
                 .title("Illegal Mod Website Detected")
