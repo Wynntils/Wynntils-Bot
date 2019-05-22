@@ -7,7 +7,7 @@ module.exports = (bot, r) => {
       var e = msg.channel.createEmbed()
                 .title("Illegal Mod Website Detected")
                 .color(7531934)
-                .description(`A message by: ${msg.author.username} has been deleted. As it has been found to contain an illegal Minecraft mod website.\n You can read more about StopModReposts here: [stopmodreposts.org](https://stopmodreposts.org/).`);
+                .description(`A message by: ${msg.author.username} has been deleted. As it has been found to contain an illegal Minecraft mod website. These sites are known to improperly credit developers, have non-existent mod versions, or, include malware into their downloads.\n You can read more about StopModReposts here: [stopmodreposts.org](https://stopmodreposts.org/).`);
       msg.channel.createMessage( { embed: e.sendable });
     }
     if (!msg.content.startsWith(bot.config.prefix)) return;
