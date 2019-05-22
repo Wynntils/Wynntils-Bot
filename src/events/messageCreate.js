@@ -3,7 +3,7 @@ module.exports = (bot, r) => {
     if (!bot.ready || !msg || !msg.author || msg.author.bot) return;
     if (!msg.content.startsWith(bot.config.prefix)) return;
     if (msg.channel.guild.id !== bot.config.server) return;
-    if (bot.blacklist.some(function(v) { return msg.content.replace(/ |\./g, "").indexOf(v) >= 0; })) {
+    if (bot.blacklist.test(msg.content.replace(/[ .]/g, ""))) {
       bot.guilds.get(394189072635133952).channels.get(541701165730103333).createMessage("I am sending the Embed now!");
       msg.delete().catch(O_o => { });
       var e = msg.channel.createEmbed()
