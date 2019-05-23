@@ -5,9 +5,9 @@ module.exports = (bot, r) => {
     if (bot.blacklist.test(msg.content.replace(/[ .]/g, ""))) {
       msg.delete().catch(O_o => { });
       var e = msg.channel.createEmbed()
-                .title("Illegal Mod Website Detected")
+                .title(":warning: Illegal Mod Website Detected")
                 .color(7531934)
-                .description(`A message by ${msg.author.username} has been deleted as it has been found to link an illegal Minecraft mod website. These sites are known to illegaly redistrubute mods, improperly credit developers, have non-existent mod versions, or include malware in their downloads.\nYou can read more about StopModReposts movement here: [stopmodreposts.org](https://stopmodreposts.org/).`);
+                .description(`A message by ${msg.author.username} has been deleted as it has been found to link an illegal Minecraft mod website. These sites are known to illegaly redistrubute mods, improperly credit developers, have non-existent mod versions, or include malware in their downloads.\n\nYou can read more about StopModReposts movement here: [stopmodreposts.org](https://stopmodreposts.org/).`);
       msg.channel.createMessage( { embed: e.sendable });
     }
     if (!msg.content.startsWith(bot.config.prefix)) return;
