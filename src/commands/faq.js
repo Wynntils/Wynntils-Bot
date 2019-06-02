@@ -78,7 +78,7 @@ module.exports = {
                 case "ban":
                     e.embed.fields.push({
                         name: "Is Wynntils Bannable?",
-                        value: `You won't be banned for using Wynntils. Though, if you get somehow do get banned for using Wynntils your appeal will be accepted. You can appeal on [Wynncraft's Forum](https://forums.wynncraft.com/) or send a message to JPresent (if it's regarding Wynntils).`
+                        value: `You won't be banned for using Wynntils. Though, if you get somehow do get banned for using Wynntils your appeal will be accepted. You can appeal on [Wynncraft's Forum](https://forums.wynncraft.com/).`
                     });
                     success = true;
                     break;
