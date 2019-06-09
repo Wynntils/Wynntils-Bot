@@ -48,7 +48,7 @@ module.exports = {
                 case "waypoint":
                     e.embed.fields.push({
                         name: "Waypoints",
-                        value: `Waypoints are currently in development!\nYou can create waypoints by going to the world map and pressing the big green plus. Viewing and editing your waypoints can be done by clicking on the \`Waypoints\` button on the world map.\n **Right now this can only be done in the CE builds**. Use \`${bot.config.prefix}faq ce\` to learn more.`
+                        value: `Waypoints are currently in development!\nYou can create waypoints by going to the world map and pressing the big green plus. Viewing and editing your waypoints can be done by clicking on the \`Waypoints\` button on the world map.`
                     });
                     success = true;
                     break;
