@@ -48,14 +48,14 @@ module.exports = {
                 case "waypoint":
                     e.embed.fields.push({
                         name: "Waypoints",
-                        value: `**Waypoints are currently in development!**\nYou can create waypoints by going to the world map and pressing the big green plus. Viewing and editing your waypoints can be done by clicking on the \`Waypoints\` button on the world map.`
+                        value: `**Waypoints are currently in development!**\n\nYou can create waypoints by going to the world map and pressing the big green plus button in the top-left corner of the screen. Viewing and editing your waypoints can be done by clicking on the \`Waypoints\` button on the world map.`
                     });
                     success = true;
                     break;
                 case "install":
                     e.embed.fields.push({
                         name: "Installing Wynntils",
-                        value: `Here are some guides to help you get started [Wynncraft Forum](https://forums.wynncraft.com/threads/197716/) or [Wynntils' Install Page](https://wynntils.com/install/). Make sure you're installing the recommended version of forge 1.12.2 while setting up Wynntils.`
+                        value: `Here are some guides to help you get started with using the mod.\n\n[Wynncraft Forums](https://forums.wynncraft.com/threads/197716/) or [Wynntils' Install Page](https://wynntils.com/install/).\n\nPlease make sure you're installing the recommended build of Forge 1.12.2 while setting up Wynntils.`
                     });
                     success = true;
                     break;
@@ -63,22 +63,22 @@ module.exports = {
                 case "cape":
                     e.embed.fields.push({
                         name: "Wynntils Capes",
-                        value: `In order to upload a cape you'll need to setup a Wynntils account first. You can do so by either going in-game (with Wynntils installed) and using the command \`/token\` this will give you a clickable token - Or using \`>register\` in <#425293785338085387>. Now think of a password to use for your Wynntils account. You can now log-in at [Wynntils Accounts](https://account.wynntils.com/login.php) with your Minecraft username as username.\n*Note, capes and such have to be uploaded as a 128x64 image.*`
+                        value: `In order to upload a cape you'll need to setup a Wynntils account first. You can do so by either going in-game (with Wynntils installed) and using the command \`/token\`. This will give you a clickable token that will allow you to create your account. You can also use \`>register\` in <#425293785338085387>. You can now log in at [Wynntils Accounts](https://account.wynntils.com/login.php) with your Minecraft username as the  username.\n\n*Please note that capes and elytraas have to be uploaded as a 128x64 image.*`
                     });
                     success = true;
                     break;
                 case "highlight":
                 case "highlights":
                     e.embed.fields.push({
-                        name: "Item/Player HighLights",
-                        value: `Dropped item and player highlights will not be implemented by Wynntils as Wynncraft does not allow for such functionality. If you're using any other mod that provides this feature do so at your own risk - It's a bannable offense.`
+                        name: "Item & Player Highlighting",
+                        value: `Dropped item and player highlighting will never be implemented in Wynntils as Wynncraft does not allow for such functionality. If you're using any other mod that provides this feature, you do so at the risk of being banned from the server.`
                     });
                     success = true;
                     break;
                 case "ban":
                     e.embed.fields.push({
-                        name: "Is Wynntils Bannable?",
-                        value: `You won't be banned for using Wynntils. Though, if you get somehow do get banned for using Wynntils your appeal will be accepted. You can appeal on [Wynncraft's Forum](https://forums.wynncraft.com/).`
+                        name: "Is Wynntils Allowed on Wynncraft?",
+                        value: `You won't be banned for using Wynntils. Though, if you get somehow do get banned for using Wynntils, please create an appeal on the [Wynncraft Forums](https://forums.wynncraft.com/) and your appeal will be accepted.`
                     });
                     success = true;
                     break;
@@ -86,15 +86,15 @@ module.exports = {
                 case "crash":
                 case "bug":
                     e.embed.fields.push({
-                        name: "Crash, Bug or Support",
-                        value: `Go into <#425293785338085387> and use \`-new [Optional message]\` this will create a channel where the Support Team will assist you with your troubles.`
+                        name: "Crash, Bug, and Support",
+                        value: `To request for support, please ask the community if it is something that can be easily answered by our users, otherwise, please go to <#425293785338085387> and type \`-new Support Request\`. Upon doing so, a channel will be created for you to submit your inquiry.\n\nTo report a bug or a crash, please go to <#425293785338085387> and type \`-new Bug Report\` or \`-new Crash Report\`. Upon doing so, a channel will be created for you to report your bug or crash.`
                     });
                     success = true;
                     break;
                 case "download":
                     e.embed.fields.push({
-                        name: "Download",
-                        value: `You can download Wynntils at:\n**Curse Forge** - [Download](https://www.curseforge.com/minecraft/mc-mods/wynntils)\n**Wynntils (Stable)** - [Download](http://ci.wynntils.com/job/Wynntils/lastSuccessfulBuild/)\n**Wynntils (Cutting Edge)** - [Download](http://ci.wynntils.com/job/Wynntils-DEV/lastSuccessfulBuild/)`
+                        name: "Downloads",
+                        value: `You can download Wynntils at these following locations:\n**CurseForge** - [Download](https://minecraft.curseforge.com/projects/wynntils)\n**Wynntils (Stable)** - [Download](http://ci.wynntils.com/job/Wynntils/lastSuccessfulBuild/)\n**Wynntils (Cutting Edge)** - [Download](http://ci.wynntils.com/job/Wynntils-DEV/lastSuccessfulBuild/)`
                     });
                     success = true;
                     break;
@@ -102,8 +102,8 @@ module.exports = {
                 case "ce":
                 case "stable":
                     e.embed.fields.push({
-                        name: "Update Stream",
-                        value: `Wynntils has two different update streams:\n**Stable**: Gets less frequent updates, and, only updates after major changes. Resulting in it having generally less issues/bugs.\n**Cutting Edge (CE)**: Get more frequent updates, and, has the newest features. However, you might experience more bugs using this build.\n\nYou can change your download stream by going into Wynntils' Settings (Default key: \`P\`), and, then under core change the download stream.`
+                        name: "Release Streams",
+                        value: `Wynntils has two different release streams:\n\n**Stable**: The mod will only update when a new version is released. Stable versions are generally more stable than Cutting Edge builds.\n**Cutting Edge (CE)**: The mod will update whenever a new build is release. Cutting Edge builds will include features that are not yet in Stable versions and are currently in development but may also be less stable than Stable versions.\n\nYou can change your release stream by going into the mod settings (default key: \`P\`) and look in the Core category.`
                     });
                     success = true;
                     break;
@@ -125,7 +125,7 @@ module.exports = {
             };
             e.embed.fields.push({
                 name: "Missing arguments",
-                value: `Please tell me what to do - use \`${bot.config.prefix}help faq\` to learn more.`
+                value: `Please provide valid arguments to use this command. You can see the valid arguments by using \`${bot.config.prefix}help faq\`.`
             });
             msg.channel.createMessage(e);
         }
