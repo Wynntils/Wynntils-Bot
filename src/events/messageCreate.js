@@ -16,7 +16,7 @@ module.exports = (bot, r) => {
     if (command.length < 1) return;
     if (!msg.channel.guild) return;
     try {
-      msg.delete().catch(O_o => { });
+      if (msg.content.startsWith(`${bot.config.prefix}faq`)) msg.delete().catch(O_o => { });
       bot.sendChannelTyping(msg.channel.id);
       command[0].execute(bot, r, msg, msg.content.replace(bot.config.prefix, '').split(' ').slice(1));
     } catch (e) {
