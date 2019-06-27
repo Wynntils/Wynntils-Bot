@@ -103,7 +103,7 @@ module.exports = {
                 case "stable":
                     e.embed.fields.push({
                         name: "Release Streams",
-                        value: `Wynntils has two different release streams:\n\n**Stable**: The mod will only update when a new version is released. Stable versions are generally more stable than Cutting Edge builds.\n\n**Cutting Edge (CE)**: The mod will update whenever a new build is release. Cutting Edge builds will include features that are not yet in Stable versions and are currently in development but may also be less stable than Stable versions.\n\nYou can change your release stream by going into the mod settings (default key: \`P\`) and look in the Core category.`
+                        value: `Wynntils has two different release streams:\n\n**Stable**: The mod will only update when a new version is released. Stable versions are generally more stable than Cutting Edge builds.\n\n**Cutting Edge (CE)**: The mod will update whenever a new build is released. Cutting Edge builds will include features that are not yet in Stable versions and are currently in development but may also be less stable than Stable versions.\n\nYou can change your release stream by going into the mod settings (default key: \`P\`) and look in the Core category.`
                     });
                     success = true;
                     break;
