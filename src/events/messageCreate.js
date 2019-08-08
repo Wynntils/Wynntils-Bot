@@ -2,6 +2,8 @@ module.exports = (bot, r) => {
   bot.on('messageCreate', (msg) => {
     if (!bot.ready || !msg || !msg.author || msg.author.bot) return;
     if (msg.channel.guild.id !== bot.config.server) return;
+    //End the meme
+    if (msg.content.match(/^[\s*_]*creeper[\s*_]*$/i)) msg.delete().catch(O_o => { });
     if (bot.blacklist.test(msg.content.replace(/[ .]/g, ""))) {
       msg.delete().catch(O_o => { });
       var e = msg.channel.createEmbed()
