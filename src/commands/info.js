@@ -1,4 +1,4 @@
-global.atob = require("atob");
+const zlib = require('zlib');
 
 module.exports = {
     info: {
@@ -45,14 +45,16 @@ module.exports = {
                     }
                     return;
                 } else {
-                    if (isNaN(args[2])) {
-                        e.description('```json\n' + atob(cb.configFiles[args[2]]) + ' ```');
-                        e.footer('Wynntils | ' + args[2], bot.user.avatarURL);
-                    } else {
-                        var key = Object.keys(cb.configFiles)[args[2]], value = cb.configFiles[key];
-                        e.description('```json\n' + atob(value) + ' ```');
-                        e.footer('Wynntils | ' + key, bot.user.avatarURL);
+                    const key = isNaN(args[2]) ? args[2] : Object.keys(cb.configFiles)[args[2]];
+                    let configData = Buffer.from(cb.configFiles[key], 'base64');
+                    if (configData[0] === 0x78) {
+                        // ZLIB magic word, possibly zipped
+                        try {
+                            configData = zlib.inflateSync(configData);
+                        } catch (e) { /* Error inflating, continue without */ }
                     }
+                    e.description('```json\n' + configData.toString('latin1') + ' ```');
+                    e.footer('Wynntils | ' + key, bot.user.avatarURL);
                 }
             } else {
                 e.field('Account Type',cb.accountType, true);
