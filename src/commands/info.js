@@ -78,7 +78,7 @@ module.exports = {
                 var s = cb.name;
                 r.table('users').getAll(s, { index: 'name' }).run((err, cb) => { search(err, cb); });
             });
-        } else if (args[0] === '@') {
+        } else if (args[0] === '*') {
             if (!msg.member.roles.includes("394189673678766091") && !msg.member.roles.includes("439546118964117534") && !msg.member.roles.includes("394189812816412692"))
                 return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
 
