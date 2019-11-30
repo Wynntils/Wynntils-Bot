@@ -78,6 +78,29 @@ module.exports = {
                 var s = cb.name;
                 r.table('users').getAll(s, { index: 'name' }).run((err, cb) => { search(err, cb); });
             });
+        } else if (args[0] === '@') {
+            if (!msg.member.roles.includes("394189673678766091") && !msg.member.roles.includes("439546118964117534") && !msg.member.roles.includes("394189812816412692"))
+                return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
+
+            // List all user roles
+            r.table('users').filter(r.row('accountType').ne('NORMAL')).run().then(res => {
+                const list = {};
+                for (const cb of res) {
+                    if (!(cb.accountType in list)) list[cb.accountType] = [];
+                    list[cb.accountType].push(cb.name);
+                }
+                const e = msg.channel.createEmbed()
+                    .color(7531934)
+                    .footer("Wynntils", bot.user.avatarURL);
+
+                for (const type in list) {
+                    if (!list.hasOwnProperty(type)) continue;
+
+                    e.field(type, '\n'.join(list[type]));
+                }
+
+                e.send().catch(e => { bot.error(e); });
+            });
         } else {
             if (!msg.member.roles.includes("394189673678766091") && !msg.member.roles.includes("439546118964117534") && !msg.member.roles.includes("394189812816412692"))
                 return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
