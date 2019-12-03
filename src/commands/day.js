@@ -23,14 +23,22 @@ module.exports = {
             const data = res[0]
 
             var embed = msg.channel.createEmbed()
-                .author(`Statistics for ${day}`, bot.user.avatarUrl)
-                .color(7531934).footer("Wynntils", bot.user.avatarUrl);
+                .author(`Statistics for ${day}`, bot.user.avatarURL)
+                .color(7531934).footer("Wynntils", bot.user.avatarURL);
             
             embed.field("RateLimits", data.daily_ratelimts, true)
             embed.field("Server Requests", data.daily_requests, true)
             embed.field("API Requests", data.api_requests, true)
             embed.field("Unique Users", data.uniqueUsers.length, true)
-            embed.field("Used Versions", "```" + data.mostUsedVersion + "```", false)
+
+            var versions = ""
+            for(var key in data.mostUsedVersion) {
+                var amount = data.mostUsedVersion[key]
+
+                versions = versions + key + " > " + amount + "\n"
+            }
+
+            embed.field("Used Versions", "```" + (versions.slice(0, -2)) + "```", false)
 
             embed.send().catch(e => { bot.error(e) })
         })
