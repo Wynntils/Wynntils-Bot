@@ -20,16 +20,17 @@ module.exports = {
         const day = args[0]
 
         r.table("analytics_days").filter({"id": day}).run().then(res => {
-            console.log(res)
+            const data = res[0]
+
             var embed = msg.channel.createEmbed()
                 .author(`Statistics for ${day}`, bot.user.avatarUrl)
                 .color(7531934).footer("Wynntils", bot.user.avatarUrl);
             
-            embed.field("RateLimits", res.daily_ratelimts, true)
-            embed.field("Server Requests", res.daily_requests, true)
-            embed.field("API Requests", res.api_requests, true)
-            embed.field("Unique Users", res.uniqueUsers, true)
-            embed.field("Used Versions", "```" + res.mostUsedVersion + "```", false)
+            embed.field("RateLimits", data.daily_ratelimts, true)
+            embed.field("Server Requests", data.daily_requests, true)
+            embed.field("API Requests", data.api_requests, true)
+            embed.field("Unique Users", data.uniqueUsers.length, true)
+            embed.field("Used Versions", "```" + data.mostUsedVersion + "```", false)
 
             embed.send().catch(e => { bot.error(e) })
         })
