@@ -96,7 +96,7 @@ module.exports = {
                 for (const type in list) {
                     if (!list.hasOwnProperty(type)) continue;
 
-                    e.field(type, list[type].join('\n'));
+                    e.field(type, list[type].join('\n').replace(/_/g, '\\_'));
                 }
 
                 e.send().catch(e => { bot.error(e); });
