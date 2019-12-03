@@ -20,6 +20,7 @@ module.exports = {
         const day = args[0]
 
         r.table("analytics_days").filter({"id": day}).run().then(res => {
+            console.log(res)
             var embed = msg.channel.createEmbed()
                 .author(`Statistics for ${day}`, bot.user.avatarUrl)
                 .color(7531934).footer("Wynntils", bot.user.avatarUrl);
