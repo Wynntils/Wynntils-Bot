@@ -13,7 +13,7 @@ module.exports = {
     },
     execute: (bot, r, msg, args) => {
         global.search = (err, cb) => {
-            if (typeof cb === "undefined" || cb.length < 1 || cb == undefined) return msg.channel.createMessage('User not found');
+            if (typeof cb === "undefined" || cb.length < 1 || cb == undefined || cb[0] == null) return msg.channel.createMessage('User not found');
             cb = cb[0];
             var e = msg.channel.createEmbed()
                 .author(cb.name, 'https://minotar.net/helm/' + cb.id + '/100.png')
@@ -105,7 +105,12 @@ module.exports = {
             if (!msg.member.roles.includes("394189673678766091") && !msg.member.roles.includes("439546118964117534") && !msg.member.roles.includes("394189812816412692"))
                 return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
             var s = args[0];
-            r.table('users').getAll(s, { index: 'name' }).run((err, cb) => { search(err, cb); });
+            const uuidV4Regex = /^[a-fA-F0-9]{8}[-]{0,1}[a-fA-F0-9]{4}[-]{0,1}[a-fA-F0-9]{4}[-]{0,1}[a-fA-F0-9]{4}[-]{0,1}[a-fA-F0-9]{12}$/;
+            if(uuidV4Regex.test(s)){
+                r.table('users').get(s.replace("-", "")).run((err, cb) => { search(err, [cb]);});
+            }else{
+                r.table('users').getAll(s, { index: 'name' }).run((err, cb) => { search(err, cb); });
+            }
         }
     }
 };

@@ -10,6 +10,7 @@ require('eris-embed-builder');
 
 let r = rethink({
   db: 'wynntils',
+  host: '91.121.171.170',
   password: config.password
 });
 
