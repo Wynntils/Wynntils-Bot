@@ -12,9 +12,7 @@ module.exports = {
         ]
     },
     execute: (bot, r, msg, args) => {
-        global.search = (err, cb) => {
-            if (typeof cb === "undefined" || cb.length < 1 || cb == undefined || cb[0] == null) return msg.channel.createMessage('User not found');
-            cb = cb[0];
+        const sendMessage = cb => {
             var e = msg.channel.createEmbed()
                 .author(cb.name, 'https://minotar.net/helm/' + cb.id + '/100.png')
                 .color(7531934)
@@ -57,6 +55,7 @@ module.exports = {
                     e.footer('Wynntils | ' + key, bot.user.avatarURL);
                 }
             } else {
+                e.field('UUID', cb.id, true);
                 e.field('Account Type',cb.accountType, true);
                 e.field('Latest Version',cb.latestVersion, true);
                 e.field('Last Online',new Date(cb.lastActivity).toDateString(), true);
@@ -69,6 +68,18 @@ module.exports = {
             } else {
                 e.send().catch(e => { bot.error(e); });
             }
+        };
+
+        const search = (err, accounts) => {
+            let sentMessage = false;
+            (accounts || []).forEach(account => {
+                if (account != null) {
+                    sendMessage(account);
+                    sentMessage = true;
+                }
+            })
+
+            if (!sentMessage) msg.channel.createMessage('User not found');
         };
 
         if (typeof args[0] === "undefined") {
