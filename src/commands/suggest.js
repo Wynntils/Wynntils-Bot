@@ -11,7 +11,7 @@ module.exports = {
     },
     execute: (bot, r, msg, args) => {
         console.log(msg.member.roles.map((e, x) => msg.member.roles[x]));
-        if (!msg.member.roles.includes("394189673678766091") && !msg.member.roles.includes("439546118964117534"))
+        if (!staff.some(r => msg.member.roles.includes(r)))
             return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
 
         const channel = msg.channel.guild.channels.find(ch => ch.name === 'suggestion-vote');

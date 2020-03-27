@@ -1,3 +1,5 @@
+const { staff, roles } = require('../enums/roles');
+
 module.exports = {
     info: {
         name: 'Roles',
@@ -21,8 +23,8 @@ module.exports = {
                 }
             }
         };
-        if (msg.member.roles.includes("394189812816412692") || msg.member.roles.includes("439546118964117534")) {
-            let manageableRoles = ["accepted", "538395171881222159", "muted", "538503043147235348" , "translator", "563486497374863361"];
+        if (staff.some(r => msg.member.roles.includes(r))) {
+            let manageableRoles = ["accepted", roles.Accepted, "muted", roles.Muted, "translator", roles.Translator];
             if (args.length === 3) {
                 if (manageableRoles.includes(args[2].toLowerCase())) {
                     var user = msg.channel.guild.members.find(member => member.username.toLowerCase().startsWith(args[1].toLowerCase())); //By name
