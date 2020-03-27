@@ -14,7 +14,9 @@ module.exports = (bot, r) => {
         }
 
         newMember.user.getDMChannel().then((channel) => {
-            channel.createMessage(m);
+            channel.createMessage(m).catch((err) => {
+                console.log(err)
+            });
         });
     })
 };
