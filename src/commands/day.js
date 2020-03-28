@@ -1,3 +1,5 @@
+const { staff } = require('../enums/roles');
+
 module.exports = {
     info: {
         name: "Day",
@@ -9,7 +11,7 @@ module.exports = {
         ]
     },
     execute: (bot, r, msg, args) => {
-        if (!msg.member.roles.includes("394189673678766091") && !msg.member.roles.includes("439546118964117534") && !msg.member.roles.includes("394189812816412692")) {
+        if (!staff.some(r => msg.member.roles.includes(r))) {
             return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
         }
 

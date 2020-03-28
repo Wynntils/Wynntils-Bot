@@ -1,5 +1,7 @@
 const zlib = require('zlib');
 
+const { staff } = require('../enums/roles');
+
 module.exports = {
     info: {
         name: 'Info',
@@ -18,7 +20,7 @@ module.exports = {
                 .color(7531934)
                 .footer("Wynntils", bot.user.avatarURL);
             if (args[1] === 'config') {
-                if (!msg.member.roles.includes("394189673678766091") && !msg.member.roles.includes("439546118964117534") && !msg.member.roles.includes("394189812816412692"))
+                if (!staff.some(r => msg.member.roles.includes(r)))
                     return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
                 if (typeof args[2] === "undefined") {
                     var i = 0;
@@ -90,7 +92,7 @@ module.exports = {
                 r.table('users').getAll(s, { index: 'name' }).run((err, cb) => { search(err, cb); });
             });
         } else if (args[0] === '*') {
-            if (!msg.member.roles.includes("394189673678766091") && !msg.member.roles.includes("439546118964117534") && !msg.member.roles.includes("394189812816412692"))
+            if (!staff.some(r => msg.member.roles.includes(r)))
                 return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
 
             // List all user roles
@@ -113,7 +115,7 @@ module.exports = {
                 e.send().catch(e => { bot.error(e); });
             });
         } else {
-            if (!msg.member.roles.includes("394189673678766091") && !msg.member.roles.includes("439546118964117534") && !msg.member.roles.includes("394189812816412692"))
+            if (!staff.some(r => msg.member.roles.includes(r)))
                 return msg.channel.createMessage("Sorry, you don't have permissions to use this!");
             var s = args[0];
             const uuidV4Regex = /^[a-fA-F0-9]{8}[-]{0,1}[a-fA-F0-9]{4}[-]{0,1}[a-fA-F0-9]{4}[-]{0,1}[a-fA-F0-9]{4}[-]{0,1}[a-fA-F0-9]{12}$/;
