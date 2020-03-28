@@ -49,12 +49,12 @@ const _roles = {
     Scyu: '537671536094740481'
 };
 
-export const roles = _roles;
+module.exports.roles = _roles;
 
-export const staff = [
+module.exports.staff = [
     _roles.Moderator, _roles.LeadModerator, _roles.WebDeveloper, _roles.ModDeveloper, _roles.SeniorDeveloper, _roles.Owner
 ];
 
-export const donatorRoles = [
+module.exports.donatorRoles = [
     _roles.Level0Donator, _roles.Level1Donator, _roles.Level2Donator, _roles.Level3Donator, _roles.Level4Donator
 ];
