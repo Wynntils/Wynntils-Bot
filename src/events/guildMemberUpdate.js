@@ -17,6 +17,8 @@ module.exports = (bot, r) => {
             channel.createMessage(m).catch((err) => {
                 console.log(err)
             });
+        }).catch((err) => {
+            console.log(err)
         });
     })
 };
