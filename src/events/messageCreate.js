@@ -12,6 +12,13 @@ module.exports = (bot, r) => {
                 .description(`A message by ${msg.author.username} has been deleted as it has been found to link an illegal Minecraft mod website. These sites are known to illegally redistrubute mods, improperly credit developers, have nonexistent mod versions, or include malware in their downloads.\n\nYou can read more about the StopModReposts movement here: [stopmodreposts.org](https://stopmodreposts.org/).`);
       msg.channel.createMessage( { embed: e.sendable });
     }
+
+    // Add up/down vote buttons to suggestions
+    if (msg.channel.id === '424990854290210837') {
+      msg.addReaction('👍');
+      msg.addReaction('👎');
+    }
+
     if (!msg.content.startsWith(bot.config.prefix)) return;
     if (msg.channel.id === '424990456435310602' && msg.author.id !== '188557595382906880' && !msg.content.startsWith(`${bot.config.prefix}faq`)) return; // Don't talk in general >:(
     const command = bot.commands.filter((c) => c.info.uses.includes(msg.content.split(' ')[0].replace(bot.config.prefix, '').toLowerCase()));
