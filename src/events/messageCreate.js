@@ -15,7 +15,7 @@ module.exports = (bot, r) => {
 
     // Add up/down vote buttons to suggestions
     if (msg.channel.id === '424990854290210837') {
-      msg.addReaction('👍').then(() => msg.addReaction('👎'));
+      msg.addReaction(':arrowup:718125161659891783').then(() => msg.addReaction(':arrowdown:718125161643245609'));
     }
 
     if (!msg.content.startsWith(bot.config.prefix)) return;
