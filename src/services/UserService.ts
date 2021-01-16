@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { UserInfo } from "../interfaces/api/athena/UserInfo";
 
-export class UserInfoService {
+export class UserService {
     async getUser(user: string) : Promise<UserInfo> {
         const response = await fetch('https://athena.wynntils.com/api/getUser/' + process.env.ATHENA_API_KEY, {
             method: 'POST',
@@ -9,7 +9,6 @@ export class UserInfoService {
                 user
             })
         });
-        const userInfo = (await response.json()) as UserInfo;
-        return userInfo;
+        return response.json();
     }
 }

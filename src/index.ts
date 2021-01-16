@@ -12,8 +12,14 @@ const creator = new Creator({
 
 //@ts-ignore
 creator.withServer(new GatewayServer((handler) => client.ws.on('INTERACTION_CREATE', handler)))
-    .registerCommandsIn(__dirname + 'commands')
+    .registerCommandsIn(__dirname + '/commands')
     .syncCommands();
+
+creator.on('debug', consola.debug);
+creator.on('warn', consola.warn);
+creator.on('error', consola.error);
+creator.on('synced', () => consola.success('Commands synced!'));
+creator.on('commandRegister', (command) => consola.info(`Registered command ${command.commandName}`));
 
 /* Register events */
 const events = requireAll({
@@ -21,7 +27,7 @@ const events = requireAll({
 });
 
 Object.keys(events).forEach((eventName) => {
-    const action = events[eventName] as (...args: any[]) => void;
+    const action = events[eventName].action as (...args: any[]) => void;
     consola.info(`Registering event: ${eventName}`)
     client.on(eventName, action);
 });
