@@ -61,12 +61,12 @@ export class InfoCommand extends SlashCommand {
                     },
                     {
                         name: 'Latest Version',
-                        value: userInfo.versions.lastest,
+                        value: userInfo.versions.latest,
                         inline: true
                     },
                     {
                         name: 'Last Online',
-                        value: (new Date(Math.max(...userInfo.versions.used.values()))).toDateString(),
+                        value: (new Date(Math.max(...Object.keys(userInfo.versions.used).map(k => userInfo.versions.used[k])))).toDateString(),
                         inline: true
                     },
                     {

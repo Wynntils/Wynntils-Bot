@@ -1,4 +1,4 @@
 export interface VersionInfo {
-    lastest: string;
-    used: Map<string, number>;
+    latest: string;
+    used: Record<string, number>;
 }
