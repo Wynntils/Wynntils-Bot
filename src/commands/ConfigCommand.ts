@@ -1,10 +1,14 @@
+import consola from "consola";
+import { MessageEmbed } from "discord.js";
+import fetch from "node-fetch";
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
+import { client } from "..";
+import { BotChannels } from "../constants/Channel";
 import { Staff } from "../constants/Role";
-import { ConfigService } from "../services/ConfigService";
+import { staffOnlyEmbed } from "../constants/staffOnlyEmbed";
+import { configService } from "../services/ConfigService";
 
 export class ConfigCommand extends SlashCommand {
-    configService: ConfigService = new ConfigService();
-
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'config',
@@ -20,33 +24,83 @@ export class ConfigCommand extends SlashCommand {
                     name: 'filename',
                     description: 'Config filename',
                     type: CommandOptionType.STRING,
+                    required: false,
+                },
+                {
+                    name: 'part',
+                    description: 'Part of config per 2000 characters',
+                    type: CommandOptionType.INTEGER,
                     required: false
-                    // TODO: provide choices
                 }
             ]
-        })
+        });
         this.filePath = __filename;
     }
 
     async run(ctx: CommandContext) {
         if (Staff.some(r => ctx.member.roles.includes(r))) {
             if (ctx.options.filename) {
-                const config = await this.configService.getConfig(ctx.options.user.toString(), ctx.options.filename.toString());
-                if (config) {
-                    // TODO: Print config
+                const configFiles = await configService.get();
+                if (!configFiles.includes(ctx.options.filename.toString())) {
+                    const embed = new MessageEmbed();
+                    embed.setColor(7531934);
+                    embed.setTitle('Invalid Config Name - Available Configs:');
+                    embed.setDescription(`\`${configFiles.join('`\n`')}\``);
+                    embed.setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
+                    return { embeds: [embed] };
+                }
+
+                let response;
+                let data;
+
+                try {
+                    response = await fetch('https://athena.wynntils.com/api/getUserConfig/' + process.env.ATHENA_API_KEY, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            user: ctx.options.user,
+                            configName: ctx.options.filename
+                        })
+                    });
+                    data = await response.json();
+                } catch (err) {
+                    consola.error(err);
+                    return 'Something went wrong when fetching the user\'s config';
+                }
+
+                if (response.ok) {
+                    const embed = new MessageEmbed();
+                    const configString = JSON.stringify(data.result, null, 2);
+                    const part = ctx.options.part ? Number.parseInt(ctx.options.part.toString()) : 1;
+                    const totalParts = Math.ceil(configString.length / 1800);
+
+                    if (part > totalParts) {
+                        return `This config file does not have more than ${totalParts} parts.`
+                    }
+
+                    embed.setColor(7531934);
+                    embed.setTitle(`${ctx.options.user.toString()} - ${ctx.options.filename} - (${part}/${totalParts})`);
+                    embed.setDescription(`\`\`\`json\n${configString.substr((part - 1) * 1800, 1800)}\n\`\`\``);
+
+                    embed.setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
+
+                    return { embeds: [embed] }
                 } else {
-                    return `Unable to retrieve ${ctx.options.filename.toString()} for ${ctx.options.user.toString()}`;
+                    return data.message;
                 }
             } else {
-                const configs = await this.configService.getAllConfigs(ctx.options.user.toString());
-                if (configs) {
-                    // TODO: Print list of config files
-                } else {
-                    return `Unable to retrieve list of config files for ${ctx.options.user.toString()}`;
-                }
+                const configFiles = await configService.get();
+                const embed = new MessageEmbed()
+                    .setColor(7531934)
+                    .setTitle('Available Configs:')
+                    .setDescription(`\`${configFiles.join('`\n`')}\``)
+                    .setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
+                return { embeds: [embed] };
             }
         } else {
-            return 'This command is for staff members only';
+            if (BotChannels.every(c => c !== ctx.channelID)) {
+                return;
+            }
+            return { embeds: [staffOnlyEmbed] };
         }
     }
 }

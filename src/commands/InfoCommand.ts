@@ -1,12 +1,14 @@
+import consola from "consola";
 import { MessageEmbed } from "discord.js";
+import fetch from "node-fetch";
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
 import { client } from "..";
+import { BotChannels } from "../constants/Channel";
 import { Staff } from "../constants/Role";
-import { UserService } from "../services/UserService";
+import { staffOnlyEmbed } from "../constants/staffOnlyEmbed";
+import { UserInfo } from "../interfaces/api/athena/UserInfo";
 
 export class InfoCommand extends SlashCommand {
-    userInfoSerivce: UserService = new UserService();
-
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'info',
@@ -23,11 +25,26 @@ export class InfoCommand extends SlashCommand {
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext) {
+    async run(ctx: CommandContext) {  
         if (Staff.some(r => ctx.member.roles.includes(r))) {
-            const embed = new MessageEmbed();
-            const userInfo = await this.userInfoSerivce.getUser(ctx.options.user.toString());
-            if (userInfo) {
+            let data;
+            let response;
+            
+            try {
+                response = await fetch('https://athena.wynntils.com/api/getUser/' + process.env.ATHENA_API_KEY, {
+                    method: 'POST',
+                    body: JSON.stringify({ user: ctx.options.user.toString() })
+                });
+                data = await response.json();
+            } catch (err) {
+                consola.error(err);
+                return 'Something went wrong when fetching the user info';
+            }
+
+            if (response.ok) {
+                const userInfo = data.result as UserInfo;
+                const embed = new MessageEmbed();
+
                 embed.setAuthor(userInfo.username, `https://minotar.net/helm/${userInfo.uuid}/100.png`);
                 embed.setColor(7531934);
                 embed.addFields(
@@ -48,7 +65,7 @@ export class InfoCommand extends SlashCommand {
                     },
                     {
                         name: 'Last Online',
-                        value: userInfo.versions.used,
+                        value: (new Date(Math.max(...userInfo.versions.used.values()))).toDateString(),
                         inline: true
                     },
                     {
@@ -58,7 +75,7 @@ export class InfoCommand extends SlashCommand {
                     },
                     {
                         name: 'Ears',
-                        value: 'UNKNOWN',
+                        value: userInfo.cosmetics.parts.ears,
                         inline: true
                     },
                     {
@@ -67,12 +84,15 @@ export class InfoCommand extends SlashCommand {
                         inline: true
                     }
                 );
-                embed.setFooter(client.user?.username, client.user?.avatarURL() ?? '');
+                embed.setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
                 return { embeds: [embed] };
             }
-            return `Unable to retrieve info for ${ctx.options.user.toString()}`;
+            return data.message;
         } else {
-            return 'This command is for staff members only';
+            if (BotChannels.every(c => c !== ctx.channelID)) {
+                return;
+            }
+            return { embeds: [staffOnlyEmbed] };
         }
     }
 }

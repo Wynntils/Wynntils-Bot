@@ -1,30 +1,23 @@
-import fetch from 'node-fetch';
 import consola from 'consola';
+import fetch from 'node-fetch';
 import { IllegalModRepostSite } from "../interfaces/api/IllegalModRepostSite";
 import { CachedService } from "../interfaces/CachedService";
 
-export class StopIllegalModRepostsService implements CachedService<IllegalModRepostSite[]> {
+class StopIllegalModRepostsService extends CachedService<IllegalModRepostSite[]> {
     url: string = 'https://api.stopmodreposts.org/sites.json';
-    expiresIn = 7 * 24 * 60 * 60 * 1000; // 7 days
+
     cache: IllegalModRepostSite[] = [];
     cachedTime: number = 0;
+    expiresIn: number = 7 * 24 * 60 * 60 * 1000; // 7 days
 
-    constructor() {
+    async updateCache() {
+        try {
+        const response = await fetch(this.url);
+        this.cache = await response.json();
         this.cachedTime = Date.now();
-        fetch(this.url).then((res) => res.json()).then((data: IllegalModRepostSite[]) => {
-            this.cache = data;
-        }).catch(consola.error);
-    }
-
-
-    async get(): Promise<IllegalModRepostSite[]> {
-        if (this.cachedTime && Date.now() - this.cachedTime > this.expiresIn) {
-            this.cachedTime = Date.now();
-            const response = await fetch(this.url);
-            const data = (await response.json()) as IllegalModRepostSite[];
-            this.cache = data;
+        } catch (err) {
+            consola.error(err);
         }
-        return this.cache;
     }
 
     async hasIllegalModRepostSite(message: string): Promise<IllegalModRepostSite | undefined> {
@@ -32,3 +25,7 @@ export class StopIllegalModRepostsService implements CachedService<IllegalModRep
         return list.find((site) => message.match(site.pattern));
     }
 }
+
+const stopIllegalModRepostsService = new StopIllegalModRepostsService;
+
+export { stopIllegalModRepostsService }

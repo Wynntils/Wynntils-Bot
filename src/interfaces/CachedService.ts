@@ -1,7 +1,18 @@
-export interface CachedService<T> {
-    cache: T;
-    cachedTime: number;
-    expiresIn: number;
+export abstract class CachedService<T> {
+    abstract cache: T;
+    abstract cachedTime: number;
+    abstract expiresIn: number;
 
-    get: () => Promise<T>; 
+    init(): Promise<void> {
+        return this.updateCache();
+    }
+
+    abstract updateCache(): Promise<void>; 
+
+    async get(): Promise<T> {
+        if (Date.now() - this.cachedTime > this.expiresIn) {
+            await this.updateCache();
+        }
+        return this.cache;
+    }
 }
