@@ -1,10 +1,10 @@
-import consola from "consola";
-import { Message, MessageEmbed } from "discord.js";
-import { Channel } from "../constants/Channel";
-import { Emoji } from "../constants/Emoji";
-import { stopIllegalModRepostsService } from "../services/StopIllegalModRepostsService";
+import consola from 'consola';
+import { Message, MessageEmbed } from 'discord.js';
+import { Channel } from '../constants/Channel';
+import { Emoji } from '../constants/Emoji';
+import { stopIllegalModRepostsService } from '../services/StopIllegalModRepostsService';
 
-export const action = (message: Message) => {
+export const action = (message: Message): void => {
     // Check for illegal mod sites
     stopIllegalModRepostsService.hasIllegalModRepostSite(message.content).then((site) => {
         if (site) {

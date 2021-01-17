@@ -1,9 +1,9 @@
-import consola from "consola";
+import consola from 'consola';
 import requireAll from 'require-all';
-import { Client } from "discord.js";
+import { Client } from 'discord.js';
 import { Creator, GatewayServer } from 'slash-create';
-import { faqService } from "./services/FaqService";
-import { configService } from "./services/ConfigService";
+import { faqService } from './services/FaqService';
+import { configService } from './services/ConfigService';
 
 const client = new Client();
 const creator = new Creator({
@@ -16,7 +16,7 @@ async function initialize() {
     await faqService.init();
     await configService.init();
 
-    //@ts-ignore
+    //@ts-expect-error
     creator.withServer(new GatewayServer((handler) => client.ws.on('INTERACTION_CREATE', handler)))
         .registerCommandsIn(__dirname + '/commands')
         .syncCommands();
@@ -34,8 +34,8 @@ async function initialize() {
     });
 
     Object.keys(events).forEach((eventName) => {
-        const action = events[eventName].action as (...args: any[]) => void;
-        consola.info(`Registering event: ${eventName}`)
+        const action = events[eventName].action;
+        consola.info(`Registering event: ${eventName}`);
         client.on(eventName, action);
     });
 

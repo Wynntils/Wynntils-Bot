@@ -1,5 +1,5 @@
-import { CommandContext, SlashCommand, SlashCreator } from "slash-create";
-import { BotChannels } from "../constants/Channel";
+import { CommandContext, SlashCommand, SlashCreator } from 'slash-create';
+import { BotChannels } from '../constants/Channel';
 
 export class PingCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
@@ -10,7 +10,7 @@ export class PingCommand extends SlashCommand {
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext) {
+    async run(ctx: CommandContext): Promise<void | string> {
         if (BotChannels.every(c => c !== ctx.channelID)) {
             return;
         }

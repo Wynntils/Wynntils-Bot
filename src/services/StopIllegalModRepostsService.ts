@@ -1,20 +1,20 @@
 import consola from 'consola';
 import fetch from 'node-fetch';
-import { IllegalModRepostSite } from "../interfaces/api/IllegalModRepostSite";
-import { CachedService } from "../interfaces/CachedService";
+import { IllegalModRepostSite } from '../interfaces/api/IllegalModRepostSite';
+import { CachedService } from '../interfaces/CachedService';
 
 class StopIllegalModRepostsService extends CachedService<IllegalModRepostSite[]> {
-    url: string = 'https://api.stopmodreposts.org/sites.json';
+    url = 'https://api.stopmodreposts.org/sites.json';
 
     cache: IllegalModRepostSite[] = [];
-    cachedTime: number = 0;
+    cachedTime = 0;
     expiresIn: number = 7 * 24 * 60 * 60 * 1000; // 7 days
 
     async updateCache() {
         try {
-        const response = await fetch(this.url);
-        this.cache = await response.json();
-        this.cachedTime = Date.now();
+            const response = await fetch(this.url);
+            this.cache = await response.json();
+            this.cachedTime = Date.now();
         } catch (err) {
             consola.error(err);
         }
@@ -28,4 +28,4 @@ class StopIllegalModRepostsService extends CachedService<IllegalModRepostSite[]>
 
 const stopIllegalModRepostsService = new StopIllegalModRepostsService;
 
-export { stopIllegalModRepostsService }
+export { stopIllegalModRepostsService };

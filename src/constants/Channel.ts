@@ -4,6 +4,6 @@ export enum Channel {
     Bot_Commands = '425293785338085387',
     Suggestions = '424990854290210837',
     Bot_Playground = '574761666647162880'
-};
+}
 
 export const BotChannels = [Channel.Bot_Commands, Channel.Bot_Playground];

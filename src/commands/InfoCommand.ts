@@ -1,12 +1,13 @@
-import consola from "consola";
-import { MessageEmbed } from "discord.js";
-import fetch from "node-fetch";
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
-import { client } from "..";
-import { BotChannels } from "../constants/Channel";
-import { Staff } from "../constants/Role";
-import { staffOnlyEmbed } from "../constants/staffOnlyEmbed";
-import { UserInfo } from "../interfaces/api/athena/UserInfo";
+import consola from 'consola';
+import { MessageEmbed } from 'discord.js';
+import fetch from 'node-fetch';
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
+import { MessageOptions } from 'slash-create/lib/context';
+import { client } from '..';
+import { BotChannels } from '../constants/Channel';
+import { Staff } from '../constants/Role';
+import { staffOnlyEmbed } from '../constants/staffOnlyEmbed';
+import { UserInfo } from '../interfaces/api/athena/UserInfo';
 
 export class InfoCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
@@ -21,11 +22,11 @@ export class InfoCommand extends SlashCommand {
                     required: true
                 }
             ]
-        })
+        });
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext) {  
+    async run(ctx: CommandContext): Promise<string | MessageOptions | void> {  
         if (Staff.some(r => ctx.member.roles.includes(r))) {
             let data;
             let response;

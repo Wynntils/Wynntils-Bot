@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed } from 'discord.js';
 
 const staffOnlyEmbed = new MessageEmbed()
     .setColor(15158332)

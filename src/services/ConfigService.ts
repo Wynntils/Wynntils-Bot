@@ -1,12 +1,12 @@
-import consola from "consola";
-import fetch from "node-fetch";
-import { CachedService } from "../interfaces/CachedService";
+import consola from 'consola';
+import fetch from 'node-fetch';
+import { CachedService } from '../interfaces/CachedService';
 
 class ConfigService extends CachedService<string[]> {
-    url: string = 'https://athena.wynntils.com/api/getUserConfig/' + process.env.ATHENA_API_KEY;
+    url = 'https://athena.wynntils.com/api/getUserConfig/' + process.env.ATHENA_API_KEY;
 
     cache: string[] = [];
-    cachedTime: number = 0;
+    cachedTime = 0;
     expiresIn: number = 1 * 24 * 60 * 60 * 1000; // 1 day
 
     async updateCache(): Promise<void> {
@@ -15,7 +15,7 @@ class ConfigService extends CachedService<string[]> {
                 method: 'POST',
                 body: JSON.stringify({
                     user: 'HeyZeer0',
-                    configName: "list"
+                    configName: 'list'
                 })
             });
             const data = await response.json();
@@ -34,4 +34,4 @@ class ConfigService extends CachedService<string[]> {
 
 const configService = new ConfigService();
 
-export { configService }
+export { configService };

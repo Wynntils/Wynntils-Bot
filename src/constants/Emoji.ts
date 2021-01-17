@@ -3,4 +3,4 @@ export enum Emoji {
     AYAYA = 'ayaya',
     ARROW_UP = 'arrowup',
     ARROW_DOWN = 'arrowdown'
-};
+}

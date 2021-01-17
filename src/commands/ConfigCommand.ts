@@ -1,12 +1,13 @@
-import consola from "consola";
-import { MessageEmbed } from "discord.js";
-import fetch from "node-fetch";
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
-import { client } from "..";
-import { BotChannels } from "../constants/Channel";
-import { Staff } from "../constants/Role";
-import { staffOnlyEmbed } from "../constants/staffOnlyEmbed";
-import { configService } from "../services/ConfigService";
+import consola from 'consola';
+import { MessageEmbed } from 'discord.js';
+import fetch from 'node-fetch';
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
+import { MessageOptions } from 'slash-create/lib/context';
+import { client } from '..';
+import { BotChannels } from '../constants/Channel';
+import { Staff } from '../constants/Role';
+import { staffOnlyEmbed } from '../constants/staffOnlyEmbed';
+import { configService } from '../services/ConfigService';
 
 export class ConfigCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
@@ -37,7 +38,7 @@ export class ConfigCommand extends SlashCommand {
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext) {
+    async run(ctx: CommandContext): Promise<string | MessageOptions | void> {
         if (Staff.some(r => ctx.member.roles.includes(r))) {
             if (ctx.options.filename) {
                 const configFiles = await configService.get();
@@ -74,7 +75,7 @@ export class ConfigCommand extends SlashCommand {
                     const totalParts = Math.ceil(configString.length / 1800);
 
                     if (part > totalParts) {
-                        return `This config file does not have more than ${totalParts} parts.`
+                        return `This config file does not have more than ${totalParts} parts.`;
                     }
 
                     embed.setColor(7531934);
@@ -83,7 +84,7 @@ export class ConfigCommand extends SlashCommand {
 
                     embed.setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
 
-                    return { embeds: [embed] }
+                    return { embeds: [embed] };
                 } else {
                     return data.message;
                 }

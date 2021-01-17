@@ -1,8 +1,7 @@
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from "slash-create";
-import { client } from "..";
-import { BotChannels } from "../constants/Channel";
-import { Guild } from "../constants/Guild";
-import { Role } from "../constants/Role";
+import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
+import { client } from '..';
+import { Guild } from '../constants/Guild';
+import { Role } from '../constants/Role';
 
 export class SelfRoleCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
@@ -35,7 +34,7 @@ export class SelfRoleCommand extends SlashCommand {
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext) {
+    async run(ctx: CommandContext): Promise<void> {
         const member = client.guilds.cache.get(Guild.Wynntils)?.members.cache.get(ctx.member.id);
         if (member === undefined) {
             return;

@@ -1,6 +1,6 @@
-import { CosmeticInfo } from "./CosmeticInfo";
-import { DiscordInfo } from "./DiscordInfo";
-import { VersionInfo } from "./VersionInfo";
+import { CosmeticInfo } from './CosmeticInfo';
+import { DiscordInfo } from './DiscordInfo';
+import { VersionInfo } from './VersionInfo';
 
 export interface UserInfo {
     uuid: string;

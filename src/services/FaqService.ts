@@ -1,10 +1,10 @@
-import { FaqEntry } from "../interfaces/api/FaqEntry";
-import { CachedService } from "../interfaces/CachedService";
+import { FaqEntry } from '../interfaces/api/FaqEntry';
+import { CachedService } from '../interfaces/CachedService';
 
 class FaqService extends CachedService<Map<string, FaqEntry>> {
-    cache: Map<string, FaqEntry> = new Map;
-    cachedTime: number = 0;
-    expiresIn: number = Infinity; // Never expires
+    cache = new Map;
+    cachedTime = 0;
+    expiresIn = Infinity; // Never expires
 
     async updateCache(): Promise<void> {
         // TODO: Convert to api
