@@ -62,6 +62,3 @@ dist/
 
 # next.js build output
 .next
-
-# Don't reveal our secrets!
-src/config.json

@@ -2,7 +2,6 @@ import { MessageEmbed } from 'discord.js';
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
 import { MessageOptions } from 'slash-create/lib/context';
 import { client } from '..';
-import { Guild } from '../constants/Guild';
 import { faqService } from '../services/FaqService';
 
 export class FaqCommand extends SlashCommand {
@@ -10,7 +9,6 @@ export class FaqCommand extends SlashCommand {
         super(creator, {
             name: 'faq',
             description: 'Provides information on frequently asked question',
-            guildID: Guild.Wynntils,
             options: [
                 {
                     name: 'value',

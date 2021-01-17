@@ -29,7 +29,7 @@ export class ConfigCommand extends SlashCommand {
                 },
                 {
                     name: 'part',
-                    description: 'Part of config per 2000 characters',
+                    description: 'Part of config per 1800 characters',
                     type: CommandOptionType.INTEGER,
                     required: false
                 }

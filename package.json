@@ -4,7 +4,8 @@
   "description": "Discord bot for the Wynntils Server",
   "main": "dist/index.js",
   "scripts": {
-    "start": "tsc & node -r dotenv/config ./dist/index.js",
+    "start": "node -r dotenv/config ./dist/index.js",
+    "build": "tsc",
     "lint": "eslint . --ext .ts"
   },
   "repository": {
@@ -15,7 +16,18 @@
     "Discord",
     "Bot"
   ],
-  "author": "Scyu_",
+  "contributors": [
+    {
+      "name": "HighCrit",
+      "email": "highcrit@wynntils.com",
+      "url": "https://github.com/HighCrit"
+    },
+    {
+      "name": "Scyu_",
+      "email": "Scyu_@wynntils.com",
+      "url": "https://github.com/DevScyu"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Wynntils/Wynntils-Bot/issues"
