@@ -7,7 +7,7 @@
     {
         "name": "guildcolor",
         "title": "Custom Territory Colors",
-        "value": "There are a few requirements for getting a custom territory color.\n\n**Requirements**\n```\n- Your Guild must be at least level 30\n- The color you wish to use MUST be visible, so avoid black or really dark colors.\n- Be the Guild Owner\n```\nIf your guild meets there requirements, then you can request a custom color by going to <#495293364803993610> and creating a support ticket using the `/new` command. Please provide the color in HEX format e.g. #FFFFFF."
+        "value": "There are a few requirements for getting a custom territory color.\n\n**Requirements**\n```\n- Your Guild must be at least level 30\n- The color you wish to use MUST be visible, so avoid black or really dark colors.\n- Be the Guild Owner\n```\nIf your guild meets the requirements, then you can request a custom color by going to <#495293364803993610> and creating a support ticket using the `/new` command. Please provide the color in HEX format e.g. #FFFFFF."
     },
     {
         "name": "install",
