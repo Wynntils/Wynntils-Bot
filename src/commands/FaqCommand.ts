@@ -24,7 +24,7 @@ export class FaqCommand extends SlashCommand {
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext): Promise<MessageOptions | void> {
+    async run(ctx: CommandContext): Promise<MessageOptions> {
         const faq = (await faqService.get()).get(ctx.options.value.toString());
         
         if (faq) {
@@ -36,6 +36,6 @@ export class FaqCommand extends SlashCommand {
             return { embeds: [embed] };
         }
         
-        return;
+        return { content: `Unable to find entry for ${ctx.options.value.toString()}`, ephemeral: true };
     }
 }

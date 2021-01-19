@@ -1,4 +1,5 @@
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
+import { MessageOptions } from 'slash-create/lib/context';
 import { client } from '..';
 import { Guild } from '../constants/Guild';
 import { Role } from '../constants/Role';
@@ -34,17 +35,19 @@ export class SelfRoleCommand extends SlashCommand {
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext): Promise<void> {
+    async run(ctx: CommandContext): Promise<MessageOptions> {
         const member = client.guilds.cache.get(Guild.Wynntils)?.members.cache.get(ctx.member.id);
         if (member === undefined) {
-            return;
+            return { content: 'You are not a member of the Wynntils Discord server.', ephemeral: true };
         }
 
         const role = ctx.options.role.toString();
         if (member.roles.cache.has(role)) {
-            member.roles.add(role);
-        } else {
-            member.roles.remove(role);
+            await member.roles.add(role);
+            return { content: 'Succesfully given you the role.', ephemeral: true };
         }
+
+        await member.roles.remove(role);
+        return { content: 'Succesfully removed the role from you.', ephemeral: true };
     }
 }

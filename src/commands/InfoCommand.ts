@@ -4,9 +4,7 @@ import fetch from 'node-fetch';
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
 import { MessageOptions } from 'slash-create/lib/context';
 import { client } from '..';
-import { BotChannels } from '../constants/Channel';
 import { Staff } from '../constants/Role';
-import { staffOnlyEmbed } from '../constants/staffOnlyEmbed';
 import { UserInfo } from '../interfaces/api/athena/UserInfo';
 
 export class InfoCommand extends SlashCommand {
@@ -26,7 +24,7 @@ export class InfoCommand extends SlashCommand {
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext): Promise<string | MessageOptions | void> {  
+    async run(ctx: CommandContext): Promise<MessageOptions> {  
         if (Staff.some(r => ctx.member.roles.includes(r))) {
             let data;
             let response;
@@ -39,7 +37,7 @@ export class InfoCommand extends SlashCommand {
                 data = await response.json();
             } catch (err) {
                 consola.error(err);
-                return 'Something went wrong when fetching the user info';
+                return { content: 'Something went wrong when fetching the user info', ephemeral: true };
             }
 
             if (response.ok) {
@@ -90,10 +88,7 @@ export class InfoCommand extends SlashCommand {
             }
             return data.message;
         } else {
-            if (BotChannels.every(c => c !== ctx.channelID)) {
-                return;
-            }
-            return { embeds: [staffOnlyEmbed] };
+            return { content: 'This command is for staff members only', ephemeral: true };
         }
     }
 }

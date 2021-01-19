@@ -1,5 +1,5 @@
 import { CommandContext, SlashCommand, SlashCreator } from 'slash-create';
-import { BotChannels } from '../constants/Channel';
+import { MessageOptions } from 'slash-create/lib/context';
 
 export class PingCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
@@ -10,11 +10,7 @@ export class PingCommand extends SlashCommand {
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext): Promise<void | string> {
-        if (BotChannels.every(c => c !== ctx.channelID)) {
-            return;
-        }
-        
-        return `Ping, ${Date.now() - ctx.invokedAt}ms! <@${ctx.member.id}>`;
+    async run(ctx: CommandContext): Promise<MessageOptions> {   
+        return { content: `Ping, ${Date.now() - ctx.invokedAt}ms!`, ephemeral: true };
     }
 }

@@ -4,9 +4,7 @@ import fetch from 'node-fetch';
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
 import { MessageOptions } from 'slash-create/lib/context';
 import { client } from '..';
-import { BotChannels } from '../constants/Channel';
 import { Staff } from '../constants/Role';
-import { staffOnlyEmbed } from '../constants/staffOnlyEmbed';
 import { configService } from '../services/ConfigService';
 
 export class ConfigCommand extends SlashCommand {
@@ -38,7 +36,7 @@ export class ConfigCommand extends SlashCommand {
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext): Promise<string | MessageOptions | void> {
+    async run(ctx: CommandContext): Promise<MessageOptions> {
         if (Staff.some(r => ctx.member.roles.includes(r))) {
             if (ctx.options.filename) {
                 const configFiles = await configService.get();
@@ -65,7 +63,7 @@ export class ConfigCommand extends SlashCommand {
                     data = await response.json();
                 } catch (err) {
                     consola.error(err);
-                    return 'Something went wrong when fetching the user\'s config';
+                    return { content: 'Something went wrong when fetching the user\'s config', ephemeral: true };
                 }
 
                 if (response.ok) {
@@ -75,7 +73,7 @@ export class ConfigCommand extends SlashCommand {
                     const totalParts = Math.ceil(configString.length / 1800);
 
                     if (part > totalParts) {
-                        return `This config file does not have more than ${totalParts} parts.`;
+                        return { content: `This config file does not have more than ${totalParts} parts.`, ephemeral: true };
                     }
 
                     embed.setColor(7531934);
@@ -98,10 +96,7 @@ export class ConfigCommand extends SlashCommand {
                 return { embeds: [embed] };
             }
         } else {
-            if (BotChannels.every(c => c !== ctx.channelID)) {
-                return;
-            }
-            return { embeds: [staffOnlyEmbed] };
+            return { content: 'This command is for staff members only!', ephemeral: true };
         }
     }
 }
