@@ -2,13 +2,14 @@ import { MessageEmbed } from 'discord.js';
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
 import { MessageOptions } from 'slash-create/lib/context';
 import { client } from '..';
+import { Guild } from '../constants/Guild';
 import { faqService } from '../services/FaqService';
 
 export class FaqCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'faq',
-            guildID: '394189072635133952',
+            guildID: Guild.Wynntils,
             description: 'Provides information on frequently asked question',
             options: [
                 {
