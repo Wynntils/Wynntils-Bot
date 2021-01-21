@@ -11,6 +11,7 @@ export class ConfigCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'config',
+            guildID: '394189072635133952',
             description: 'Retrieves configs for a given user',
             options: [
                 {

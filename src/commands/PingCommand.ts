@@ -5,6 +5,7 @@ export class PingCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'ping',
+            guildID: '394189072635133952',
             description: 'Provides the delay between issuance and execution of a command'
         });
         this.filePath = __filename;

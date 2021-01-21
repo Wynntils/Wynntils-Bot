@@ -8,6 +8,7 @@ export class SelfRoleCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'selfrole',
+            guildID: '394189072635133952',
             description: 'Either adds or removes a given role',
             options: [
                 {

@@ -8,6 +8,7 @@ export class FaqCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'faq',
+            guildID: '394189072635133952',
             description: 'Provides information on frequently asked question',
             options: [
                 {

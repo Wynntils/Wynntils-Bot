@@ -11,6 +11,7 @@ export class InfoCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'info',
+            guildID: '394189072635133952',
             description: 'Returns user info',
             options: [
                 {
