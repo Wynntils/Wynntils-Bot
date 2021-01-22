@@ -43,7 +43,7 @@ export class SelfRoleCommand extends SlashCommand {
         }
 
         const role = ctx.options.role.toString();
-        if (member.roles.cache.has(role)) {
+        if (!member.roles.cache.has(role)) {
             await member.roles.add(role);
             return { content: 'Succesfully given you the role.', ephemeral: true };
         }
