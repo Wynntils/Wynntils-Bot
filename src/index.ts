@@ -5,7 +5,13 @@ import { Creator, GatewayServer } from 'slash-create';
 import { faqService } from './services/FaqService';
 import { configService } from './services/ConfigService';
 
-const client = new Client({ partials: ['MESSAGE', 'REACTION'], ws: { intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'GUILD_MEMBERS'] } });
+const client = new Client({
+    presence: { activity: { name: 'Now featuring slash commands!' }, status: 'online' },
+    partials: ['MESSAGE', 'REACTION'],
+    ws: {
+        intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'GUILD_MEMBERS']
+    } 
+});
 const creator = new Creator({
     applicationID: process.env.APPLICATION_ID ?? '',
     publicKey: process.env.PUBLIC_KEY ?? '',

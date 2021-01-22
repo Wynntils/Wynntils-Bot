@@ -5,3 +5,5 @@ export enum Emoji {
     ARROW_UP = 'arrowup:718125161659891783',
     ARROW_DOWN = 'arrowdown:718125161643245609'
 }
+
+export const watchedEmotes: string[] = [Emoji.WHITE_CHECKMARK, Emoji.ARROWS_COUNTERCLOCKWISE, Emoji.AYAYA];

@@ -2,16 +2,20 @@ import consola from 'consola';
 import { MessageReaction, User } from 'discord.js';
 import { client } from '..';
 import { Channel } from '../constants/Channel';
-import { Emoji } from '../constants/Emoji';
+import { Emoji, watchedEmotes } from '../constants/Emoji';
 import { Guild } from '../constants/Guild';
 import { Role } from '../constants/Role';
 
-export const action = async (reaction: MessageReaction, user: User): Promise<void> => {
-    if (reaction.message.partial) {
-        await reaction.message.fetch().catch(consola.error);
-    }
+export const action = async (reaction: MessageReaction, user: User): Promise<void> => { 
     if (reaction.partial) {
         await reaction.fetch().catch(consola.error);
+    }
+    if (!watchedEmotes.includes(reaction.emoji.identifier)) {
+        // Prevent unneccesary fetching of data.
+        return;
+    }
+    if (reaction.message.partial) {
+        await reaction.message.fetch().catch(consola.error);
     }
     if (user.id === undefined) {
         await user.fetch().catch(consola.error);
