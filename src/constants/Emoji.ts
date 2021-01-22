@@ -1,5 +1,6 @@
 export enum Emoji {
-    ARROWS_COUNTERCLOCKWISE = 'arrows_counterclockwise',
+    WHITE_CHECKMARK = '✅',
+    ARROWS_COUNTERCLOCKWISE = '🔄',
     AYAYA = 'ayaya',
     ARROW_UP = 'arrowup',
     ARROW_DOWN = 'arrowdown'
