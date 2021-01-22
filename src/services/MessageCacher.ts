@@ -14,7 +14,7 @@ class MessageCacher {
     cacheMessage(channel: Channel, message: Message): void {
         client.guilds.fetch(Guild.Wynntils).then((guild) => {
             const c = guild.channels.resolve(channel) as TextChannel;
-            c.messages.fetch(message);
+            c.messages.fetch(message).catch(consola.error);
         }).catch(consola.error);
     }
 }

@@ -37,7 +37,7 @@ export class SelfRoleCommand extends SlashCommand {
     }
 
     async run(ctx: CommandContext): Promise<MessageOptions> {
-        const member = client.guilds.cache.get(Guild.Wynntils)?.members.cache.get(ctx.member.id);
+        const member = await client.guilds.cache.get(Guild.Wynntils)?.members.fetch(ctx.member.id);
         if (member === undefined) {
             return { content: 'You are not a member of the Wynntils Discord server.', ephemeral: true };
         }
