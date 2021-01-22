@@ -4,7 +4,6 @@ import fetch from 'node-fetch';
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
 import { MessageOptions } from 'slash-create/lib/context';
 import { client } from '..';
-import { Guild } from '../constants/Guild';
 import { Staff } from '../constants/Role';
 import { UserInfo } from '../interfaces/api/athena/UserInfo';
 
@@ -12,7 +11,6 @@ export class InfoCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'info',
-            guildID: Guild.Wynntils,
             description: 'Returns user info',
             options: [
                 {

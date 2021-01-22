@@ -5,6 +5,9 @@ import { Emoji } from '../constants/Emoji';
 import { stopIllegalModRepostsService } from '../services/StopIllegalModRepostsService';
 
 export const action = (message: Message): void => {
+    if (message.partial) {
+        return;
+    }
     // Check for illegal mod sites
     stopIllegalModRepostsService.hasIllegalModRepostSite(message.content).then((site) => {
         if (site) {

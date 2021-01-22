@@ -4,7 +4,6 @@ import fetch from 'node-fetch';
 import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
 import { MessageOptions } from 'slash-create/lib/context';
 import { client } from '..';
-import { Guild } from '../constants/Guild';
 import { Staff } from '../constants/Role';
 import { configService } from '../services/ConfigService';
 
@@ -12,7 +11,6 @@ export class ConfigCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'config',
-            guildID: Guild.Wynntils,
             description: 'Retrieves configs for a given user',
             options: [
                 {

@@ -9,7 +9,6 @@ export class SelfRoleCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'selfrole',
-            guildID: Guild.Wynntils,
             description: 'Either adds or removes a given role',
             options: [
                 {
@@ -52,17 +51,17 @@ export class SelfRoleCommand extends SlashCommand {
         if (!member.roles.cache.has(role)) {
             try {
                 await member.roles.add(role);
-            } catch {
-                console.error('Unable to apply role: ' + role);
-                return { content: 'Ran into an error while apply you the role.', ephemeral: true };
+            } catch (err) {
+                console.error(err);
+                return { content: 'Ran into an error while applying the role to you.', ephemeral: true };
             }
             return { content: 'Succesfully given you the role.', ephemeral: true };
         }
         try {
             await member.roles.remove(role);
-        } catch {
-            console.error('Unable to remove role: ' + role);
-            return { content: 'Ran into an error while apply you the role.', ephemeral: true };
+        } catch (err) {
+            console.error(err);
+            return { content: 'Ran into an error while removing the role from you.', ephemeral: true };
         }
         return { content: 'Succesfully removed the role from you.', ephemeral: true };
     }
