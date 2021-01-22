@@ -1,4 +1,4 @@
-import { CommandContext, SlashCommand, SlashCreator } from 'slash-create';
+import { SlashCommand, SlashCreator } from 'slash-create';
 import { MessageOptions } from 'slash-create/lib/context';
 import { Guild } from '../constants/Guild';
 
@@ -7,12 +7,12 @@ export class PingCommand extends SlashCommand {
         super(creator, {
             name: 'ping',
             guildID: Guild.Wynntils,
-            description: 'Provides the delay between issuance and execution of a command'
+            description: 'Command to check wheter the bot is still operational'
         });
         this.filePath = __filename;
     }
 
-    async run(ctx: CommandContext): Promise<MessageOptions> {   
-        return { content: `Ping, ${Date.now() - ctx.invokedAt}ms!`, ephemeral: true };
+    async run(): Promise<MessageOptions> {   
+        return { content: 'Pong! :ping_pong:', ephemeral: true };
     }
 }
