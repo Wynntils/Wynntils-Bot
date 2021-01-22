@@ -1,7 +1,9 @@
 import consola from 'consola';
-import { GuildMember, MessageReaction, User } from 'discord.js';
+import { MessageReaction, User } from 'discord.js';
+import { client } from '..';
 import { Channel } from '../constants/Channel';
 import { Emoji } from '../constants/Emoji';
+import { Guild } from '../constants/Guild';
 import { Role } from '../constants/Role';
 
 export const action = async (reaction: MessageReaction, user: User): Promise<void> => {
@@ -11,16 +13,29 @@ export const action = async (reaction: MessageReaction, user: User): Promise<voi
     if (reaction.partial) {
         await reaction.fetch().catch(consola.error);
     }
+    if (user.id === undefined) {
+        await user.fetch().catch(consola.error);
+    }
 
-    if (user instanceof GuildMember) {
+    let guildMember;
+    try {
+        const guild = await client.guilds.fetch(Guild.Wynntils);
+        guildMember = await guild.members.fetch(user.id);
+    } catch (err) {
+        consola.error(err);
+    }
+
+    if (guildMember) {
         if (reaction.message.channel.id === Channel.Welcome) {
-            user.roles.add(Role.Accepted, 'Reacted in #welcome').catch(consola.error);
+            guildMember.roles.add(Role.Accepted, 'Reacted in #welcome').catch(consola.error);
         } else if (reaction.message.channel.id === Channel.Self_Roles) {
             if (reaction.emoji.identifier === Emoji.ARROWS_COUNTERCLOCKWISE) {
-                user.roles.add(Role.ModUpdates, 'Reacted in #self-roles').catch(consola.error);
+                guildMember.roles.add(Role.ModUpdates, 'Reacted in #self-roles').catch(consola.error);
             } else if (reaction.emoji.identifier === Emoji.AYAYA) {
-                user.roles.add(Role.Anime, 'Reacted in #self-roles').catch(consola.error);
+                guildMember.roles.add(Role.Anime, 'Reacted in #self-roles').catch(consola.error);
             }
         }
+    } else {
+        consola.error(`Unable to find user (${user.id}) in Wynntils Discord server.`);
     }
 };

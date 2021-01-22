@@ -24,6 +24,6 @@ export const action = (message: Message): void => {
 
     // Add arrows to suggestions
     if (message.channel.id === Channel.Suggestions) {
-        message.react(`:${Emoji.ARROW_UP}:`).then(() => message.react(`:${Emoji.ARROW_DOWN}:`).catch(consola.error)).catch(consola.error);
+        message.react(Emoji.ARROW_UP).then(() => message.react(Emoji.ARROW_DOWN).catch(consola.error)).catch(consola.error);
     }
 };
