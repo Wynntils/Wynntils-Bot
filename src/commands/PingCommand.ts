@@ -5,7 +5,7 @@ export class PingCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'ping',
-            description: 'Command to check wheter the bot is still operational'
+            description: 'Command to check whether the bot is still operational'
         });
         this.filePath = __filename;
     }
