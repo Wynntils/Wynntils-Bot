@@ -33,70 +33,84 @@ export class ConfigCommand extends SlashCommand {
                 }
             ]
         });
+
         this.filePath = __filename;
     }
 
+    hasPermission(ctx: CommandContext): boolean | string {
+        const { member } = ctx;
+        if (!member) {
+            return 'This command doesn\'t work in DMs';
+        }
+        return Staff.some(r => member.roles.includes(r));
+    }
+
     async run(ctx: CommandContext): Promise<MessageOptions> {
-        if (Staff.some(r => ctx.member.roles.includes(r))) {
-            if (ctx.options.filename) {
-                const configFiles = await configService.get();
-                if (!configFiles.includes(ctx.options.filename.toString())) {
-                    const embed = new MessageEmbed();
-                    embed.setColor(7531934);
-                    embed.setTitle('Invalid Config Name - Available Configs:');
-                    embed.setDescription(`\`${configFiles.join('`\n`')}\``);
-                    embed.setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
-                    return { embeds: [embed] };
-                }
+        const embed = new MessageEmbed();
+        embed.setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
 
-                let response;
-                let data;
-
-                try {
-                    response = await fetch('https://athena.wynntils.com/api/getUserConfig/' + process.env.ATHENA_API_KEY, {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            user: ctx.options.user,
-                            configName: ctx.options.filename
-                        })
-                    });
-                    data = await response.json();
-                } catch (err) {
-                    consola.error(err);
-                    return { content: 'Something went wrong when fetching the user\'s config', ephemeral: true };
-                }
-
-                if (response.ok) {
-                    const embed = new MessageEmbed();
-                    const configString = JSON.stringify(data.result, null, 2);
-                    const part = ctx.options.part ? Number.parseInt(ctx.options.part.toString()) : 1;
-                    const totalParts = Math.ceil(configString.length / 1800);
-
-                    if (part > totalParts) {
-                        return { content: `This config file does not have more than ${totalParts} parts.`, ephemeral: true };
-                    }
-
-                    embed.setColor(7531934);
-                    embed.setTitle(`${ctx.options.user.toString()} - ${ctx.options.filename} - (${part}/${totalParts})`);
-                    embed.setDescription(`\`\`\`json\n${configString.substr((part - 1) * 1800, 1800)}\n\`\`\``);
-
-                    embed.setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
-
-                    return { embeds: [embed] };
-                } else {
-                    return data.message;
-                }
-            } else {
-                const configFiles = await configService.get();
-                const embed = new MessageEmbed()
-                    .setColor(7531934)
-                    .setTitle('Available Configs:')
-                    .setDescription(`\`${configFiles.join('`\n`')}\``)
-                    .setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
+        if (ctx.options.filename) {
+            const configFiles = await configService.get();
+            if (!configFiles.includes(ctx.options.filename.toString())) {
+                embed.setColor(0xff5349)
+                    .setTitle(':x: Invalid Config Name - Available Configs')
+                    .setDescription(`\`${configFiles.join('`\n`')}\``);
                 return { embeds: [embed] };
             }
-        } else {
-            return { content: 'This command is for staff members only!', ephemeral: true };
+
+            let response;
+            let data;
+
+            try {
+                response = await fetch('https://athena.wynntils.com/api/getUserConfig/' + process.env.ATHENA_API_KEY, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        user: ctx.options.user,
+                        configName: ctx.options.filename
+                    })
+                });
+                data = await response.json();
+            } catch (err) {
+                consola.error(err);
+                embed.setColor(0xff5349)
+                    .setTitle(':x: Oops! Error D;')
+                    .setDescription('Something went wrong when fetching the user\'s config.');
+
+                return { embeds: [embed], ephemeral: true };
+            }
+
+            if (response.ok) {
+                const configString = JSON.stringify(data.result, null, 2);
+                const part = ctx.options.part ? Number.parseInt(ctx.options.part.toString()) : 1;
+                const totalParts = Math.ceil(configString.length / 1800);
+
+                if (part > totalParts) {
+                    embed.setColor(0xff5349)
+                        .setTitle(':octagonal_sign: End of Config')
+                        .setDescription(`This config file does not have more than ${totalParts} parts.`);
+
+                    return { embeds: [embed], ephemeral: true };
+                }
+
+                embed.setColor(0x72ed9e)
+                    .setTitle(`${ctx.options.user.toString()} - ${ctx.options.filename} - (${part}/${totalParts})`)
+                    .setDescription(`\`\`\`json\n${configString.substr((part - 1) * 1800, 1800)}\n\`\`\``);
+
+                return { embeds: [embed] };
+            }
+
+            embed.setColor(0xff5349)
+                .setTitle(':x: Oops! Error D;')
+                .setDescription( data.message);
+
+            return { embeds: [embed], ephemeral: true };
         }
+
+        const configFiles = await configService.get();
+        embed.setColor(0x72ed9e)
+            .setTitle('Available Configs')
+            .setDescription(`\`${configFiles.join('`\n`')}\``);
+
+        return { embeds: [embed] };
     }
 }

@@ -21,21 +21,28 @@ export class FaqCommand extends SlashCommand {
                 }
             ] 
         });
+
         this.filePath = __filename;
     }
 
     async run(ctx: CommandContext): Promise<MessageOptions> {
         const faq = (await faqService.get()).get(ctx.options.value.toString());
+    
+        const embed = new MessageEmbed();
+        embed.setFooter(`By: ${ctx.user.username}#${ctx.user.discriminator} - Please read #faq`);
         
         if (faq) {
-            const embed = new MessageEmbed();
-            embed.setColor(7531934);
-            embed.setAuthor('Wynntils FAQ', client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
-            embed.addField(faq.title, faq.value);
-            embed.setFooter(`By: ${ctx.member.user.username}#${ctx.member.user.discriminator} - Please read #faq`);
+            embed.setColor(0x72ed9e)
+                .setAuthor('Wynntils FAQ', client.user?.avatarURL() ?? client.user?.defaultAvatarURL)
+                .addField(faq.title, faq.value);
+
             return { embeds: [embed] };
         }
+
+        embed.setColor(0xff5349)
+            .setTitle(':x: Invalid Entry')
+            .setDescription(`Unable to find entry for ${ctx.options.value.toString()}.`);
         
-        return { content: `Unable to find entry for ${ctx.options.value.toString()}`, ephemeral: true };
+        return { embeds: [embed], ephemeral: true };
     }
 }

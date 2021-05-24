@@ -7,6 +7,7 @@ export class PingCommand extends SlashCommand {
             name: 'ping',
             description: 'Command to check whether the bot is still operational'
         });
+
         this.filePath = __filename;
     }
 
