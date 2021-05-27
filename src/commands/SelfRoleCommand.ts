@@ -1,7 +1,6 @@
 import consola from 'consola';
 import { MessageEmbed } from 'discord.js';
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
-import { MessageOptions } from 'slash-create/lib/context';
+import { CommandContext, CommandOptionType, MessageOptions, SlashCommand, SlashCreator } from 'slash-create';
 import { client } from '..';
 import { Guild } from '../constants/Guild';
 import { Role } from '../constants/Role';
@@ -50,7 +49,7 @@ export class SelfRoleCommand extends SlashCommand {
                 .setTitle('Oops! Error D;')
                 .setDescription(':x: Unable to access the Wynntils Discord server.');
 
-            return { embeds: [embed], ephemeral: true };
+            return { embeds: [embed.toJSON()], ephemeral: true };
         }
 
         const member = await guild.members.fetch(ctx.user.id);
@@ -59,7 +58,7 @@ export class SelfRoleCommand extends SlashCommand {
                 .setTitle(':x: Oops! Error D;')
                 .setDescription('You are not a member of the Wynntils Discord server. Here is an invite: https://discord.gg/SZuNem8.');
 
-            return { embeds: [embed], ephemeral: true };
+            return { embeds: [embed.toJSON()], ephemeral: true };
         }
 
         const role = ctx.options.role.toString();
@@ -72,13 +71,13 @@ export class SelfRoleCommand extends SlashCommand {
                     .setTitle(':x: Oops! Error D;')
                     .setDescription('Ran into an error while applying the role to you.');
 
-                return { embeds: [embed], ephemeral: true };
+                return { embeds: [embed.toJSON()], ephemeral: true };
             }
             embed.setColor(0x72ed9e)
                 .setTitle('Success!')
                 .setDescription('Succesfully given you the role.');
 
-            return { embeds: [embed], ephemeral: true };
+            return { embeds: [embed.toJSON()], ephemeral: true };
         }
         
         try {
@@ -89,12 +88,12 @@ export class SelfRoleCommand extends SlashCommand {
                 .setTitle(':x: Oops! Error D;')
                 .setDescription('Ran into an error while removing the role from you.');
 
-            return { embeds: [embed], ephemeral: true };
+            return { embeds: [embed.toJSON()], ephemeral: true };
         }
         embed.setColor(0x72ed9e)
             .setTitle('Success!')
             .setDescription('Succesfully removed the role from you.');
 
-        return { embeds: [embed], ephemeral: true };
+        return { embeds: [embed.toJSON()], ephemeral: true };
     }
 }

@@ -1,8 +1,7 @@
 import consola from 'consola';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
-import { MessageOptions } from 'slash-create/lib/context';
+import { CommandContext, CommandOptionType, MessageOptions, SlashCommand, SlashCreator } from 'slash-create';
 import { client } from '..';
 import { Staff } from '../constants/Role';
 import { configService } from '../services/ConfigService';
@@ -55,7 +54,7 @@ export class ConfigCommand extends SlashCommand {
                 embed.setColor(0xff5349)
                     .setTitle(':x: Invalid Config Name - Available Configs')
                     .setDescription(`\`${configFiles.join('`\n`')}\``);
-                return { embeds: [embed] };
+                return { embeds: [embed.toJSON()] };
             }
 
             let response;
@@ -76,7 +75,7 @@ export class ConfigCommand extends SlashCommand {
                     .setTitle(':x: Oops! Error D;')
                     .setDescription('Something went wrong when fetching the user\'s config.');
 
-                return { embeds: [embed], ephemeral: true };
+                return { embeds: [embed.toJSON()], ephemeral: true };
             }
 
             if (response.ok) {
@@ -89,21 +88,21 @@ export class ConfigCommand extends SlashCommand {
                         .setTitle(':octagonal_sign: End of Config')
                         .setDescription(`This config file does not have more than ${totalParts} parts.`);
 
-                    return { embeds: [embed], ephemeral: true };
+                    return { embeds: [embed.toJSON()], ephemeral: true };
                 }
 
                 embed.setColor(0x72ed9e)
                     .setTitle(`${ctx.options.user.toString()} - ${ctx.options.filename} - (${part}/${totalParts})`)
                     .setDescription(`\`\`\`json\n${configString.substr((part - 1) * 1800, 1800)}\n\`\`\``);
 
-                return { embeds: [embed] };
+                return { embeds: [embed.toJSON()] };
             }
 
             embed.setColor(0xff5349)
                 .setTitle(':x: Oops! Error D;')
                 .setDescription( data.message);
 
-            return { embeds: [embed], ephemeral: true };
+            return { embeds: [embed.toJSON()], ephemeral: true };
         }
 
         const configFiles = await configService.get();
@@ -111,6 +110,6 @@ export class ConfigCommand extends SlashCommand {
             .setTitle('Available Configs')
             .setDescription(`\`${configFiles.join('`\n`')}\``);
 
-        return { embeds: [embed] };
+        return { embeds: [embed.toJSON()] };
     }
 }

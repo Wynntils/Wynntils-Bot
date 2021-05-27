@@ -1,5 +1,4 @@
-import { SlashCommand, SlashCreator } from 'slash-create';
-import { MessageOptions } from 'slash-create/lib/context';
+import { MessageOptions, SlashCommand, SlashCreator } from 'slash-create';
 
 export class PingCommand extends SlashCommand {
     constructor(creator: SlashCreator) {

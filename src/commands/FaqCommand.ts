@@ -1,6 +1,5 @@
 import { MessageEmbed } from 'discord.js';
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
-import { MessageOptions } from 'slash-create/lib/context';
+import { CommandContext, CommandOptionType, MessageOptions, SlashCommand, SlashCreator } from 'slash-create';
 import { client } from '..';
 import { faqService } from '../services/FaqService';
 
@@ -36,13 +35,13 @@ export class FaqCommand extends SlashCommand {
                 .setAuthor('Wynntils FAQ', client.user?.avatarURL() ?? client.user?.defaultAvatarURL)
                 .addField(faq.title, faq.value);
 
-            return { embeds: [embed] };
+            return { embeds: [embed.toJSON()] };
         }
 
         embed.setColor(0xff5349)
             .setTitle(':x: Invalid Entry')
             .setDescription(`Unable to find entry for ${ctx.options.value.toString()}.`);
         
-        return { embeds: [embed], ephemeral: true };
+        return { embeds: [embed.toJSON()], ephemeral: true };
     }
 }

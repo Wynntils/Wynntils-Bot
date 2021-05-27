@@ -1,8 +1,7 @@
 import consola from 'consola';
 import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
-import { CommandContext, CommandOptionType, SlashCommand, SlashCreator } from 'slash-create';
-import { MessageOptions } from 'slash-create/lib/context';
+import { CommandContext, CommandOptionType, MessageOptions, SlashCommand, SlashCreator } from 'slash-create';
 import { client } from '..';
 import { Staff } from '../constants/Role';
 import { UserInfo } from '../interfaces/api/athena/UserInfo';
@@ -52,7 +51,7 @@ export class InfoCommand extends SlashCommand {
                 .setTitle(':x: Oops! Error D;')
                 .setDescription('Something went wrong when fetching the user info.');
 
-            return { embeds: [embed], ephemeral: true };
+            return { embeds: [embed.toJSON()], ephemeral: true };
         }
 
         if (response.ok) {
@@ -98,13 +97,13 @@ export class InfoCommand extends SlashCommand {
                 }
             );
             
-            return { embeds: [embed] };
+            return { embeds: [embed.toJSON()] };
         }
 
         embed.setColor(0xff5349)
             .setTitle(':x: Oops! Error D;')
             .setDescription(data.message);
 
-        return { embeds: [embed], ephemeral: true };
+        return { embeds: [embed.toJSON()], ephemeral: true };
     }
 }
