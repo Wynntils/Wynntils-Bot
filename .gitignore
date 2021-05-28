@@ -57,9 +57,11 @@ typings/
 # dotenv environment variables file
 .env
 
+# build folder
+dist/
+
 # next.js build output
 .next
 
-# Don't reveal our secrets!
-src/config.json
 package-lock.json
+.idea
