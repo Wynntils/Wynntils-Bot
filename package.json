@@ -1,6 +1,6 @@
 {
   "name": "wynntils-bot",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Discord bot for the Wynntils Server",
   "main": "dist/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
       "url": "https://github.com/DevScyu"
     }
   ],
-  "license": "MIT",
+  "license": "AGPL-3.0-only",
   "bugs": {
     "url": "https://github.com/Wynntils/Wynntils-Bot/issues"
   },
