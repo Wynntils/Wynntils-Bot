@@ -22,7 +22,7 @@ class StopIllegalModRepostsService extends CachedService<IllegalModRepostSite[]>
 
     async hasIllegalModRepostSite(message: string): Promise<IllegalModRepostSite | undefined> {
         const list = await this.get();
-        return list.find((site) => message.match(site.pattern));
+        return list.find((site) => message.match("https?://([^\\s\\.]+\\.)*" + site.domain.replace(".", "\\.") + "(/[^\\s]*)?"));
     }
 }
 
