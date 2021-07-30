@@ -17,7 +17,7 @@
     {
         "name": "capes",
         "title": "Wynntils Capes",
-        "value": "In order to upload a cape you'll need to setup a Wynntils account first. You can do so by either going in-game (with Wynntils installed) and using the command `/token`. This will give you a clickable token that will allow you to create your account. You can now log in at [Wynntils Accounts](https://account.wynntils.com/) with your Minecraft username as the  username.\n\n*Please note that capes and elytraas have to be uploaded as a 64x32 or 128x64 image.*"
+        "value": "In order to upload a cape you'll need to setup a Wynntils account first. You can do so by either going in-game (with Wynntils installed) and using the command `/token`. This will give you a clickable token that will allow you to create your account. You can now log in at [Wynntils Accounts](https://account.wynntils.com/) with your Minecraft username as the  username.\n\n*Please note that capes and elytraas have to be uploaded as a 64x32 or 128x64 image.*\n\n⚠***Applying capes may take a few hours or daays to update, we do not know what is causing this. We are sorry for the inconvenience.***"
     },
     {
         "name": "highlights",
