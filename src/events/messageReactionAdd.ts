@@ -30,9 +30,7 @@ export const action = async (reaction: MessageReaction, user: User): Promise<voi
     }
 
     if (guildMember) {
-        if (reaction.message.channel.id === Channel.Welcome) {
-            guildMember.roles.add(Role.Accepted, 'Reacted in #welcome').catch(consola.error);
-        } else if (reaction.message.channel.id === Channel.Self_Roles) {
+        if (reaction.message.channel.id === Channel.Self_Roles) {
             if (reaction.emoji.identifier === Emoji.ARROWS_COUNTERCLOCKWISE) {
                 guildMember.roles.add(Role.ModUpdates, 'Reacted in #self-roles').catch(consola.error);
             } else if (reaction.emoji.identifier === Emoji.AYAYA) {

@@ -18,10 +18,6 @@ export class SelfRoleCommand extends SlashCommand {
                     required: true,
                     choices: [
                         {
-                            name: 'Accepted',
-                            value: Role.Accepted
-                        },
-                        {
                             name: 'Mod Updated',
                             value: Role.ModUpdates
                         },
