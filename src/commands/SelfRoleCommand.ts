@@ -21,10 +21,6 @@ export class SelfRoleCommand extends SlashCommand {
                             name: 'Mod Updated',
                             value: Role.ModUpdates
                         },
-                        {
-                            name: 'Anime',
-                            value: Role.Anime
-                        },
                     ]
                 }
             ]

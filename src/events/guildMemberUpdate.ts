@@ -1,4 +1,5 @@
 import { GuildMember } from 'discord.js';
+import { Channel } from '../constants/Channel'
 import { DonatorRoles, Role } from '../constants/Role';
 import consola from 'consola';
 
@@ -13,7 +14,7 @@ export const action = (oldMember: GuildMember, newMember: GuildMember): void => 
         return; 
     } // Was already donator
 
-    let msg = `Hey ${newMember.user.username}, thanks for supporting the project! Please provide us your in-game username, and someone will apply your donor tag in-game within 12 hours.`;
+    let msg = `Hey ${newMember.user.username}, thanks for supporting the project! Please provide us your in-game username in <#${Channel.Donator_Lounge}>, and someone will apply your donor tag in-game within 12 hours.`;
 
     newMember.createDM().then((dm) => {
         dm.send(msg).catch(consola.error);

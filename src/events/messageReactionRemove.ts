@@ -33,8 +33,6 @@ export const action = async (reaction: MessageReaction, user: User): Promise<voi
         if (reaction.message.channel.id === Channel.Self_Roles) {
             if (reaction.emoji.identifier === Emoji.ARROWS_COUNTERCLOCKWISE) {
                 guildMember.roles.remove(Role.ModUpdates, 'Reacted in #self-roles').catch(consola.error);
-            } else if (reaction.emoji.identifier === Emoji.AYAYA) {
-                guildMember.roles.remove(Role.Anime, 'Reacted in #self-roles').catch(consola.error);
             }
         }
     } else {

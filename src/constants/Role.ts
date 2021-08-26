@@ -6,7 +6,6 @@ export enum Role {
     WynntilsTickets = '556081384096268288',
     BotRoles = '556627417171755028',
     DJ = '645113312597639168',
-    Anime = '458924325207015434',
     ModUpdates = '424996873091284992',
     ReactionRoles = '597206145467154432',
     Gamer = '538399903022579732',
@@ -50,4 +49,4 @@ export enum Role {
 
 export const Staff = [Role.Moderator, Role.LeadModerator, Role.WebDeveloper, Role.ModDeveloper, Role.SeniorDeveloper, Role.Owner];
 export const DonatorRoles = [Role.Level0Donator, Role.Level1Donator, Role.Level2Donator, Role.Level3Donator, Role.Level4Donator];
-export const FreeRoles = [Role.Anime, Role.ModUpdates];
+export const FreeRoles = [Role.ModUpdates];
