@@ -1,10 +1,12 @@
 {
   "name": "wynntils-bot",
-  "version": "1.0.0",
+  "version": "2.1.1",
   "description": "Discord bot for the Wynntils Server",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "npm i"
+    "start": "node -r dotenv/config ./dist/index.js",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
@@ -12,23 +14,44 @@
   },
   "keywords": [
     "Discord",
-    "Bot",
-    "Eris"
+    "Bot"
   ],
-  "author": "Scyu_",
-  "license": "MIT",
+  "contributors": [
+    {
+      "name": "HighCrit",
+      "email": "highcrit@wynntils.com",
+      "url": "https://github.com/HighCrit"
+    },
+    {
+      "name": "Scyu_",
+      "email": "Scyu_@wynntils.com",
+      "url": "https://github.com/DevScyu"
+    }
+  ],
+  "license": "AGPL-3.0-only",
   "bugs": {
     "url": "https://github.com/Wynntils/Wynntils-Bot/issues"
   },
   "homepage": "https://wynntils.com",
   "dependencies": {
-    "atob": "^2.1.2",
-    "chalk": "^2.4.1",
-    "dateformat": "^3.0.3",
-    "eris": "^0.8.6",
-    "eris-additions": "^1.2.5",
-    "eris-embed-builder": "^0.1.2",
-    "rethinkdbdash": "^2.3.31",
-    "util": "^0.11.1"
+    "bufferutil": "^4.0.3",
+    "consola": "^2.15.3",
+    "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0",
+    "erlpack": "github:discord/erlpack",
+    "node-fetch": "^2.6.1",
+    "require-all": "^3.0.0",
+    "slash-create": "^3.2.1",
+    "utf-8-validate": "^5.0.5",
+    "zlib-sync": "^0.1.7"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.0",
+    "@types/node-fetch": "^2.5.10",
+    "@types/require-all": "^3.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
+    "eslint": "^7.27.0",
+    "typescript": "^4.2.4"
   }
 }

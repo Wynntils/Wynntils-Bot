@@ -1,0 +1,47 @@
+[
+    {
+        "name": "sockets",
+        "title": "Viewing Friend & Party Members through the Map",
+        "value": "Yes, we're planning to implement it. Yes, it was already in CE for a short while. However, we decided to remove it as a better solution is possible (for both better performance and file size)."
+    },
+    {
+        "name": "guildcolor",
+        "title": "Custom Territory Colors",
+        "value": "There are a few requirements for getting a custom territory color.\n\n**Requirements**\n```\n- Your Guild must be at least level 30\n- The color you wish to use MUST be visible, so avoid black or really dark colors.\n- Be the Guild Owner\n```\nIf your guild meets the requirements, then you can request a custom color by going to <#495293364803993610> and creating a support ticket using the `/new` command. Please provide the color in HEX format e.g. #FFFFFF."
+    },
+    {
+        "name": "install",
+        "title": "Installing Wynntils",
+        "value": "Here are some guides to help you get started with using the mod.\n\n[Wynncraft Forums](https://forums.wynncraft.com/threads/197716/) or [Wynntils' Install Page](https://wynntils.com/install/).\n\nPlease make sure you're installing the recommended build of Forge 1.12.2 while setting up Wynntils."
+    },
+    {
+        "name": "capes",
+        "title": "Wynntils Capes",
+        "value": "In order to upload a cape you'll need to setup a Wynntils account first. You can do so by either going in-game (with Wynntils installed) and using the command `/token`. This will give you a clickable token that will allow you to create your account. You can now log in at [Wynntils Accounts](https://account.wynntils.com/) with your Minecraft username as the  username.\n\n*Please note that capes and elytraas have to be uploaded as a 64x32 or 128x64 image.*\n\n⚠ ***Applying capes may take a few hours or days to update, we do not know what is causing this. We are sorry for the inconvenience.***"
+    },
+    {
+        "name": "highlights",
+        "title": "Item & Player Highlighting",
+        "value": "Dropped item and player highlighting will never be implemented in Wynntils as Wynncraft does not allow for such functionality. If you're using any other mod that provides this feature, you do so at the risk of being banned from the server."
+    },
+    {
+        "name": "ban",
+        "title": "Is Wynntils Allowed on Wynncraft?",
+        "value": "You won't be banned for using Wynntils. Though, if you get somehow do get banned for using Wynntils, please create an appeal on the [Wynncraft Forums](https://forums.wynncraft.com/) and your appeal will be accepted."
+    },
+    {
+        "name": "support",
+        "title": "Crash, Bug, and Support",
+        "value": "To request for support, please ask the community if it is something that can be easily answered by our users, otherwise, please go to <#425293785338085387> and type `-new Support Request`. Upon doing so, a channel will be created for you to submit your inquiry.\n\nTo report a bug or a crash, please go to <#425293785338085387> and type `-new Bug Report` or `-new Crash Report`. Upon doing so, a channel will be created for you to report your bug or crash."
+    },
+    {
+        "name": "download",
+        "title": "Downloads",
+        "value": "You can download Wynntils at these following locations:\n**CurseForge** - [Download](https://minecraft.curseforge.com/projects/wynntils)\n**Wynntils (Stable)** - [Download](http://ci.wynntils.com/job/Wynntils/lastSuccessfulBuild/)\n**Wynntils (Cutting Edge)** - [Download](http://ci.wynntils.com/job/Wynntils-DEV/lastSuccessfulBuild/)"
+    },
+    {
+        "name": "streams",
+        "title": "Release Streams",
+        "value": "Wynntils has two different release streams:\n\n**Stable**: The mod will only update when a new version is released. Stable versions are generally more stable than Cutting Edge builds.\n\n**Cutting Edge (CE)**: The mod will update whenever a new build is released. Cutting Edge builds will include features that are not yet in Stable versions and are currently in development but may also be less stable than Stable versions.\n\nYou can change your release stream by going into the mod settings (default key: `P`) and look in the Core category."
+    }
+]
