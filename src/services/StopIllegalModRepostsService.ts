@@ -8,7 +8,7 @@ class StopIllegalModRepostsService extends CachedService<IllegalModRepostSite[]>
 
     cache: IllegalModRepostSite[] = [];
     cachedTime = 0;
-    expiresIn: number = 7 * 24 * 60 * 60 * 1000; // 7 days
+    expiresIn: number = 604800000; // 7 days
 
     async updateCache() {
         try {
