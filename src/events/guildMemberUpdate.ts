@@ -1,4 +1,4 @@
-import { GuildMember } from 'discord.js';
+import { DiscordAPIError, DMChannel, GuildMember, TextChannel } from 'discord.js';
 import { Channel } from '../constants/Channel'
 import { DonatorRoles, Role } from '../constants/Role';
 import consola from 'consola';
@@ -16,7 +16,11 @@ export const action = (oldMember: GuildMember, newMember: GuildMember): void => 
 
     let msg = `Hey ${newMember.user.username}, thanks for supporting the project! Please provide us your in-game username in <#${Channel.Donator_Lounge}>, and someone will apply your donor tag in-game within 12 hours.`;
 
-    newMember.createDM().then((dm) => {
+    newMember.createDM().then((dm: DMChannel) => {
         dm.send(msg).catch(consola.error);
-    }).catch(consola.error);
+    }).catch((error: DiscordAPIError) => {
+        let donatorLounge = newMember.guild.channels.cache.get(Channel.Donator_Lounge) as TextChannel;
+        donatorLounge.send(msg).catch(consola.error);
+        console.error(error);
+    });
 };

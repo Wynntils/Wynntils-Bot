@@ -26,7 +26,11 @@
       "name": "Scyu_",
       "email": "Scyu_@wynntils.com",
       "url": "https://github.com/DevScyu"
-    }
+    },
+    {
+      "name": "Chromium",
+      "email": "chromium@wynntils.com",
+      "url": "https://github.com/DevChromium"
   ],
   "license": "AGPL-3.0-only",
   "bugs": {
