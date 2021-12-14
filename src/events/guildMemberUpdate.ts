@@ -19,8 +19,7 @@ export const action = (oldMember: GuildMember, newMember: GuildMember): void => 
     newMember.createDM().then((dm: DMChannel) => {
         dm.send(msg).catch(consola.error);
     }).catch((error: DiscordAPIError) => {
-        let donatorLounge = newMember.guild.channels.cache.get(Channel.Donator_Lounge) as TextChannel;
+        let donatorLounge = newMember.guild.channels.resolve(Channel.Donator_Lounge) as TextChannel;
         donatorLounge.send(msg).catch(consola.error);
-        console.error(error);
     });
 };
