@@ -4,7 +4,7 @@ import { client } from '..'
 import consola from 'consola'
 import { logError } from '../utils/functions'
 
-interface WynntilsSlackCommandOptions extends SlashCommandOptions {
+interface WynntilsSlashCommandOptions extends SlashCommandOptions {
     helpText?: string;
     roles?: string[];
 }
@@ -20,7 +20,7 @@ export default class WynntilsBaseCommand extends Command {
 
     readonly log: (...args: any[]) => void
 
-    constructor(creator: SlashCreator, opts: WynntilsSlackCommandOptions) {
+    constructor(creator: SlashCreator, opts: WynntilsSlashCommandOptions) {
         if (!opts.guildIDs) opts.guildIDs = client.guilds.cache.map(g => g.id)
         super(creator, opts)
 
