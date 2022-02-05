@@ -1,11 +1,9 @@
-import consola from 'consola';
-import { MessageEmbed } from 'discord.js';
-import { CommandContext, CommandOptionType, MessageOptions, SlashCommand, SlashCreator } from 'slash-create';
-import { client } from '..';
-import { Guild } from '../constants/Guild';
-import { Role } from '../constants/Role';
+import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
+import { client } from '..'
+import { logError, styledEmbed } from '../utils/functions'
+import WynntilsBaseCommand from '../classes/WynntilsCommand'
 
-export class SelfRoleCommand extends SlashCommand {
+export class SelfRoleCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'selfrole',
@@ -18,74 +16,63 @@ export class SelfRoleCommand extends SlashCommand {
                     required: true,
                     choices: [
                         {
-                            name: 'Mod Updated',
-                            value: Role.ModUpdates
+                            name: 'Development Updates',
+                            value: 'Development Updates'
                         },
                     ]
                 }
             ]
-        });
+        })
 
-        this.filePath = __filename;
+        this.filePath = __filename
     }
 
     async run(ctx: CommandContext): Promise<MessageOptions> {
-        const embed = new MessageEmbed();
-        embed.setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
+        const embed = styledEmbed()
 
-        const guild = await client.guilds.fetch(Guild.Wynntils);
-        if (guild === undefined) {
-            consola.error('Unable to access the Wynntils Discord server.');
+        const guild = await client.guilds.fetch(ctx.guildID!)
+        const member = await guild.members.fetch(ctx.user.id)
 
-            embed.setColor(0xff5349)
-                .setTitle('Oops! Error D;')
-                .setDescription(':x: Unable to access the Wynntils Discord server.');
-
-            return { embeds: [embed.toJSON()], ephemeral: true };
-        }
-
-        const member = await guild.members.fetch(ctx.user.id);
-        if (member === undefined) {
+        const role = guild.roles.cache.find(r => r.name === ctx.options.role.toString())
+        if (!role) {
             embed.setColor(0xff5349)
                 .setTitle(':x: Oops! Error D;')
-                .setDescription('You are not a member of the Wynntils Discord server. Here is an invite: https://discord.gg/SZuNem8.');
+                .setDescription(`Role \`${ctx.options.role}\` not found in server.`)
 
-            return { embeds: [embed.toJSON()], ephemeral: true };
+            return { embeds: [embed.toJSON()], ephemeral: true }
         }
 
-        const role = ctx.options.role.toString();
-        if (!member.roles.cache.has(role)) {
+        if (!member.roles.cache.has(role.id)) {
             try {
-                await member.roles.add(role);
+                await member.roles.add(role)
+
+                embed.setColor(0x72ed9e)
+                    .setTitle('Success!')
+                    .setDescription('Succesfully given you the role.')
             } catch (err) {
-                consola.error(err);
+                logError(err)
                 embed.setColor(0xff5349)
                     .setTitle(':x: Oops! Error D;')
-                    .setDescription('Ran into an error while applying the role to you.');
+                    .setDescription('Ran into an error while applying the role to you.')
 
-                return { embeds: [embed.toJSON()], ephemeral: true };
+                return { embeds: [embed.toJSON()], ephemeral: true }
             }
-            embed.setColor(0x72ed9e)
-                .setTitle('Success!')
-                .setDescription('Succesfully given you the role.');
 
-            return { embeds: [embed.toJSON()], ephemeral: true };
+        } else {
+            try {
+                await member.roles.remove(role)
+
+                embed.setColor(0x72ed9e)
+                    .setTitle('Success!')
+                    .setDescription('Succesfully removed the role from you.')
+            } catch (err) {
+                logError(err)
+                embed.setColor(0xff5349)
+                    .setTitle(':x: Oops! Error D;')
+                    .setDescription('Ran into an error while removing the role from you.')
+            }
         }
-        
-        try {
-            await member.roles.remove(role);
-        } catch (err) {
-            consola.error(err);
-            embed.setColor(0xff5349)
-                .setTitle(':x: Oops! Error D;')
-                .setDescription('Ran into an error while removing the role from you.');
 
-            return { embeds: [embed.toJSON()], ephemeral: true };
-        }
-        embed.setColor(0x72ed9e)
-            .setTitle('Success!')
-            .setDescription('Succesfully removed the role from you.');
-
-        return { embeds: [embed.toJSON()], ephemeral: true };
+        return { embeds: [embed.toJSON()], ephemeral: true }
     }
 }

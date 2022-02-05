@@ -7,4 +7,4 @@ export enum Channel {
     Donator_Lounge = '541705572819664916'
 }
 
-export const BotChannels = [Channel.Bot_Commands, Channel.Bot_Playground];
+export const BotChannels = [Channel.Bot_Commands, Channel.Bot_Playground]

@@ -3,4 +3,4 @@ interface FaqEntry {
     value: string;
 }
 
-export { FaqEntry };
+export { FaqEntry }

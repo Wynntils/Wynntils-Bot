@@ -1,53 +1,57 @@
-import consola from 'consola';
-import requireAll from 'require-all';
-import { Client } from 'discord.js';
-import { SlashCreator, GatewayServer } from 'slash-create';
-import { faqService } from './services/FaqService';
-import { configService } from './services/ConfigService';
+import consola from 'consola'
+import requireAll from 'require-all'
+import { Client, Intents } from 'discord.js'
+import { faqService } from './services/FaqService'
+import { configService } from './services/ConfigService'
+import { logError } from './utils/functions'
+import { GatewayServer, SlashCreator } from 'slash-create'
+import { ConfigCommand } from './commands/ConfigCommand'
+import { FaqCommand } from './commands/FaqCommand'
+import { InfoCommand } from './commands/InfoCommand'
+import { PingCommand } from './commands/PingCommand'
+import { SelfRoleCommand } from './commands/SelfRoleCommand'
+import { HelpCommand } from './commands/HelpCommand'
 
 const client = new Client({
-    presence: { activity: { name: 'Here to help!' }, status: 'online' },
+    presence: { activities: [{ name: 'Here to help!' }], status: 'online' },
     partials: ['MESSAGE', 'REACTION'],
-    ws: {
-        intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS', 'GUILD_MEMBERS']
-    } 
-});
-const creator = new SlashCreator({
-    applicationID: process.env.APPLICATION_ID ?? '',
-    publicKey: process.env.PUBLIC_KEY ?? '',
-    token: process.env.BOT_TOKEN ?? ''
-});
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS, Intents.FLAGS.GUILD_MEMBERS]
+})
 
-async function initialize() {
-    await faqService.init();
-    await configService.init();
+/* Register events */
+const events = requireAll({
+    dirname: __dirname + '/events'
+})
 
-    //@ts-expect-error INTERACTION_CREATE is not yet an event for this version of discord.js
+Object.keys(events).forEach((eventName) => {
+    const action = events[eventName].action
+    consola.debug(`Registering event: ${eventName}`)
+    client.on(eventName, action)
+})
+
+client.login(process.env.BOT_TOKEN).then(async () => {
+    await faqService.init()
+    await configService.init()
+
+    process.on('unhandledRejection', (error: Error, promise: Promise<any>) => logError(error))
+    process.on('uncaughtException', (error: Error, origin: string) => logError(error))
+
+    const creator = new SlashCreator({
+        applicationID: process.env.APPLICATION_ID ?? '',
+        publicKey: process.env.PUBLIC_KEY ?? '',
+        token: process.env.BOT_TOKEN ?? ''
+    })
+
     creator.withServer(new GatewayServer((handler) => client.ws.on('INTERACTION_CREATE', handler)))
-        .registerCommandsIn(__dirname + '/commands')
-        .syncCommands();
+        .registerCommands([ConfigCommand, FaqCommand, InfoCommand, PingCommand, SelfRoleCommand, HelpCommand])
+        .syncCommands()
 
-    creator.on('debug', consola.debug);
-    creator.on('warn', consola.warn);
-    creator.on('error', consola.error);
-    creator.on('synced', () => consola.success('Commands synced!'));
-    creator.on('commandRegister', (command) => consola.info(`Registered command ${command.commandName}`));
-    creator.on('commandError', (command, err) => consola.error(`Command: ${command.commandName}`, err));
+    creator.on('debug', consola.debug)
+    creator.on('warn', consola.warn)
+    creator.on('error', logError)
+    creator.on('synced', () => consola.success('Commands synced!'))
+    creator.on('commandRegister', (command) => consola.info(`Registered command ${command.commandName}`))
+    creator.on('commandError', (command, err) => logError(err))
+}).catch(consola.error)
 
-    /* Register events */
-    const events = requireAll({
-        dirname: __dirname + '/events'
-    });
-
-    Object.keys(events).forEach((eventName) => {
-        const action = events[eventName].action;
-        consola.info(`Registering event: ${eventName}`);
-        client.on(eventName, action);
-    });
-
-    client.login(process.env.BOT_TOKEN);
-}
-
-initialize();
-
-export { client, creator };
+export { client }
