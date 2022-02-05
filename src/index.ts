@@ -10,6 +10,7 @@ import { FaqCommand } from './commands/FaqCommand'
 import { InfoCommand } from './commands/InfoCommand'
 import { PingCommand } from './commands/PingCommand'
 import { SelfRoleCommand } from './commands/SelfRoleCommand'
+import { HelpCommand } from './commands/HelpCommand'
 
 const client = new Client({
     presence: { activities: [{ name: 'Here to help!' }], status: 'online' },
@@ -42,7 +43,7 @@ client.login(process.env.BOT_TOKEN).then(async () => {
     })
 
     creator.withServer(new GatewayServer((handler) => client.ws.on('INTERACTION_CREATE', handler)))
-        .registerCommands([ConfigCommand, FaqCommand, InfoCommand, PingCommand, SelfRoleCommand])
+        .registerCommands([ConfigCommand, FaqCommand, InfoCommand, PingCommand, SelfRoleCommand, HelpCommand])
         .syncCommands()
 
     creator.on('debug', consola.debug)

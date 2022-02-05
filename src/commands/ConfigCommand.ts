@@ -1,14 +1,16 @@
 import fetch from 'node-fetch'
-import { CommandContext, CommandOptionType, MessageOptions, SlashCommand, SlashCreator } from 'slash-create'
+import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
 import { Staff } from '../constants/Role'
 import { configService } from '../services/ConfigService'
 import { logError, styledEmbed } from '../utils/functions'
+import WynntilsBaseCommand from '../classes/WynntilsCommand'
 
-export class ConfigCommand extends SlashCommand {
+export class ConfigCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'config',
             description: 'Retrieves configs for a given user',
+            roles: Staff,
             options: [
                 {
                     name: 'user',
@@ -32,14 +34,6 @@ export class ConfigCommand extends SlashCommand {
         })
 
         this.filePath = __filename
-    }
-
-    hasPermission(ctx: CommandContext): boolean | string {
-        const { member } = ctx
-        if (!member)
-            return 'This command doesn\'t work in DMs'
-
-        return Staff.some(r => member.roles.includes(r))
     }
 
     async run(ctx: CommandContext): Promise<MessageOptions> {

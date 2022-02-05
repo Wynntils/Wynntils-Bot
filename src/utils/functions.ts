@@ -1,5 +1,6 @@
 import { MessageEmbed, TextChannel } from 'discord.js'
 import { client } from '../index'
+import consola from 'consola'
 
 export const styledEmbed: () => MessageEmbed = () => {
     return new MessageEmbed()
@@ -8,7 +9,7 @@ export const styledEmbed: () => MessageEmbed = () => {
 }
 
 export const logError: (error: Error) => void = async (error: Error) => {
-    logError(error)
+    consola.error(error)
 
     for (const guild of client.guilds.cache) {
         const channel = guild[1].channels.cache.find(c => c.name === 'console-log') as TextChannel
@@ -18,7 +19,7 @@ export const logError: (error: Error) => void = async (error: Error) => {
 
         const embed = styledEmbed().setColor('RED').setTitle('An error occurred with the bot').setDescription(error.message + '```' + error.stack + '```')
 
-        await channel.send({ embeds: [embed] })
+        await channel.send({ embeds: [embed] }).catch(consola.error)
     }
 
 }

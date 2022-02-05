@@ -1,6 +1,7 @@
-import { MessageOptions, SlashCommand, SlashCreator } from 'slash-create'
+import { MessageOptions, SlashCreator } from 'slash-create'
+import WynntilsBaseCommand from '../classes/WynntilsCommand'
 
-export class PingCommand extends SlashCommand {
+export class PingCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'ping',

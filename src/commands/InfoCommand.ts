@@ -1,14 +1,16 @@
 import fetch from 'node-fetch'
-import { CommandContext, CommandOptionType, MessageOptions, SlashCommand, SlashCreator } from 'slash-create'
+import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
 import { Staff } from '../constants/Role'
 import { UserInfo } from '../interfaces/api/athena/UserInfo'
 import { logError, styledEmbed } from '../utils/functions'
+import WynntilsBaseCommand from '../classes/WynntilsCommand'
 
-export class InfoCommand extends SlashCommand {
+export class InfoCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'info',
             description: 'Returns user info',
+            roles: Staff,
             options: [
                 {
                     name: 'user',
@@ -20,14 +22,6 @@ export class InfoCommand extends SlashCommand {
         })
 
         this.filePath = __filename
-    }
-
-    hasPermission(ctx: CommandContext): boolean | string {
-        const { member } = ctx
-        if (!member)
-            return 'This command doesn\'t work in DMs'
-
-        return Staff.some(r => member.roles.includes(r))
     }
 
     async run(ctx: CommandContext): Promise<MessageOptions> {
@@ -79,17 +73,17 @@ export class InfoCommand extends SlashCommand {
                 },
                 {
                     name: 'Cape',
-                    value: !userInfo.cosmetics.isElytra ? 'true' : 'false',
+                    value: !userInfo.cosmetics.isElytra ? 'Enabled' : 'Disabled',
                     inline: true
                 },
                 {
                     name: 'Ears',
-                    value: userInfo.cosmetics.parts.ears ? 'true' : 'false',
+                    value: userInfo.cosmetics.parts.ears ? 'Enabled' : 'Disabled',
                     inline: true
                 },
                 {
                     name: 'Elytra',
-                    value: userInfo.cosmetics.isElytra ? 'true' : 'false',
+                    value: userInfo.cosmetics.isElytra ? 'Enabled' : 'Disabled',
                     inline: true
                 }
             )

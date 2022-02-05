@@ -1,9 +1,10 @@
-import { CommandContext, CommandOptionType, MessageOptions, SlashCommand, SlashCreator } from 'slash-create'
+import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
 import { client } from '..'
 import { faqService } from '../services/FaqService'
 import { styledEmbed } from '../utils/functions'
+import WynntilsBaseCommand from '../classes/WynntilsCommand'
 
-export class FaqCommand extends SlashCommand {
+export class FaqCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
             name: 'faq',
