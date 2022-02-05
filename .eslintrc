@@ -20,13 +20,18 @@
                 "SwitchCase": 1
             }
         ],
+        "quote-props": [
+            "error",
+            "as-needed",
+            { "keywords": false }
+        ],
         "quotes": [
             "error",
             "single"
         ],
         "semi": [
             "error",
-            "always"
+            "never"
         ],
         "react/prop-types": 0,
         "react/no-unescaped-entities": 0,
@@ -64,7 +69,7 @@
             }
         ],
         "space-before-blocks":"error",
-        "curly": ["error", "all"],
+        "curly": ["error", "multi-or-nest"],
         "brace-style": 2
     }
 }

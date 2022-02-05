@@ -41,12 +41,12 @@
   "dependencies": {
     "bufferutil": "^4.0.3",
     "consola": "^2.15.3",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.6.0",
     "dotenv": "^10.0.0",
     "erlpack": "github:discord/erlpack",
     "node-fetch": "^2.6.1",
     "require-all": "^3.0.0",
-    "slash-create": "^3.2.1",
+    "slash-create": "^5.1.0",
     "utf-8-validate": "^5.0.5",
     "zlib-sync": "^0.1.7"
   },

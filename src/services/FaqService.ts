@@ -1,5 +1,5 @@
-import { FaqEntry } from '../interfaces/api/FaqEntry';
-import { CachedService } from '../interfaces/CachedService';
+import { FaqEntry } from '../interfaces/api/FaqEntry'
+import { CachedService } from '../interfaces/CachedService'
 
 class FaqService extends CachedService<Map<string, FaqEntry>> {
     cache = new Map;
@@ -8,17 +8,17 @@ class FaqService extends CachedService<Map<string, FaqEntry>> {
 
     async updateCache(): Promise<void> {
         // TODO: Convert to api
-        const data = require('../../assets/faq.json');
-        const newMap = new Map;
+        const data = require('../../assets/faq.json')
+        const newMap = new Map
 
         Object.keys(data).forEach((key) => {
-            newMap.set(data[key].name, { title: data[key].title, value: data[key].value });
-        });
+            newMap.set(data[key].name, { title: data[key].title, value: data[key].value })
+        })
 
-        this.cache = newMap;
+        this.cache = newMap
     }
 }
 
-const faqService = new FaqService();
+const faqService = new FaqService()
 
-export { faqService };
+export { faqService }

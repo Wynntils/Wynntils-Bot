@@ -1,6 +1,6 @@
-import consola from 'consola';
-import fetch from 'node-fetch';
-import { CachedService } from '../interfaces/CachedService';
+import fetch from 'node-fetch'
+import { CachedService } from '../interfaces/CachedService'
+import { logError } from '../utils/functions'
 
 class ConfigService extends CachedService<string[]> {
     url = 'https://athena.wynntils.com/api/getUserConfig/' + process.env.ATHENA_API_KEY;
@@ -17,21 +17,21 @@ class ConfigService extends CachedService<string[]> {
                     user: 'HeyZeer0',
                     configName: 'list'
                 })
-            });
-            const data = await response.json();
+            })
+            const data = await response.json()
 
             if (response.ok) {
-                this.cache = data.result;
-                this.cachedTime = Date.now();
-            } else {
-                consola.error(data.message);
-            }
+                this.cache = data.result
+                this.cachedTime = Date.now()
+            } else
+                logError(data.message)
+
         } catch (err) {
-            consola.error(err);
+            logError(err)
         }
     }
 }
 
-const configService = new ConfigService();
+const configService = new ConfigService()
 
-export { configService };
+export { configService }

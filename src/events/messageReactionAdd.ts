@@ -1,41 +1,41 @@
-import consola from 'consola';
-import { MessageReaction, User } from 'discord.js';
-import { client } from '..';
-import { Channel } from '../constants/Channel';
-import { Emoji, watchedEmotes } from '../constants/Emoji';
-import { Guild } from '../constants/Guild';
-import { Role } from '../constants/Role';
+import { MessageReaction, User } from 'discord.js'
+import { client } from '..'
+import { Channel } from '../constants/Channel'
+import { Emoji, watchedEmotes } from '../constants/Emoji'
+import { Guild } from '../constants/Guild'
+import { Role } from '../constants/Role'
+import { logError } from '../utils/functions'
 
-export const action = async (reaction: MessageReaction, user: User): Promise<void> => { 
-    if (reaction.partial) {
-        await reaction.fetch().catch(consola.error);
-    }
+export const action = async (reaction: MessageReaction, user: User): Promise<void> => {
+    if (reaction.partial)
+        await reaction.fetch().catch(logError)
+
     if (!watchedEmotes.includes(reaction.emoji.identifier)) {
         // Prevent unneccesary fetching of data.
-        return;
+        return
     }
-    if (reaction.message.partial) {
-        await reaction.message.fetch().catch(consola.error);
-    }
-    if (user.id === undefined) {
-        await user.fetch().catch(consola.error);
-    }
+    if (reaction.message.partial)
+        await reaction.message.fetch().catch(logError)
 
-    let guildMember;
+    if (user.id === undefined)
+        await user.fetch().catch(logError)
+
+
+    let guildMember
     try {
-        const guild = await client.guilds.fetch(Guild.Wynntils);
-        guildMember = await guild.members.fetch(user.id);
+        const guild = await client.guilds.fetch(Guild.Wynntils)
+        guildMember = await guild.members.fetch(user.id)
     } catch (err) {
-        consola.error(err);
+        logError(err)
     }
 
     if (guildMember) {
         if (reaction.message.channel.id === Channel.Self_Roles) {
-            if (reaction.emoji.identifier === Emoji.ARROWS_COUNTERCLOCKWISE) {
-                guildMember.roles.add(Role.ModUpdates, 'Reacted in #self-roles').catch(consola.error);
-            }
+            if (reaction.emoji.identifier === Emoji.ARROWS_COUNTERCLOCKWISE)
+                guildMember.roles.add(Role.ModUpdates, 'Reacted in #self-roles').catch(logError)
+
         }
-    } else {
-        consola.error(`Unable to find user (${user.id}) in Wynntils Discord server.`);
-    }
-};
+    } else
+        logError(Error(`Unable to find user (${user.id}) in Wynntils Discord server.`))
+
+}

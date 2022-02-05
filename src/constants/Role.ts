@@ -47,6 +47,6 @@ export enum Role {
     Scyu = '537671536094740481'
 }
 
-export const Staff = [Role.Moderator, Role.LeadModerator, Role.WebDeveloper, Role.ModDeveloper, Role.SeniorDeveloper, Role.Owner];
-export const DonatorRoles = [Role.Level0Donator, Role.Level1Donator, Role.Level2Donator, Role.Level3Donator, Role.Level4Donator];
-export const FreeRoles = [Role.ModUpdates];
+export const Staff = [Role.Moderator, Role.LeadModerator, Role.WebDeveloper, Role.ModDeveloper, Role.SeniorDeveloper, Role.Owner]
+export const DonatorRoles = [Role.Level0Donator, Role.Level1Donator, Role.Level2Donator, Role.Level3Donator, Role.Level4Donator]
+export const FreeRoles = [Role.ModUpdates]

@@ -1,10 +1,8 @@
-import consola from 'consola';
-import { MessageEmbed } from 'discord.js';
-import fetch from 'node-fetch';
-import { CommandContext, CommandOptionType, MessageOptions, SlashCommand, SlashCreator } from 'slash-create';
-import { client } from '..';
-import { Staff } from '../constants/Role';
-import { UserInfo } from '../interfaces/api/athena/UserInfo';
+import fetch from 'node-fetch'
+import { CommandContext, CommandOptionType, MessageOptions, SlashCommand, SlashCreator } from 'slash-create'
+import { Staff } from '../constants/Role'
+import { UserInfo } from '../interfaces/api/athena/UserInfo'
+import { logError, styledEmbed } from '../utils/functions'
 
 export class InfoCommand extends SlashCommand {
     constructor(creator: SlashCreator) {
@@ -19,46 +17,45 @@ export class InfoCommand extends SlashCommand {
                     required: true
                 }
             ]
-        });
+        })
 
-        this.filePath = __filename;
+        this.filePath = __filename
     }
 
     hasPermission(ctx: CommandContext): boolean | string {
-        const { member } = ctx;
-        if (!member) {
-            return 'This command doesn\'t work in DMs';
-        }
-        return Staff.some(r => member.roles.includes(r));
+        const { member } = ctx
+        if (!member)
+            return 'This command doesn\'t work in DMs'
+
+        return Staff.some(r => member.roles.includes(r))
     }
 
-    async run(ctx: CommandContext): Promise<MessageOptions> {  
-        const embed = new MessageEmbed();
-        embed.setFooter(client.user?.username, client.user?.avatarURL() ?? client.user?.defaultAvatarURL);
+    async run(ctx: CommandContext): Promise<MessageOptions> {
+        const embed = styledEmbed()
 
-        let data;
-        let response;
-        
+        let data
+        let response
+
         try {
             response = await fetch('https://athena.wynntils.com/api/getUser/' + process.env.ATHENA_API_KEY, {
                 method: 'POST',
                 body: JSON.stringify({ user: ctx.options.user.toString() })
-            });
-            data = await response.json();
+            })
+            data = await response.json()
         } catch (err) {
-            consola.error(err);
+            logError(err)
             embed.setColor(0xff5349)
                 .setTitle(':x: Oops! Error D;')
-                .setDescription('Something went wrong when fetching the user info.');
+                .setDescription('Something went wrong when fetching the user info.')
 
-            return { embeds: [embed.toJSON()], ephemeral: true };
+            return { embeds: [embed.toJSON()], ephemeral: true }
         }
 
         if (response.ok) {
-            const userInfo = data.result as UserInfo;
-            
-            embed.setAuthor(userInfo.username, `https://minotar.net/helm/${userInfo.uuid}/100.png`);
-            embed.setColor(0x72ed9e);
+            const userInfo = data.result as UserInfo
+
+            embed.setAuthor(userInfo.username, `https://minotar.net/helm/${userInfo.uuid}/100.png`)
+            embed.setColor(0x72ed9e)
             embed.addFields(
                 {
                     name: 'UUID',
@@ -82,28 +79,28 @@ export class InfoCommand extends SlashCommand {
                 },
                 {
                     name: 'Cape',
-                    value: !userInfo.cosmetics.isElytra,
+                    value: !userInfo.cosmetics.isElytra ? 'true' : 'false',
                     inline: true
                 },
                 {
                     name: 'Ears',
-                    value: userInfo.cosmetics.parts.ears,
+                    value: userInfo.cosmetics.parts.ears ? 'true' : 'false',
                     inline: true
                 },
                 {
                     name: 'Elytra',
-                    value: userInfo.cosmetics.isElytra,
+                    value: userInfo.cosmetics.isElytra ? 'true' : 'false',
                     inline: true
                 }
-            );
-            
-            return { embeds: [embed.toJSON()] };
+            )
+
+            return { embeds: [embed.toJSON()] }
         }
 
         embed.setColor(0xff5349)
             .setTitle(':x: Oops! Error D;')
-            .setDescription(data.message);
+            .setDescription(data.message)
 
-        return { embeds: [embed.toJSON()], ephemeral: true };
+        return { embeds: [embed.toJSON()], ephemeral: true }
     }
 }
