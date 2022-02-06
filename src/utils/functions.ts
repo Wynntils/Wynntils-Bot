@@ -1,4 +1,4 @@
-import { MessageEmbed, TextChannel } from 'discord.js'
+import { GuildBasedChannel, MessageEmbed, TextChannel } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
 
@@ -12,7 +12,7 @@ export const logError: (error: Error) => void = async (error: Error) => {
     consola.error(error)
 
     for (const guild of client.guilds.cache) {
-        const channel = guild[1].channels.cache.find(c => c.name === 'console-log') as TextChannel
+        const channel = guild[1].channels.cache.find((c: GuildBasedChannel) => c.name === 'console-log') as TextChannel
 
         if (!channel)
             continue
