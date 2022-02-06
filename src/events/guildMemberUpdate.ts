@@ -14,7 +14,7 @@ export const action = (oldMember: GuildMember, newMember: GuildMember): void => 
         return
     // Was already donator
 
-    const msg = `Hey ${newMember.user.username}, thanks for supporting the project! Please provide us your in-game username in <#${Channel.Donator_Lounge}>, and someone will apply your donor tag in-game within 12 hours.`
+    const msg = `Hey <@${newMember.user.id}>, thanks for supporting the project! Please provide us your in-game username in <#${Channel.Donator_Lounge}>, and someone will apply your donor tag in-game within 12 hours.`
 
     newMember.createDM().then((dm: DMChannel) => {
         dm.send(msg).catch((error: DiscordAPIError) => {
