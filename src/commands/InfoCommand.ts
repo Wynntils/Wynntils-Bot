@@ -36,7 +36,7 @@ export class InfoCommand extends WynntilsBaseCommand {
                 body: JSON.stringify({ user: ctx.options.user.toString() })
             })
             data = await response.json()
-        } catch (err) {
+        } catch (err: any) {
             logError(err)
             embed.setColor(0xff5349)
                 .setTitle(':x: Oops! Error D;')
@@ -48,14 +48,20 @@ export class InfoCommand extends WynntilsBaseCommand {
         if (response.ok) {
             const userInfo = data.result as UserInfo
 
-            embed.setAuthor(userInfo.username, `https://minotar.net/helm/${userInfo.uuid}/100.png`)
+            const cosmeticInfo = `\`\`\`
+Cape:   ${!userInfo.cosmetics.isElytra ? '🟩 Enabled' : '🟥 Disabled'}
+Elytra: ${userInfo.cosmetics.isElytra ? '🟩 Enabled' : '🟥 Disabled'}
+Ears:   ${userInfo.cosmetics.parts.ears ? '🟩 Enabled' : '🟥 Disabled'}\`\`\`
+            `
+
+            const timestamp = Math.max(...Object.keys(userInfo.versions.used).map(k => userInfo.versions.used[k]))
+            const lastActive = Math.floor(timestamp / 1000)
+
+            embed.setTitle(`${userInfo.username}'s Info`)
             embed.setColor(0x72ed9e)
+            embed.setThumbnail(`https://minotar.net/helm/${userInfo.uuid}/100.png`)
+            embed.setDescription(userInfo.uuid)
             embed.addFields(
-                {
-                    name: 'UUID',
-                    value: userInfo.uuid,
-                    inline: true
-                },
                 {
                     name: 'Account Type',
                     value: userInfo.accountType,
@@ -68,24 +74,19 @@ export class InfoCommand extends WynntilsBaseCommand {
                 },
                 {
                     name: 'Last Online',
-                    value: (new Date(Math.max(...Object.keys(userInfo.versions.used).map(k => userInfo.versions.used[k])))).toDateString(),
+                    value: `<t:${lastActive}:R>`,
                     inline: true
                 },
                 {
-                    name: 'Cape',
-                    value: !userInfo.cosmetics.isElytra ? 'Enabled' : 'Disabled',
-                    inline: true
+                    name: 'Discord',
+                    value: userInfo.discord.id ? `<@${userInfo.discord.id}>` : 'Not linked',
+                    inline: false
                 },
                 {
-                    name: 'Ears',
-                    value: userInfo.cosmetics.parts.ears ? 'Enabled' : 'Disabled',
-                    inline: true
+                    name: 'Cosmetics',
+                    value: cosmeticInfo,
+                    inline: false
                 },
-                {
-                    name: 'Elytra',
-                    value: userInfo.cosmetics.isElytra ? 'Enabled' : 'Disabled',
-                    inline: true
-                }
             )
 
             return { embeds: [embed.toJSON()] }
