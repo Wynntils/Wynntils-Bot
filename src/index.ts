@@ -5,12 +5,8 @@ import { faqService } from './services/FaqService'
 import { configService } from './services/ConfigService'
 import { logError } from './utils/functions'
 import { GatewayServer, SlashCreator } from 'slash-create'
-import { ConfigCommand } from './commands/ConfigCommand'
-import { FaqCommand } from './commands/FaqCommand'
-import { InfoCommand } from './commands/InfoCommand'
-import { PingCommand } from './commands/PingCommand'
-import { SelfRoleCommand } from './commands/SelfRoleCommand'
-import { HelpCommand } from './commands/HelpCommand'
+import path from 'path'
+import { HelpCommand } from './classes/HelpCommand'
 
 const client = new Client({
     presence: { activities: [{ name: 'Here to help!' }], status: 'online' },
@@ -20,7 +16,7 @@ const client = new Client({
 
 /* Register events */
 const events = requireAll({
-    dirname: __dirname + '/events'
+    dirname: path.join(__dirname + 'events')
 })
 
 Object.keys(events).forEach((eventName) => {
@@ -42,9 +38,18 @@ client.login(process.env.BOT_TOKEN).then(async () => {
         token: process.env.BOT_TOKEN ?? ''
     })
 
+    const commands = requireAll({
+        dirname: path.join(__dirname, 'commands')
+    })
+
     creator.withServer(new GatewayServer((handler) => client.ws.on('INTERACTION_CREATE', handler)))
-        .registerCommands([ConfigCommand, FaqCommand, InfoCommand, PingCommand, SelfRoleCommand, HelpCommand])
-        .syncCommands()
+
+    Object.keys(commands).forEach((command) => {
+        const className = Object.keys(commands[command])[0]
+        creator.registerCommand(commands[command][className])
+    })
+    creator.registerCommand(HelpCommand)
+    creator.syncCommands()
 
     creator.on('debug', consola.debug)
     creator.on('warn', consola.warn)
