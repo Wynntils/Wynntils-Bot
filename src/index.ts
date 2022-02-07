@@ -16,7 +16,7 @@ const client = new Client({
 
 /* Register events */
 const events = requireAll({
-    dirname: path.join(__dirname + 'events')
+    dirname: path.join(__dirname, 'events')
 })
 
 Object.keys(events).forEach((eventName) => {
