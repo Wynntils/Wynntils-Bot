@@ -4,7 +4,7 @@ import { Emoji } from '../constants/Emoji'
 import { stopIllegalModRepostsService } from '../services/StopIllegalModRepostsService'
 import { logError, styledEmbed } from '../utils/functions'
 
-export const action = (message: Message): void => {
+export const action = async (message: Message): Promise<void> => {
     if (message.partial)
         return
 

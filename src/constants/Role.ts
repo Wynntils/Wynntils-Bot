@@ -37,8 +37,6 @@ export enum Role {
     TrialModerator = '537419151262875650',
     Moderator = '394189812816412692',
     Auttaja = '556660511404458014',
-    LeadModerator = '538125811308560394',
-    WebDeveloper = '606804889456214029',
     ModDeveloper = '439546118964117534',
     SeniorDeveloper = '439545766000853002',
     WynntilsRoles = '568135224295292929',
