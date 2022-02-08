@@ -10,12 +10,12 @@ export const action = async (thread: ThreadChannel): Promise<void> => {
     const embed = styledEmbed()
       .setColor(0x72ed9e)
       .setTitle("Thread Notification")
-      .setDescription("An thread has been created.")
+      .setDescription("A thread has been created.")
       .addFields([
         {
           name: "Name",
           value: thread.name,
-          inline: true,
+          inline: false,
         },
         {
           name: "Owner",
@@ -23,7 +23,7 @@ export const action = async (thread: ThreadChannel): Promise<void> => {
           inline: true,
         },
         {
-          name: "Created at",
+          name: "Creation Date",
           value: `<t:${Math.floor(thread.createdTimestamp / 1000)}:R>`,
           inline: true,
         },

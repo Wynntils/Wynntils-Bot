@@ -13,7 +13,7 @@ export const action = async (thread: ThreadChannel) => {
         {
           name: "Name",
           value: thread.name,
-          inline: true,
+          inline: false,
         },
         {
           name: "Owner",
