@@ -1,5 +1,5 @@
-import { Command, CommandContext, SlashCommandOptions, SlashCreator } from 'slash-create'
-import { Client } from 'discord.js'
+import { Command, CommandContext, MessageOptions, SlashCommandOptions, SlashCreator } from 'slash-create'
+import { Client, TextChannel } from 'discord.js'
 import { client } from '..'
 import consola from 'consola'
 
@@ -13,6 +13,8 @@ export default class WynntilsBaseCommand extends Command {
     readonly roles: string[]
 
     private readonly _client: Client
+    protected opts: any
+    protected channel: TextChannel | undefined
     public get client(): Client {
         return this._client
     }
@@ -28,6 +30,26 @@ export default class WynntilsBaseCommand extends Command {
 
         this._client = client
         this.log = consola.log
+    }
+
+    async run(ctx: CommandContext): Promise<MessageOptions | void> {
+        // context.subcommands is sometimes empty even if subcommand used
+        // use first option instead
+        const key = Object.keys(ctx?.options)?.[0] ?? 'default'
+
+        // Setup some helpers
+        this.opts = ctx.options[key]
+        if (ctx.guildID !== undefined)
+            this.channel = <TextChannel>(await this.client.guilds.fetch(ctx.guildID)).channels.cache.get(ctx.channelID)
+        if (typeof this[key as keyof this] === 'function') { // @ts-ignore
+            return this[key](ctx)
+        }
+
+        if (typeof this['default' as keyof this] === 'function') { // @ts-ignore
+            return this['default'](ctx)
+        }
+
+        return { content: 'Command not found', ephemeral: true }
     }
 
     hasPermission(ctx: CommandContext): boolean | string {
