@@ -1,9 +1,7 @@
-import { CommandContext, CommandOptionType, SlashCreator, MessageOptions } from "slash-create";
-import WynntilsBaseCommand from "../classes/WynntilsCommand";
-import { Staff } from "../constants/Role";
-import { Strike } from "../models/Strike";
-import { styledEmbed } from "../utils/functions";
-import Database from "../utils/managers/Database";
+import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
+import WynntilsBaseCommand from '../classes/WynntilsCommand'
+import { Staff } from '../constants/Role'
+import { styledEmbed } from '../utils/functions'
 
 export class StrikeCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
@@ -49,7 +47,7 @@ export class StrikeCommand extends WynntilsBaseCommand {
 
     async give(ctx: CommandContext): Promise<MessageOptions> {
         // const strike = new Strike();
-        
+
         // strike.user = ctx.options.user
         // strike.moderator = ctx.member?.id
         // strike.reason = ctx.options.reason
@@ -57,9 +55,9 @@ export class StrikeCommand extends WynntilsBaseCommand {
         // await strike.save();
 
         const logEmbed = styledEmbed()
-            .setTitle("")
+            .setTitle('')
 
-        return { content: `Given a strike to <@${ctx.options.user}> with reason: ${ctx.options.reason}`}
+        return { content: `Given a strike to <@${ctx.options.user}> with reason: ${ctx.options.reason}` }
 
     }
 }
