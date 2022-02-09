@@ -1,9 +1,18 @@
-import { Entity, ObjectID, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
 
 @Entity()
-export class Strike {
+export class Strike extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    punishmentId: string;
+    punishmentId: string ;
+
+    @Column()
+    user: string;
+
+    @Column()
+    moderator: string | undefined;
+
+    @Column()
+    reason: string;
 
 }
