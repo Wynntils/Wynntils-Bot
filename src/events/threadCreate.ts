@@ -30,9 +30,7 @@ export const action = async (thread: ThreadChannel): Promise<void> => {
       ]);
 
     thread.join();
-
     if(logChannel) logChannel.send({ embeds: [embed.toJSON()] });
-    consola.success(`Joined thread ${thread.name}`);
   } catch (err: any) {
     logError(err);
   }
