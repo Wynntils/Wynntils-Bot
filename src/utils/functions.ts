@@ -23,3 +23,15 @@ export const logError: (error: Error) => void = async (error: Error) => {
     }
 
 }
+
+
+export const logPunishment: (embed: MessageEmbed) => void = async (embed: MessageEmbed) => {
+    for (const guild of client.guilds.cache) {
+        const channel = guild[1].channels.cache.find((c: GuildBasedChannel) => c.name === 'server-logs') as TextChannel
+
+        if (!channel)
+            continue
+        
+        await channel.send({ embeds: [embed] }).catch(consola.error)
+    }
+}

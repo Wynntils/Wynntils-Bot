@@ -1,7 +1,10 @@
+import { Guild } from 'discord.js'
 import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
+import { client } from '..'
 import WynntilsBaseCommand from '../classes/WynntilsCommand'
 import { Staff } from '../constants/Role'
-import { styledEmbed } from '../utils/functions'
+import { Punishment } from '../models/Punishment'
+import { logPunishment, styledEmbed } from '../utils/functions'
 
 export class StrikeCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
@@ -46,18 +49,34 @@ export class StrikeCommand extends WynntilsBaseCommand {
     }
 
     async give(ctx: CommandContext): Promise<MessageOptions> {
-        // const strike = new Strike();
 
-        // strike.user = ctx.options.user
-        // strike.moderator = ctx.member?.id
-        // strike.reason = ctx.options.reason
+        const user = await client.users.fetch(this.opts.user)
+        
+        const logPunishmentEmbed = styledEmbed()
+            .setTitle('Wynntils Log')
+            .setDescription(`**${user.username} has been striken**`)
+            .addFields([
+                {
+                    name: 'User',
+                    value: `<@${user.id}>\n(${user.id})`,
+                    inline: true
+                },
+                {
+                    name: 'Action by',
+                    value: `<@${ctx.member?.id}>\n(${ctx.member?.id})`,
+                    inline: true
+                },
+                {
+                    name: 'Reason',
+                    value: this.opts.reason,
+                    inline: true
+                }
+            ])
+            .setFooter({ text: `ID: ID HERE ${user.id}` })
 
-        // await strike.save();
+        logPunishment(logPunishmentEmbed)
 
-        const logEmbed = styledEmbed()
-            .setTitle('')
-
-        return { content: `Given a strike to <@${ctx.options.user}> with reason: ${ctx.options.reason}` }
+        return { content: `Given a strike to <@${this.opts.user}> with reason: ${this.opts.reason}` }
 
     }
 }
