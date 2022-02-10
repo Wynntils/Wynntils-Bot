@@ -4,6 +4,7 @@ import { Staff } from '../constants/Role'
 import { UserInfo } from '../interfaces/api/athena/UserInfo'
 import { logError, styledEmbed } from '../utils/functions'
 import WynntilsBaseCommand from '../classes/WynntilsCommand'
+import { Colors } from '../constants/Colors'
 
 export class InfoCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
@@ -38,7 +39,7 @@ export class InfoCommand extends WynntilsBaseCommand {
             data = await response.json()
         } catch (err: any) {
             logError(err)
-            embed.setColor(0xff5349)
+            embed.setColor(Colors.RED)
                 .setTitle(':x: Oops! Error D;')
                 .setDescription('Something went wrong when fetching the user info.')
 
@@ -58,7 +59,7 @@ Ears:   ${userInfo.cosmetics.parts.ears ? '🟩 Enabled' : '🟥 Disabled'}\`\`\
             const lastActive = Math.floor(timestamp / 1000)
 
             embed.setTitle(`${userInfo.username}'s Info`)
-            embed.setColor(0x72ed9e)
+            embed.setColor(Colors.GREEN)
             embed.setThumbnail(`https://minotar.net/helm/${userInfo.uuid}/100.png`)
             embed.setDescription(userInfo.uuid)
             embed.addFields(
@@ -92,7 +93,7 @@ Ears:   ${userInfo.cosmetics.parts.ears ? '🟩 Enabled' : '🟥 Disabled'}\`\`\
             return { embeds: [embed.toJSON()] }
         }
 
-        embed.setColor(0xff5349)
+        embed.setColor(Colors.RED)
             .setTitle(':x: Oops! Error D;')
             .setDescription(data.message)
 

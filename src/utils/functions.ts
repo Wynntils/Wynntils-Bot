@@ -1,6 +1,8 @@
 import { GuildBasedChannel, MessageEmbed, TextChannel } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
+import { Colors } from '../constants/Colors'
+import { DMOptions } from '../constants/types/DMOptions'
 
 export const styledEmbed: () => MessageEmbed = () => {
     return new MessageEmbed()
@@ -17,11 +19,24 @@ export const logError: (error: Error) => void = async (error: Error) => {
         if (!channel)
             continue
 
-        const embed = styledEmbed().setColor('RED').setTitle('An error occurred with the bot').setDescription(error.message + '```' + error.stack + '```')
+        const embed = styledEmbed().setColor(Colors.RED).setTitle('An error occurred with the bot').setDescription(error.message + '```' + error.stack + '```')
 
         await channel.send({ embeds: [embed] }).catch(consola.error)
     }
 
+}
+
+export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }:  DMOptions) => {
+    const user = await client.users.cache.find(u => u.id === userId)
+    user.createDM()
+        .then(dm => {
+            const options = {
+                content: content ? content : '',
+                embed: embed ? [embed] : []
+            }
+            dm.send(options)
+        })
+        .catch(err => logError(err))
 }
 
 

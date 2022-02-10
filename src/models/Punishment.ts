@@ -1,11 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from 'typeorm'
+import { Entity, Column, BaseEntity, ObjectID, ObjectIdColumn } from 'typeorm'
 
 
-@Entity()
+@Entity('punishments')
 export class Punishment extends BaseEntity {
 
-    @PrimaryGeneratedColumn('uuid')
-    punishmentId: string ;
+    @ObjectIdColumn()
+    id: ObjectID;
 
     @Column()
     type: string;
@@ -16,9 +16,11 @@ export class Punishment extends BaseEntity {
     @Column()
     moderator: string | undefined;
 
-    @Column()
+    @Column({ default : 'No reason given' })
     reason: string;
 
-}
+    @Column()
+    timestamp: number;
 
+}
 
