@@ -44,7 +44,11 @@
     "discord.js": "^13.6.0",
     "dotenv": "^10.0.0",
     "erlpack": "github:discord/erlpack",
+<<<<<<< HEAD
     "mongodb": "^3.7.3",
+=======
+    "mongodb": "^4.3.1",
+>>>>>>> 1b64f8e15a1dc9b720d8282ebd517c9edcc687ba
     "node-fetch": "^2.6.7",
     "prettier": "^1.9.1",
     "prettier-eslint": "^10.1.0",
