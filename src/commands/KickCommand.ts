@@ -1,11 +1,9 @@
-import { CommandOptionType, SlashCreator, MessageOptions, CommandContext } from 'slash-create'
-import { client } from '..'
+import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
 import WynntilsBaseCommand from '../classes/WynntilsCommand'
 import { Colors } from '../constants/Colors'
 import { Staff } from '../constants/Role'
 import { Punishment } from '../models/Punishment'
 import { dmUser, logPunishment, styledEmbed } from '../utils/functions'
-
 
 export class KickCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
@@ -17,7 +15,7 @@ export class KickCommand extends WynntilsBaseCommand {
                 {
                     name: 'user',
                     description: 'The user you want to kick',
-                    type: CommandOptionType.MENTIONABLE,
+                    type: CommandOptionType.USER,
                     required: true
                 },
                 {
@@ -32,10 +30,10 @@ export class KickCommand extends WynntilsBaseCommand {
     // Runs the command
     async default(ctx: CommandContext): Promise<MessageOptions> {
 
-        const user = await this.client.guilds.cache.get(ctx.guildID)?.members.fetch(this.opts.user)
+        const user = await this.channel?.guild.members.fetch(this.opts.user)
         if (!user)
             return { content: 'User does not exist' }
-        
+
         const reason = this.opts.reason ? this.opts.reason : 'No reason given'
         const punishment = new Punishment()
 
@@ -44,6 +42,8 @@ export class KickCommand extends WynntilsBaseCommand {
         punishment.moderator = ctx.member?.id
         punishment.reason = reason
         punishment.timestamp = Date.now()
+
+        await punishment.save()
 
         const userPunishmentEmbed = styledEmbed()
             .setTitle('Wynntils Moderation')
@@ -89,13 +89,12 @@ export class KickCommand extends WynntilsBaseCommand {
                 }
             ])
             .setFooter({ text: `ID: ${punishment.id}` })
-        
+
         logPunishment(logPunishmentEmbed)
 
-        dmUser({ userId: this.opts.user, embed: userPunishmentEmbed })
+        await dmUser({ userId: this.opts.user, embed: userPunishmentEmbed })
 
-        user.kick(reason)
-
+        await user.kick(reason)
 
         return { content: 'Succesfully kicked' }
     }

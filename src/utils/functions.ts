@@ -1,4 +1,4 @@
-import { GuildBasedChannel, MessageEmbed, TextChannel } from 'discord.js'
+import { GuildBasedChannel, MessageEmbed, MessageOptions, MessagePayload, TextChannel } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
 import { Colors } from '../constants/Colors'
@@ -28,15 +28,18 @@ export const logError: (error: Error) => void = async (error: Error) => {
 
 export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }:  DMOptions) => {
     const user = await client.users.cache.find(u => u.id === userId)
-    user.createDM()
-        .then(dm => {
-            const options = {
-                content: content ? content : '',
-                embed: embed ? [embed] : []
+    if (user) {
+        try {
+            const dm = await user.createDM()
+            const options: string | MessagePayload | MessageOptions = {
+                content: content ?? undefined,
+                embeds: embed ? [embed.toJSON()] : undefined
             }
-            dm.send(options)
-        })
-        .catch(err => logError(err))
+            await dm.send(options)
+        } catch (e) {
+            logError(e)
+        }
+    }
 }
 
 
@@ -46,7 +49,7 @@ export const logPunishment: (embed: MessageEmbed) => void = async (embed: Messag
 
         if (!channel)
             continue
-        
+
         await channel.send({ embeds: [embed] }).catch(consola.error)
     }
 }

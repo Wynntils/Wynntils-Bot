@@ -89,7 +89,6 @@ export class StrikeCommand extends WynntilsBaseCommand {
         punishment.timestamp = Date.now()
 
         await punishment.save()
-        punishment.reload()
 
         const userPunishmentEmbed = styledEmbed()
             .setTitle('Wynntils Moderation')
@@ -138,7 +137,7 @@ export class StrikeCommand extends WynntilsBaseCommand {
 
         user.createDM()
             .then(dm => dm.send({ embeds: [userPunishmentEmbed] }))
-            .catch((error: DiscordAPIError) => logError(error)) 
+            .catch((error: DiscordAPIError) => logError(error))
 
         logPunishment(logPunishmentEmbed)
 
@@ -147,7 +146,7 @@ export class StrikeCommand extends WynntilsBaseCommand {
     }
 
     async remove(ctx: CommandContext): Promise<MessageOptions> {
-        
+
         const punishment = await Punishment.findOne(this.opts.punishment_id)
 
         if (!punishment)
@@ -159,7 +158,7 @@ export class StrikeCommand extends WynntilsBaseCommand {
     }
 
     async info(ctx: CommandContext): Promise<MessageOptions> {
-        
+
         const punishment = await Punishment.findOne(this.opts.punishment_id)
 
         if (!punishment)
@@ -199,29 +198,29 @@ export class StrikeCommand extends WynntilsBaseCommand {
             .setFooter({ text: `ID: ${punishment.id}` })
 
         return { embeds: [punishmentEmbed.toJSON()] }
-    } 
+    }
 
     async search(ctx: CommandContext): Promise<MessageOptions> {
 
-        const punishments = await Punishment.find({ 
-            where: { 
-                user: this.opts.user 
-            } 
+        const punishments = await Punishment.find({
+            where: {
+                user: this.opts.user
+            }
         })
-        
+
         const user = await client.users.fetch(this.opts.user)
-        
+
         let punishmentsDescription = 'Punishments:\n'
         punishments.forEach(punishment => punishmentsDescription += `${punishment.id}\n`)
-        
+
         const userPunishmentEmbed = styledEmbed()
             .setTitle(`Punishments of ${user.username}#${user.discriminator}`)
             .setColor(Colors.BLUE)
             .setDescription(punishmentsDescription)
 
-        if (!punishments || punishments.length === 0) 
+        if (!punishments || punishments.length === 0)
             userPunishmentEmbed.setDescription('This user has no punishments')
-        
+
         return { embeds: [userPunishmentEmbed.toJSON()] }
     }
 }
