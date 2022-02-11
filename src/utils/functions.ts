@@ -1,4 +1,4 @@
-import { GuildBasedChannel, MessageEmbed, MessageOptions, MessagePayload, TextChannel } from 'discord.js'
+import { GuildBasedChannel, MessageEmbed, TextChannel } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
 import { Colors } from '../constants/Colors'
@@ -31,11 +31,10 @@ export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ 
     if (user) {
         try {
             const dm = await user.createDM()
-            const options: string | MessagePayload | MessageOptions = {
+            await dm.send({
                 content: content ?? undefined,
-                embeds: embed ? [embed.toJSON()] : undefined
-            }
-            await dm.send(options)
+                embeds: embed ? [embed] : undefined,
+            })
         } catch (e) {
             logError(e)
         }
