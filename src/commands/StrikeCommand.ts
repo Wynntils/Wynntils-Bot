@@ -114,7 +114,7 @@ export class StrikeCommand extends WynntilsBaseCommand {
 
         const logPunishmentEmbed = styledEmbed()
             .setTitle('Wynntils Log')
-            .setColor(Colors.GREEN)
+            .setColor(Colors.YELLOW)
             .setDescription(`**${user.username} has been striken**`)
             .addFields([
                 {
@@ -209,14 +209,11 @@ export class StrikeCommand extends WynntilsBaseCommand {
         })
 
         const user = await client.users.fetch(this.opts.user)
-
-        let punishmentsDescription = 'Punishments:\n'
-        punishments.forEach(punishment => punishmentsDescription += `${punishment.id}\n`)
-
         const userPunishmentEmbed = styledEmbed()
-            .setTitle(`Punishments of ${user.username}#${user.discriminator}`)
             .setColor(Colors.BLUE)
-            .setDescription(punishmentsDescription)
+            .setDescription(`Found ${punishments.length} punishments for <@${this.opts.user}> \`(${user.username}#${user.discriminator})\``)
+            
+        punishments.forEach(punishment => userPunishmentEmbed.addField(`${punishment.id}`, `**${punishment.type}** • ${punishment.reason}`, false))
 
         if (!punishments || punishments.length === 0)
             userPunishmentEmbed.setDescription('This user has no punishments')

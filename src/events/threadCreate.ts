@@ -1,4 +1,5 @@
 import { TextChannel, ThreadChannel } from 'discord.js'
+import { Colors } from '../constants/Colors'
 import { logError, styledEmbed } from '../utils/functions'
 
 export const action = async (thread: ThreadChannel): Promise<void> => {
@@ -7,14 +8,14 @@ export const action = async (thread: ThreadChannel): Promise<void> => {
             c => c.name === 'server-logs'
         ) as TextChannel
         const embed = styledEmbed()
-            .setColor(0x72ed9e)
+            .setColor(Colors.GREEN)
             .setTitle('Thread Notification')
             .setDescription('A thread has been created.')
             .addFields([
                 {
                     name: 'Name',
                     value: thread.name,
-                    inline: false
+                    inline: true
                 },
                 {
                     name: 'Owner',

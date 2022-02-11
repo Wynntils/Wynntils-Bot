@@ -1,36 +1,38 @@
-import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
+import { CommandContext, CommandOptionType, SlashCreator, MessageOptions } from 'slash-create'
 import { client } from '..'
 import WynntilsBaseCommand from '../classes/WynntilsCommand'
 import { Colors } from '../constants/Colors'
 import { Staff } from '../constants/Role'
 import { Punishment } from '../models/Punishment'
-import { dmUser, logPunishment, styledEmbed } from '../utils/functions'
+import { styledEmbed, logPunishment, dmUser } from '../utils/functions'
 
-export class KickCommand extends WynntilsBaseCommand {
+export class BanCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
         super(creator, {
-            name: 'kick',
-            description: 'Kick a user from within the server',
+            name: 'ban',
+            description: 'Ban a user from within the server',
             roles: Staff,
             options: [
                 {
                     name: 'user',
-                    description: 'The user you want to kick',
-                    type: CommandOptionType.USER,
+                    description: 'The user you want to ban',
+                    type: CommandOptionType.MENTIONABLE,
                     required: true
                 },
                 {
                     name: 'reason',
-                    description: 'The reason why you want to kick this user',
+                    description: 'The reason why you want to ban this user',
                     type: CommandOptionType.STRING
                 }
             ]
         })
     }
 
-    // Runs the command
     async default(ctx: CommandContext): Promise<MessageOptions> {
 
+        /*TODO: Make it so you can choose how long you want the ban to be, 
+                this should schedule a cron job to unban them on the specified date.
+        */
         const user = await this.channel?.guild.members.fetch(this.opts.user)
 
         if (Staff.some(sr => user?.roles.cache.some(r => r.name === sr)))
@@ -48,7 +50,7 @@ export class KickCommand extends WynntilsBaseCommand {
         const reason = this.opts.reason ? this.opts.reason : 'No reason given'
         const punishment = new Punishment()
 
-        punishment.type = 'Kick'
+        punishment.type = 'Ban'
         punishment.user = this.opts.user
         punishment.moderator = ctx.member?.id
         punishment.reason = reason
@@ -59,11 +61,11 @@ export class KickCommand extends WynntilsBaseCommand {
         const userPunishmentEmbed = styledEmbed()
             .setTitle('Wynntils Moderation')
             .setColor(Colors.BLUE)
-            .setDescription('You have been kicked from Wynntils')
+            .setDescription('You have been banned from Wynntils')
             .addFields([
                 {
                     name: 'Action',
-                    value: 'Kick',
+                    value: 'Ban',
                     inline: true
                 },
                 {
@@ -75,13 +77,18 @@ export class KickCommand extends WynntilsBaseCommand {
                     name: 'Reason',
                     value: `${reason}`,
                     inline: true
+                },
+                {
+                    name: 'Duration',
+                    value: 'Permanent',
+                    inline: true
                 }
             ])
 
         const logPunishmentEmbed = styledEmbed()
             .setTitle('Wynntils Log')
             .setColor(Colors.RED)
-            .setDescription(`**${user.displayName} has been kicked from the server**`)
+            .setDescription(`**${user.displayName} has been banned from the server**`)
             .addFields([
                 {
                     name: 'User',
@@ -97,6 +104,11 @@ export class KickCommand extends WynntilsBaseCommand {
                     name: 'Reason',
                     value: `${reason}`,
                     inline: true
+                },
+                {
+                    name: 'Duration',
+                    value: 'Permanent',
+                    inline: true
                 }
             ])
             .setFooter({ text: `ID: ${punishment.id}` })
@@ -105,9 +117,8 @@ export class KickCommand extends WynntilsBaseCommand {
 
         await dmUser({ userId: this.opts.user, embed: userPunishmentEmbed })
 
-        await user.kick(reason)
+        await user.ban({ days: 7, reason })
 
-        return { content: 'Succesfully kicked' }
+        return { content: 'Succesfully banned' }
     }
-
 }

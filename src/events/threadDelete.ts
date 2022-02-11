@@ -1,4 +1,5 @@
 import { TextChannel, ThreadChannel } from 'discord.js'
+import { Colors } from '../constants/Colors'
 import { logError, styledEmbed } from '../utils/functions'
 
 export const action = async (thread: ThreadChannel) => {
@@ -8,12 +9,13 @@ export const action = async (thread: ThreadChannel) => {
         ) as TextChannel
         const embed = styledEmbed()
             .setTitle('Thread Notification')
+            .setColor(Colors.RED)
             .setDescription('A thread has been closed')
             .addFields([
                 {
                     name: 'Name',
                     value: thread.name,
-                    inline: false
+                    inline: true
                 },
                 {
                     name: 'Owner',
