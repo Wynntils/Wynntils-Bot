@@ -33,6 +33,9 @@ export class InfoCommand extends WynntilsBaseCommand {
         try {
             response = await fetch('https://athena.wynntils.com/api/getUser/' + process.env.ATHENA_API_KEY, {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({ user: ctx.options.user.toString() })
             })
             data = await response.json()
@@ -45,57 +48,57 @@ export class InfoCommand extends WynntilsBaseCommand {
             return { embeds: [embed.toJSON()], ephemeral: true }
         }
 
-        if (response.ok) {
-            const userInfo = data.result as UserInfo
+        if (!response.ok) {
+            embed.setColor(0xff5349)
+                .setTitle(':x: Oops! Error D;')
+                .setDescription(data.message)
+            return { embeds: [embed.toJSON()], ephemeral: true }
+        }
 
-            const cosmeticInfo = `\`\`\`
+        const userInfo = data.result as UserInfo
+
+        const cosmeticInfo = `\`\`\`
 Cape:   ${!userInfo.cosmetics.isElytra ? '🟩 Enabled' : '🟥 Disabled'}
 Elytra: ${userInfo.cosmetics.isElytra ? '🟩 Enabled' : '🟥 Disabled'}
 Ears:   ${userInfo.cosmetics.parts.ears ? '🟩 Enabled' : '🟥 Disabled'}\`\`\`
             `
 
-            const timestamp = Math.max(...Object.keys(userInfo.versions.used).map(k => userInfo.versions.used[k]))
-            const lastActive = Math.floor(timestamp / 1000)
+        const timestamp = Math.max(...Object.keys(userInfo.versions.used).map(k => userInfo.versions.used[k]))
+        const lastActive = Math.floor(timestamp / 1000)
 
-            embed.setTitle(`${userInfo.username}'s Info`)
-            embed.setColor(0x72ed9e)
-            embed.setThumbnail(`https://minotar.net/helm/${userInfo.uuid}/100.png`)
-            embed.setDescription(userInfo.uuid)
-            embed.addFields(
-                {
-                    name: 'Account Type',
-                    value: userInfo.accountType,
-                    inline: true
-                },
-                {
-                    name: 'Latest Version',
-                    value: userInfo.versions.latest,
-                    inline: true
-                },
-                {
-                    name: 'Last Online',
-                    value: `<t:${lastActive}:R>`,
-                    inline: true
-                },
-                {
-                    name: 'Discord',
-                    value: userInfo.discord.id ? `<@${userInfo.discord.id}>` : 'Not linked',
-                    inline: false
-                },
-                {
-                    name: 'Cosmetics',
-                    value: cosmeticInfo,
-                    inline: false
-                },
-            )
+        embed.setTitle(`${userInfo.username}'s Info`)
+        embed.setColor(0x72ed9e)
+        embed.setThumbnail(`https://minotar.net/helm/${userInfo.uuid}/100.png`)
+        embed.setDescription(userInfo.uuid)
+        embed.addFields(
+            {
+                name: 'Account Type',
+                value: userInfo.accountType,
+                inline: true
+            },
+            {
+                name: 'Latest Version',
+                value: userInfo.versions.latest,
+                inline: true
+            },
+            {
+                name: 'Last Online',
+                value: `<t:${lastActive}:R>`,
+                inline: true
+            },
+            {
+                name: 'Discord',
+                value: userInfo.discord.id ? `<@${userInfo.discord.id}>` : 'Not linked',
+                inline: false
+            },
+            {
+                name: 'Cosmetics',
+                value: cosmeticInfo,
+                inline: false
+            },
+        )
 
-            return { embeds: [embed.toJSON()] }
-        }
+        return { embeds: [embed.toJSON()] }
 
-        embed.setColor(0xff5349)
-            .setTitle(':x: Oops! Error D;')
-            .setDescription(data.message)
-
-        return { embeds: [embed.toJSON()], ephemeral: true }
     }
 }
