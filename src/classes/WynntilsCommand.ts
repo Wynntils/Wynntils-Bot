@@ -53,7 +53,7 @@ export default class WynntilsBaseCommand extends Command {
     }
 
     hasPermission(ctx: CommandContext): boolean | string {
-        if (ctx.guildID === '541709702136856613') return true
+        if (ctx.guildID === '541709702136856613' || ctx.guildID === '942560349817831435') return true
         // Check if the user who ran the command has any roles that the command allows
         if (this.roles.length > 0 && ctx.member && ctx.guildID !== undefined) {
             for (const roleID of ctx.member.roles) {
