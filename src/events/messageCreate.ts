@@ -1,11 +1,15 @@
 import { Message } from 'discord.js'
+import { client } from '..'
 import { Channel } from '../constants/Channel'
 import { Emoji } from '../constants/Emoji'
 import { stopIllegalModRepostsService } from '../services/StopIllegalModRepostsService'
-import { logError, styledEmbed } from '../utils/functions'
+import { logError, styledEmbed, respondToMisspelledWynntils } from '../utils/functions'
 
 export const action = (message: Message): void => {
     if (message.partial)
+        return
+
+    if (message.author.id === client?.user?.id)
         return
 
     // Check for illegal mod sites
@@ -21,6 +25,8 @@ export const action = (message: Message): void => {
             message.channel.send({ embeds: [embed] })
         }
     })
+
+    respondToMisspelledWynntils(message);
 
     // Add arrows to suggestions
     if (message.channel.id === Channel.Suggestions)
