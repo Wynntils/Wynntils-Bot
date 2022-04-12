@@ -1,4 +1,4 @@
-import { GuildBasedChannel, Message, MessageEmbed, TextChannel, WebSocketShard } from 'discord.js'
+import { GuildBasedChannel, Message, MessageEmbed, TextChannel } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
 
