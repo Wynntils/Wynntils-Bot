@@ -1,4 +1,4 @@
-import { GuildBasedChannel, MessageEmbed, TextChannel } from 'discord.js'
+import { GuildBasedChannel, Message, MessageEmbed, TextChannel, WebSocketShard } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
 
@@ -21,5 +21,15 @@ export const logError: (error: Error) => void = async (error: Error) => {
 
         await channel.send({ embeds: [embed] }).catch(consola.error)
     }
+
+}
+
+export const respondToMisspelledWynntils = (message: Message): void => {
+   
+    const msg = message.content.toLowerCase()
+    const possibilities = ['wintails', 'wintils', 'wynntillis', 'wanytils', 'wanytails', 'wintil']
+
+    if (possibilities.some(word => msg.includes(word)))
+        message.reply(`It's Wynntils, not ${possibilities.filter(word => msg.includes(word))}`)
 
 }
