@@ -13,6 +13,7 @@ class ConfigService extends CachedService<string[]> {
         try {
             const response = await fetch(this.url, {
                 method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user: 'HeyZeer0',
                     configName: 'list'
