@@ -29,7 +29,7 @@ export const respondToMisspelledWynntils = async (message: Message): Promise<voi
     for (const word of message.content.split(' ')) {
         if (
             word.toLowerCase().startsWith('w')
-            && word.toLowerCase().endsWith('s')
+            && word.toLowerCase() !== "wynntils"
             && distance(word.toLowerCase(), 'wynntils') <= 3
         ) {
             await message.reply('You spelled Wynntils wrong.')
