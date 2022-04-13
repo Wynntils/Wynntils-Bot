@@ -1,6 +1,7 @@
 import { GuildBasedChannel, Message, MessageEmbed, TextChannel } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
+import { distance } from 'fastest-levenshtein'
 
 export const styledEmbed: () => MessageEmbed = () => {
     return new MessageEmbed()
@@ -24,12 +25,11 @@ export const logError: (error: Error) => void = async (error: Error) => {
 
 }
 
-export const respondToMisspelledWynntils = (message: Message): void => {
-   
-    const msg = message.content.toLowerCase()
-    const possibilities = ['wintails', 'wintils', 'wynntillis', 'wanytils', 'wanytails', 'wintil']
-
-    if (possibilities.some(word => msg.includes(word)))
-        message.reply(`It's Wynntils, not ${possibilities.filter(word => msg.includes(word))}`)
-
+export const respondToMisspelledWynntils = async (message: Message): Promise<void> => {
+    for (const word of message.content.split(' ')) {
+        if (distance(word.toLowerCase(), 'wynntils') <= 4) {
+            await message.reply('You spelled Wynntils wrong.')
+            return
+        }
+    }
 }

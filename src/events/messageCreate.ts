@@ -3,7 +3,7 @@ import { client } from '..'
 import { Channel } from '../constants/Channel'
 import { Emoji } from '../constants/Emoji'
 import { stopIllegalModRepostsService } from '../services/StopIllegalModRepostsService'
-import { logError, styledEmbed, respondToMisspelledWynntils } from '../utils/functions'
+import { logError, respondToMisspelledWynntils, styledEmbed } from '../utils/functions'
 
 export const action = (message: Message): void => {
     if (message.partial)
@@ -26,7 +26,7 @@ export const action = (message: Message): void => {
         }
     })
 
-    respondToMisspelledWynntils(message);
+    respondToMisspelledWynntils(message)
 
     // Add arrows to suggestions
     if (message.channel.id === Channel.Suggestions)
