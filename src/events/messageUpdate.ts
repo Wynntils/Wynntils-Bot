@@ -17,11 +17,11 @@ export const action = async (oldMessage: Message, newMessage: Message): Promise<
             .addFields([
                 {
                     name: 'Before',
-                    value: `\`\`\`${oldMessage.content}\`\`\``
+                    value: `\`\`\`${oldMessage.cleanContent}\`\`\``
                 },
                 {
                     name: 'After',
-                    value: `\`\`\`${newMessage.content}\`\`\``
+                    value: `\`\`\`${newMessage.cleanContent}\`\`\``
                 }
             ])
             .setTimestamp()
