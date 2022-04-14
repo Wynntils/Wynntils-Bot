@@ -6,7 +6,7 @@ export const action = async (oldMessage: Message, newMessage: Message): Promise<
     try {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const logChannel = oldMessage.guild.channels.cache.find(
+        const serverLogChannel = oldMessage.guild.channels.cache.find(
             c => c.name === 'server-logs'
         ) as TextChannel
 
@@ -26,8 +26,8 @@ export const action = async (oldMessage: Message, newMessage: Message): Promise<
             ])
             .setTimestamp()
 
-        if (logChannel)
-            logChannel.send({ embeds: [embed.toJSON()] })
+        if (serverLogChannel)
+            serverLogChannel.send({ embeds: [embed.toJSON()] })
 
     } catch (err) {
         logError(err)

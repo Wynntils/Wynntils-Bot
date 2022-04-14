@@ -4,7 +4,7 @@ import { logError, styledEmbed } from '../utils/functions'
 
 export const action = async (thread: ThreadChannel) => {
     try {
-        const logChannel = thread.guild.channels.cache.find(
+        const serverLogChannel = thread.guild.channels.cache.find(
             c => c.name === 'server-logs'
         ) as TextChannel
         const embed = styledEmbed()
@@ -29,7 +29,7 @@ export const action = async (thread: ThreadChannel) => {
                 }
             ])
 
-        if (logChannel) logChannel.send({ embeds: [embed.toJSON()] })
+        if (serverLogChannel) serverLogChannel.send({ embeds: [embed.toJSON()] })
     } catch (err) {
         logError(err)
     }
