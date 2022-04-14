@@ -3,15 +3,21 @@ import { Channel } from '../constants/Channel'
 import { DonatorRoles } from '../constants/Role'
 import { logError } from '../utils/functions'
 
-export const action = (oldMember: GuildMember, newMember: GuildMember): void => {
+export const action = async (oldMember: GuildMember, newMember: GuildMember): Promise<void> => {
+
+    //TODO(Chromium): Add logs member updates (e.g.: Role added/removed, Username change, Server nickname change, User avatar change)
+
     if (oldMember.roles.cache.size === newMember.roles.cache.size)
         return
+
     // Roles didn't change
     if (!DonatorRoles.some(dr => newMember.roles.cache.some(r => r.name === dr)))
         return
+
     // Didn't become donator
     if (DonatorRoles.some(dr => oldMember.roles.cache.some(r => r.name === dr)))
         return
+
     // Was already donator
 
     const msg = `Hey <@${newMember.user.id}>, thanks for supporting the project! Please provide us your in-game username in <#${Channel.Donator_Lounge}>, and someone will apply your donor tag in-game within 12 hours.`
