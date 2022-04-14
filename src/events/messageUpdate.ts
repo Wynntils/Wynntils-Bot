@@ -8,6 +8,9 @@ export const action = async (oldMessage: Message, newMessage: Message): Promise<
     if (oldMessage.author.id === client.user.id)
         return
 
+    if (oldMessage.hasThread || newMessage.hasThread)
+        return
+
     try {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
