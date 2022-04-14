@@ -3,6 +3,7 @@ import { client } from '..'
 import { faqService } from '../services/FaqService'
 import { styledEmbed } from '../utils/functions'
 import WynntilsBaseCommand from '../classes/WynntilsCommand'
+import { Colors } from '../constants/Colors'
 
 export class FaqCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
@@ -32,14 +33,14 @@ export class FaqCommand extends WynntilsBaseCommand {
             .setFooter({ text: `By: ${ctx.user.username}#${ctx.user.discriminator} - Please read #faq` })
 
         if (faq) {
-            embed.setColor(0x72ed9e)
+            embed.setColor(Colors.GREEN)
                 .setAuthor({ name: 'Wynntils FAQ', iconURL: client.user?.avatarURL() ?? client.user?.defaultAvatarURL })
                 .addField(faq.title, faq.value)
 
             return { embeds: [embed.toJSON()] }
         }
 
-        embed.setColor(0xff5349)
+        embed.setColor(Colors.RED)
             .setTitle(':x: Invalid Entry')
             .setDescription(`Unable to find entry for ${ctx.options.value.toString()}.`)
 

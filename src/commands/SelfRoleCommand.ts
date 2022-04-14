@@ -2,6 +2,7 @@ import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 
 import { client } from '..'
 import { logError, styledEmbed } from '../utils/functions'
 import WynntilsBaseCommand from '../classes/WynntilsCommand'
+import { Colors } from '../constants/Colors'
 
 export class SelfRoleCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
@@ -35,7 +36,7 @@ export class SelfRoleCommand extends WynntilsBaseCommand {
 
         const role = guild.roles.cache.find(r => r.name === ctx.options.role.toString())
         if (!role) {
-            embed.setColor(0xff5349)
+            embed.setColor(Colors.RED)
                 .setTitle(':x: Oops! Error D;')
                 .setDescription(`Role \`${ctx.options.role}\` not found in server.`)
 
@@ -46,12 +47,12 @@ export class SelfRoleCommand extends WynntilsBaseCommand {
             try {
                 await member.roles.add(role)
 
-                embed.setColor(0x72ed9e)
+                embed.setColor(Colors.GREEN)
                     .setTitle('Success!')
                     .setDescription('Succesfully given you the role.')
             } catch (err) {
                 logError(err)
-                embed.setColor(0xff5349)
+                embed.setColor(Colors.RED)
                     .setTitle(':x: Oops! Error D;')
                     .setDescription('Ran into an error while applying the role to you.')
 
@@ -62,12 +63,12 @@ export class SelfRoleCommand extends WynntilsBaseCommand {
             try {
                 await member.roles.remove(role)
 
-                embed.setColor(0x72ed9e)
+                embed.setColor(Colors.GREEN)
                     .setTitle('Success!')
                     .setDescription('Succesfully removed the role from you.')
             } catch (err) {
                 logError(err)
-                embed.setColor(0xff5349)
+                embed.setColor(Colors.RED)
                     .setTitle(':x: Oops! Error D;')
                     .setDescription('Ran into an error while removing the role from you.')
             }

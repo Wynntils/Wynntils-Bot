@@ -4,6 +4,7 @@ import { Staff } from '../constants/Role'
 import { configService } from '../services/ConfigService'
 import { logError, styledEmbed } from '../utils/functions'
 import WynntilsBaseCommand from '../classes/WynntilsCommand'
+import { Colors } from '../constants/Colors'
 
 export class ConfigCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
@@ -42,7 +43,7 @@ export class ConfigCommand extends WynntilsBaseCommand {
         if (ctx.options.filename) {
             const configFiles = await configService.get()
             if (!configFiles.includes(ctx.options.filename.toString())) {
-                embed.setColor(0xff5349)
+                embed.setColor(Colors.RED)
                     .setTitle(':x: Invalid Config Name - Available Configs')
                     .setDescription(`\`${configFiles.join('`\n`')}\``)
                 return { embeds: [embed.toJSON()] }
@@ -62,7 +63,7 @@ export class ConfigCommand extends WynntilsBaseCommand {
                 data = await response.json()
             } catch (err) {
                 logError(err)
-                embed.setColor(0xff5349)
+                embed.setColor(Colors.RED)
                     .setTitle(':x: Oops! Error D;')
                     .setDescription('Something went wrong when fetching the user\'s config.')
 
@@ -75,21 +76,21 @@ export class ConfigCommand extends WynntilsBaseCommand {
                 const totalParts = Math.ceil(configString.length / 1800)
 
                 if (part > totalParts) {
-                    embed.setColor(0xff5349)
+                    embed.setColor(Colors.RED)
                         .setTitle(':octagonal_sign: End of Config')
                         .setDescription(`This config file does not have more than ${totalParts} parts.`)
 
                     return { embeds: [embed.toJSON()], ephemeral: true }
                 }
 
-                embed.setColor(0x72ed9e)
+                embed.setColor(Colors.GREEN)
                     .setTitle(`${ctx.options.user.toString()} - ${ctx.options.filename} - (${part}/${totalParts})`)
                     .setDescription(`\`\`\`json\n${configString.substr((part - 1) * 1800, 1800)}\n\`\`\``)
 
                 return { embeds: [embed.toJSON()] }
             }
 
-            embed.setColor(0xff5349)
+            embed.setColor(Colors.RED)
                 .setTitle(':x: Oops! Error D;')
                 .setDescription( data.message)
 
@@ -97,7 +98,7 @@ export class ConfigCommand extends WynntilsBaseCommand {
         }
 
         const configFiles = await configService.get()
-        embed.setColor(0x72ed9e)
+        embed.setColor(Colors.GREEN)
             .setTitle('Available Configs')
             .setDescription(`\`${configFiles.join('`\n`')}\``)
 

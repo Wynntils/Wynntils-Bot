@@ -45,7 +45,9 @@ export default class WynntilsBaseCommand extends Command {
             return this[key](ctx)
         }
 
-        if (typeof this['default' as keyof this] === 'function') { // @ts-ignore
+        if (typeof this['default' as keyof this] === 'function') {
+            this.opts = ctx.options
+            // @ts-ignore
             return this['default'](ctx)
         }
 

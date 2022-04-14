@@ -1,6 +1,8 @@
-import { GuildBasedChannel, Message, MessageEmbed, TextChannel } from 'discord.js'
+import { GuildBasedChannel, MessageEmbed, TextChannel } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
+import { Colors } from '../constants/Colors'
+import { DMOptions } from '../constants/types/DMOptions'
 
 export const styledEmbed: () => MessageEmbed = () => {
     return new MessageEmbed()
@@ -17,19 +19,36 @@ export const logError: (error: Error) => void = async (error: Error) => {
         if (!channel)
             continue
 
-        const embed = styledEmbed().setColor('RED').setTitle('An error occurred with the bot').setDescription(error.message + '```' + error.stack + '```')
+        const embed = styledEmbed().setColor(Colors.RED).setTitle('An error occurred with the bot').setDescription(error.message + '```' + error.stack + '```')
 
         await channel.send({ embeds: [embed] }).catch(consola.error)
     }
 
 }
 
-export const respondToMisspelledWynntils = (message: Message): void => {
-   
-    const msg = message.content.toLowerCase()
-    const possibilities = ['wintails', 'wintils', 'wynntillis', 'wanytils', 'wanytails', 'wintil']
+export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }:  DMOptions) => {
+    const user = await client.users.cache.find(u => u.id === userId)
+    if (user) {
+        try {
+            const dm = await user.createDM()
+            await dm.send({
+                content: content ?? undefined,
+                embeds: embed ? [embed] : undefined,
+            })
+        } catch (e) {
+            logError(e)
+        }
+    }
+}
 
-    if (possibilities.some(word => msg.includes(word)))
-        message.reply(`It's Wynntils, not ${possibilities.filter(word => msg.includes(word))}`)
 
+export const logPunishment: (embed: MessageEmbed) => void = async (embed: MessageEmbed) => {
+    for (const guild of client.guilds.cache) {
+        const channel = guild[1].channels.cache.find((c: GuildBasedChannel) => c.name === 'server-logs') as TextChannel
+
+        if (!channel)
+            continue
+
+        await channel.send({ embeds: [embed] }).catch(consola.error)
+    }
 }

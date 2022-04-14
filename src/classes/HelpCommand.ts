@@ -1,5 +1,6 @@
 import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
 import WynntilsBaseCommand from '../classes/WynntilsCommand'
+import { Colors } from '../constants/Colors'
 import { styledEmbed } from '../utils/functions'
 
 export class HelpCommand extends WynntilsBaseCommand {
@@ -32,7 +33,9 @@ export class HelpCommand extends WynntilsBaseCommand {
                         .addField('Commands:', this.creator.commands.filter(cmd => cmd.hasPermission(ctx) === true).map((cmd) => {
                             return `**${cmd.commandName}** - ${cmd.description}`
                         }).join('\n'))
-                        .setTitle('Wynntils Help Commands').toJSON()
+                        .setTitle('Wynntils Help Commands')
+                        .setColor(Colors.GREEN)
+                        .toJSON()
                 ],
                 ephemeral: true
             }
@@ -43,8 +46,11 @@ export class HelpCommand extends WynntilsBaseCommand {
 
         if (command.hasPermission(ctx) !== true) return { content: 'You do not have permission to use this command', ephemeral: true }
 
-        const embed = styledEmbed().setTitle('Help: ' + search).setDescription(command.helpText)
+        const embed = styledEmbed()
+            .setTitle('Help: ' + search)
+            .setDescription(command.helpText)
             .setTitle('Wynntils Help Commands')
+            .setColor(Colors.GREEN)
 
         if (typeof command.options !== 'undefined') {
             embed.addField('Usages:', command.options.map((cmd) => {

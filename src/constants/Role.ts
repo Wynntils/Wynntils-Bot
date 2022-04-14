@@ -37,8 +37,6 @@ export enum Role {
     TrialModerator = '537419151262875650',
     Moderator = '394189812816412692',
     Auttaja = '556660511404458014',
-    LeadModerator = '538125811308560394',
-    WebDeveloper = '606804889456214029',
     ModDeveloper = '439546118964117534',
     SeniorDeveloper = '439545766000853002',
     WynntilsRoles = '568135224295292929',
@@ -47,6 +45,6 @@ export enum Role {
     Scyu = '537671536094740481'
 }
 
-export const Staff = ['Moderator', 'Developer', 'Senior Developer', 'Owner']
+export const Staff = ['Moderator', 'Developer', 'Senior Developer', 'Administrator']
 export const DonatorRoles = ['Level 0 Donator', 'Level 1 Donator', 'Level 2 Donator', 'Level 3 Donator', 'Level 4 Donator']
 export const FreeRoles = [Role.ModUpdates]

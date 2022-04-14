@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node -r dotenv/config ./dist/index.js",
+    "dev": "nodemon -r dotenv/config ./dist/index.js",
     "build": "tsc",
     "lint": "eslint . --ext .ts"
   },
@@ -44,9 +45,11 @@
     "discord.js": "^13.6.0",
     "dotenv": "^10.0.0",
     "erlpack": "github:discord/erlpack",
+    "mongodb": "^3.7.3",
     "node-fetch": "^2.6.7",
     "require-all": "^3.0.0",
     "slash-create": "^5.1.0",
+    "typeorm": "^0.2.41",
     "utf-8-validate": "^5.0.5",
     "zlib-sync": "^0.1.7"
   },
@@ -55,8 +58,10 @@
     "@types/node-fetch": "^2.5.10",
     "@types/require-all": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^4.24.0",
-    "@typescript-eslint/parser": "^4.24.0",
+    "@typescript-eslint/parser": "^5.11.0",
     "eslint": "^7.27.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "prettier": "^1.9.1",
+    "prettier-eslint": "^10.1.0"
   }
 }
