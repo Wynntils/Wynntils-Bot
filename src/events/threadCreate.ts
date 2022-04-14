@@ -9,12 +9,12 @@ export const action = async (thread: ThreadChannel): Promise<void> => {
         ) as TextChannel
         const embed = styledEmbed()
             .setColor(Colors.GREEN)
-            .setTitle('Thread Notification')
+            .setTitle('Wynntils thread logging')
             .setDescription('A thread has been created.')
             .addFields([
                 {
-                    name: 'Name',
-                    value: thread.name,
+                    name: 'Thread',
+                    value: `<#${thread.id}>`,
                     inline: true
                 },
                 {

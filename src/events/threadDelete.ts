@@ -8,12 +8,12 @@ export const action = async (thread: ThreadChannel) => {
             c => c.name === 'server-logs'
         ) as TextChannel
         const embed = styledEmbed()
-            .setTitle('Thread Notification')
+            .setTitle('Wynntils thread logging')
             .setColor(Colors.RED)
             .setDescription('A thread has been closed')
             .addFields([
                 {
-                    name: 'Name',
+                    name: 'Thread',
                     value: thread.name,
                     inline: true
                 },
