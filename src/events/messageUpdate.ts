@@ -1,8 +1,13 @@
 import { Message, TextChannel } from 'discord.js'
 import { logError, styledEmbed } from '../utils/functions'
 import { Colors } from '../constants/Colors'
+import { client } from '../index'
 
 export const action = async (oldMessage: Message, newMessage: Message): Promise<void> => {
+
+    if (oldMessage.author.id === client.user.id)
+        return
+
     try {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
