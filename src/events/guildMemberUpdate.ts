@@ -1,14 +1,81 @@
 import { DiscordAPIError, DMChannel, GuildMember, TextChannel } from 'discord.js'
 import { Channel } from '../constants/Channel'
 import { DonatorRoles } from '../constants/Role'
-import { logError } from '../utils/functions'
+import { logError, styledEmbed } from '../utils/functions'
+import { Colors } from '../constants/Colors'
 
 export const action = async (oldMember: GuildMember, newMember: GuildMember): Promise<void> => {
 
-    //TODO(Chromium): Add logs member updates (e.g.: Role added/removed, Username change, Server nickname change, User avatar change)
+    const serverLogChannel = oldMember.guild.channels.cache.find(c => c.name === 'server-logs') as TextChannel
 
-    if (oldMember.roles.cache.size === newMember.roles.cache.size)
-        return
+    const logEmbed = styledEmbed()
+        .setAuthor({ name: `${newMember.displayName} (${newMember.user.id})`, iconURL: newMember.user.avatarURL() })
+
+    if (oldMember.roles.cache.size !== newMember.roles.cache.size) {
+        // Role added
+        if (oldMember.roles.cache.size < newMember.roles.cache.size) {
+            const role = newMember.roles.cache.filter(r => !oldMember.roles.cache.has(r.id)).first()
+            logEmbed
+                .setColor(Colors.GREEN)
+                .setTitle('Role Added')
+                .setDescription(`<@&${role.id}>`)
+
+            serverLogChannel.send({ embeds: [logEmbed.toJSON()] })
+        }
+
+        // Role removed
+        if (oldMember.roles.cache.size > newMember.roles.cache.size) {
+            const role = oldMember.roles.cache.filter(r => !newMember.roles.cache.has(r.id)).first()
+            logEmbed
+                .setColor(Colors.RED)
+                .setTitle('Role Removed')
+                .setDescription(`<@&${role.id}>`)
+
+            serverLogChannel.send({ embeds: [logEmbed.toJSON()] })
+        }
+    }
+
+    // Username change
+    if (oldMember.user.username !== newMember.user.username) {
+        logEmbed
+            .setColor(Colors.ORANGE)
+            .setTitle('Username change')
+            .addFields([
+                {
+                    name: 'Previous username',
+                    value: oldMember.user.username,
+                    inline: true
+                },
+                {
+                    name: 'New username',
+                    value: newMember.user.username,
+                    inline: true
+                }
+            ])
+
+        serverLogChannel.send({ embeds: [logEmbed.toJSON()] })
+    }
+
+    // Nickname change
+    if (oldMember.nickname !== newMember.nickname) {
+        logEmbed
+            .setColor(Colors.ORANGE)
+            .setTitle('Nickname change')
+            .addFields([
+                {
+                    name: 'Previous nickname',
+                    value: oldMember.user.username,
+                    inline: true
+                },
+                {
+                    name: 'New nickname',
+                    value: newMember.user.username,
+                    inline: true
+                }
+            ])
+
+        serverLogChannel.send({ embeds: [logEmbed.toJSON()] })
+    }
 
     // Roles didn't change
     if (!DonatorRoles.some(dr => newMember.roles.cache.some(r => r.name === dr)))
@@ -30,3 +97,4 @@ export const action = async (oldMember: GuildMember, newMember: GuildMember): Pr
         })
     }).catch(logError)
 }
+
