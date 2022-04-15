@@ -1,8 +1,9 @@
-import { GuildBasedChannel, MessageEmbed, TextChannel } from 'discord.js'
+import { GuildBasedChannel, Message, MessageEmbed, TextChannel } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
 import { Colors } from '../constants/Colors'
 import { DMOptions } from '../constants/types/DMOptions'
+import { distance } from 'fastest-levenshtein'
 
 export const styledEmbed: () => MessageEmbed = () => {
     return new MessageEmbed()
@@ -24,6 +25,19 @@ export const logError: (error: Error) => void = async (error: Error) => {
         await channel.send({ embeds: [embed] }).catch(consola.error)
     }
 
+}
+
+export const respondToMisspelledWynntils = async(message: Message): Promise<void> => {
+    for (const word of message.content.split(' ')) {
+        if (
+            word.toLowerCase().startsWith('w')
+            && word.toLowerCase() !== 'wynntils'
+            && distance(word.toLowerCase(), 'wynntils') <= 3
+        ) {
+            await message.reply('You spelled Wynntils wrong.')
+            return
+        }
+    }
 }
 
 export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }:  DMOptions) => {
