@@ -1,8 +1,6 @@
 import { GuildBasedChannel, Message, MessageEmbed, TextChannel } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
-import { Colors } from '../constants/Colors'
-import { DMOptions } from '../constants/types/DMOptions'
 import { distance } from 'fastest-levenshtein'
 
 export const styledEmbed: () => MessageEmbed = () => {
@@ -20,49 +18,22 @@ export const logError: (error: Error) => void = async (error: Error) => {
         if (!channel)
             continue
 
-        const embed = styledEmbed().setColor(Colors.RED).setTitle('An error occurred with the bot').setDescription(error.message + '```' + error.stack + '```')
+        const embed = styledEmbed().setColor('RED').setTitle('An error occurred with the bot').setDescription(error.message + '```' + error.stack + '```')
 
         await channel.send({ embeds: [embed] }).catch(consola.error)
     }
 
 }
 
-export const respondToMisspelledWynntils = async(message: Message): Promise<void> => {
+export const respondToMisspelledWynntils = async (message: Message): Promise<void> => {
     for (const word of message.content.split(' ')) {
         if (
             word.toLowerCase().startsWith('w')
-            && word.toLowerCase() !== 'wynntils'
+            && word.toLowerCase() !== "wynntils"
             && distance(word.toLowerCase(), 'wynntils') <= 3
         ) {
             await message.reply('You spelled Wynntils wrong.')
             return
         }
-    }
-}
-
-export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }:  DMOptions) => {
-    const user = await client.users.cache.find(u => u.id === userId)
-    if (user) {
-        try {
-            const dm = await user.createDM()
-            await dm.send({
-                content: content ?? undefined,
-                embeds: embed ? [embed] : undefined,
-            })
-        } catch (e) {
-            logError(e)
-        }
-    }
-}
-
-
-export const logPunishment: (embed: MessageEmbed) => void = async (embed: MessageEmbed) => {
-    for (const guild of client.guilds.cache) {
-        const channel = guild[1].channels.cache.find((c: GuildBasedChannel) => c.name === 'server-logs') as TextChannel
-
-        if (!channel)
-            continue
-
-        await channel.send({ embeds: [embed] }).catch(consola.error)
     }
 }

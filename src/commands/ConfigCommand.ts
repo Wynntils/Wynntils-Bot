@@ -55,6 +55,7 @@ export class ConfigCommand extends WynntilsBaseCommand {
             try {
                 response = await fetch('https://athena.wynntils.com/api/getUserConfig/' + process.env.ATHENA_API_KEY, {
                     method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         user: ctx.options.user,
                         configName: ctx.options.filename
