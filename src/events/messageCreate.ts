@@ -26,7 +26,7 @@ export const action = async (message: Message): Promise<void> => {
         }
     })
 
-    respondToMisspelledWynntils(message);
+    respondToMisspelledWynntils(message)
 
     // Add arrows to suggestions
     if (message.channel.id === Channel.Suggestions)
