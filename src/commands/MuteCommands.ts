@@ -60,16 +60,16 @@ export class MuteCommand extends WynntilsBaseCommand {
         const duration = this.opts.duration * 60 * 60 * 1000
 
         if (Staff.some(sr => user?.roles.cache.some(r => r.name === sr)))
-            return { content: 'You cannot mute a staff member.' }
+            return { content: 'You cannot mute a staff member.', ephemeral: true }
 
         if (this.opts.user === ctx.member?.id)
-            return { content: 'You cannot mute yourself.' }
+            return { content: 'You cannot mute yourself.', ephemeral: true }
 
         if (this.opts.user === client.user?.id)
-            return { content: 'Hey! You cannot put me in a timeout! :(' }
+            return { content: 'Hey! You cannot put me in a timeout! :(', ephemeral: true }
 
         if (!user)
-            return { content: 'User does not exist.' }
+            return { content: 'User does not exist.', ephemeral: true }
 
         const reason = this.opts.reason ? this.opts.reason : 'No reason given'
         const punishment = new Punishment()

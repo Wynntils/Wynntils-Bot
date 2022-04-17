@@ -36,16 +36,16 @@ export class BanCommand extends WynntilsBaseCommand {
         const user = await this.channel?.guild.members.fetch(this.opts.user)
 
         if (Staff.some(sr => user?.roles.cache.some(r => r.name === sr)))
-            return { content: 'You cannot ban a staff member.' }
+            return { content: 'You cannot ban a staff member.', ephemeral: true }
 
         if (this.opts.user === ctx.member?.id)
-            return { content: 'You cannot ban yourself.' }
+            return { content: 'You cannot ban yourself.', ephemeral: true }
 
         if (this.opts.user === client.user?.id)
-            return { content: 'Hey! Trying to ban me is not nice :(' }
+            return { content: 'Hey! Trying to ban me is not nice :(', ephemeral: true }
 
         if (!user)
-            return { content: 'User does not exist' }
+            return { content: 'User does not exist', ephemeral: true }
 
         const reason = this.opts.reason ? this.opts.reason : 'No reason given'
         const punishment = new Punishment()
