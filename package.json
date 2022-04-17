@@ -45,9 +45,11 @@
     "dotenv": "^10.0.0",
     "erlpack": "github:discord/erlpack",
     "fastest-levenshtein": "^1.0.12",
+    "mongodb": "^3.7.3",
     "node-fetch": "^2.6.7",
     "require-all": "^3.0.0",
     "slash-create": "^5.1.0",
+    "typeorm": "^0.3.6",
     "utf-8-validate": "^5.0.5",
     "zlib-sync": "^0.1.7"
   },
