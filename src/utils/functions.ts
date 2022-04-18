@@ -26,13 +26,16 @@ export const logError: (error: Error) => void = async (error: Error) => {
 }
 
 export const respondToMisspelledWynntils = async (message: Message): Promise<void> => {
-    for (const word of message.content.split(' ')) {
+    const matches = message.content.match(/\b\w+\b/g)
+    if (matches === null) return
+    for (const word of matches) {
         if (
-            word.toLowerCase().startsWith('w')
+            !['wynntils', 'wanytails'].includes(word.toLowerCase())
+            && word.toLowerCase().startsWith('w')
             && word.toLowerCase().endsWith('s')
             && distance(word.toLowerCase(), 'wynntils') <= 3
         ) {
-            await message.reply('You spelled Wynntils wrong.')
+            await message.reply(`It's Wynntils, not ${word}!`)
             return
         }
     }
