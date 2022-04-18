@@ -32,7 +32,6 @@ export const respondToMisspelledWynntils = async (message: Message): Promise<voi
         if (
             !['wynntils', 'wanytails'].includes(word.toLowerCase())
             && word.toLowerCase().startsWith('w')
-            && word.toLowerCase().endsWith('s')
             && distance(word.toLowerCase(), 'wynntils') <= 3
         ) {
             await message.reply(`It's Wynntils, not ${word}!`)
