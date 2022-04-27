@@ -30,7 +30,7 @@ export const respondToMisspelledWynntils = async (message: Message): Promise<voi
     if (matches === null) return
     for (const word of matches) {
         if (
-            !['wynntils', 'wanytails'].includes(word.toLowerCase())
+            !['wynntils', 'wanytails', 'wynnter'].includes(word.toLowerCase())
             && word.toLowerCase().startsWith('w')
             && distance(word.toLowerCase(), 'wynntils') <= 3
         ) {
