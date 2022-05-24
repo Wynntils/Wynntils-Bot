@@ -60,7 +60,7 @@ export class InfoCommand extends WynntilsBaseCommand {
 
         const isCape = typeof userInfo.cosmetics.isElytra === null ? false : !userInfo.cosmetics.isElytra
         const isElytra = !isCape
-        const parts =  userInfo.cosmetics.parts === null ? { ears: null } : userInfo.cosmetics.parts
+        const parts = userInfo.cosmetics.parts === null ? { ears: null } : userInfo.cosmetics.parts
         const hasEars = parts.ears === null ? false : userInfo.cosmetics.parts.ears
 
         const cosmeticInfo = `\`\`\`

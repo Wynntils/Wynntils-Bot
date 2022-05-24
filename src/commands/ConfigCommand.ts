@@ -93,7 +93,7 @@ export class ConfigCommand extends WynntilsBaseCommand {
 
             embed.setColor(Colors.RED)
                 .setTitle(':x: Oops! Error D;')
-                .setDescription( data.message)
+                .setDescription(data.message)
 
             return { embeds: [embed.toJSON()], ephemeral: true }
         }

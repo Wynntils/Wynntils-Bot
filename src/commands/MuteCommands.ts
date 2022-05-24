@@ -4,7 +4,7 @@ import WynntilsBaseCommand from '../classes/WynntilsCommand'
 import { Colors } from '../constants/Colors'
 import { Staff } from '../constants/Role'
 import { Punishment } from '../models/Punishment'
-import { styledEmbed, logPunishment, dmUser } from '../utils/functions'
+import { dmUser, logPunishment, styledEmbed } from '../utils/functions'
 
 export class MuteCommand extends WynntilsBaseCommand {
 
@@ -18,7 +18,7 @@ export class MuteCommand extends WynntilsBaseCommand {
                     name: 'give',
                     description: 'Mute an user',
                     type: CommandOptionType.SUB_COMMAND,
-                    options:[
+                    options: [
                         {
                             name: 'user',
                             description: 'The user you want to mute',
@@ -41,7 +41,7 @@ export class MuteCommand extends WynntilsBaseCommand {
                     name: 'remove',
                     description: 'Remove a mute from an user',
                     type: CommandOptionType.SUB_COMMAND,
-                    options:[
+                    options: [
                         {
                             name: 'user',
                             description: 'The user you want to unmute',

@@ -12,7 +12,10 @@ export const action = async (message: Message): Promise<void> => {
 
         const embed = styledEmbed()
             .setColor(Colors.RED)
-            .setAuthor({ name: `${message.author.username}#${message.author.discriminator} (${message.author.id})`, iconURL: message.author.avatarURL() })
+            .setAuthor({
+                name: `${message.author.username}#${message.author.discriminator} (${message.author.id})`,
+                iconURL: message.author.avatarURL()
+            })
             .setDescription(`Message ${message.id} deleted from <#${message.channel.id}>`)
             .addField('Content', `\`\`\`${message.cleanContent}\`\`\``)
             .setTimestamp()

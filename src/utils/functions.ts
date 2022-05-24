@@ -6,7 +6,10 @@ import { DMOptions } from '../constants/types/DMOptions'
 
 export const styledEmbed: () => MessageEmbed = () => {
     return new MessageEmbed()
-        .setFooter({ text: client.user?.username ?? 'Wynntils', iconURL: (client.user?.avatarURL() ?? client.user?.defaultAvatarURL) })
+        .setFooter({
+            text: client.user?.username ?? 'Wynntils',
+            iconURL: (client.user?.avatarURL() ?? client.user?.defaultAvatarURL)
+        })
         .setTimestamp(Date.now())
 }
 
@@ -41,7 +44,7 @@ export const respondToMisspelledWynntils = async (message: Message): Promise<voi
     }
 }
 
-export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }:  DMOptions) => {
+export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }: DMOptions) => {
     const user = await client.users.cache.find(u => u.id === userId)
     if (user) {
         try {

@@ -1,4 +1,4 @@
-import { Entity, Column, BaseEntity, ObjectID, ObjectIdColumn } from 'typeorm'
+import { BaseEntity, Column, Entity, ObjectID, ObjectIdColumn } from 'typeorm'
 
 
 @Entity('punishments')
@@ -16,7 +16,7 @@ export class Punishment extends BaseEntity {
     @Column()
     moderator: string | undefined;
 
-    @Column({ default : 'No reason given' })
+    @Column({ default: 'No reason given' })
     reason: string;
 
     @Column()

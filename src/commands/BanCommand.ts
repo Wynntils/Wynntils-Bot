@@ -1,10 +1,10 @@
-import { CommandContext, CommandOptionType, SlashCreator, MessageOptions } from 'slash-create'
+import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
 import { client } from '..'
 import WynntilsBaseCommand from '../classes/WynntilsCommand'
 import { Colors } from '../constants/Colors'
 import { Staff } from '../constants/Role'
 import { Punishment } from '../models/Punishment'
-import { styledEmbed, logPunishment, dmUser } from '../utils/functions'
+import { dmUser, logPunishment, styledEmbed } from '../utils/functions'
 
 export class BanCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
@@ -30,7 +30,7 @@ export class BanCommand extends WynntilsBaseCommand {
 
     async default(ctx: CommandContext): Promise<MessageOptions> {
 
-        /*TODO: Make it so you can choose how long you want the ban to be, 
+        /*TODO: Make it so you can choose how long you want the ban to be,
                 this should schedule a cron job to unban them on the specified date.
         */
         const user = await this.channel?.guild.members.fetch(this.opts.user)
