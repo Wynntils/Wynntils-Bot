@@ -15,6 +15,7 @@ export default class WynntilsBaseCommand extends Command {
     private readonly _client: Client
     protected opts: any
     protected channel: TextChannel | undefined
+
     public get client(): Client {
         return this._client
     }
@@ -45,7 +46,9 @@ export default class WynntilsBaseCommand extends Command {
             return this[key](ctx)
         }
 
-        if (typeof this['default' as keyof this] === 'function') { // @ts-ignore
+        if (typeof this['default' as keyof this] === 'function') {
+            this.opts = ctx.options
+            // @ts-ignore
             return this['default'](ctx)
         }
 

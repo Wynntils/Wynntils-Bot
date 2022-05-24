@@ -4,6 +4,7 @@ import { Staff } from '../constants/Role'
 import { UserInfo } from '../interfaces/api/athena/UserInfo'
 import { logError, styledEmbed } from '../utils/functions'
 import WynntilsBaseCommand from '../classes/WynntilsCommand'
+import { Colors } from '../constants/Colors'
 
 export class InfoCommand extends WynntilsBaseCommand {
     constructor(creator: SlashCreator) {
@@ -41,7 +42,7 @@ export class InfoCommand extends WynntilsBaseCommand {
             data = await response.json()
         } catch (err: any) {
             logError(err)
-            embed.setColor(0xff5349)
+            embed.setColor(Colors.RED)
                 .setTitle(':x: Oops! Error D;')
                 .setDescription('Something went wrong when fetching the user info.')
 
@@ -57,17 +58,22 @@ export class InfoCommand extends WynntilsBaseCommand {
 
         const userInfo = data.result as UserInfo
 
+        const isCape = typeof userInfo.cosmetics.isElytra === null ? false : !userInfo.cosmetics.isElytra
+        const isElytra = !isCape
+        const parts = userInfo.cosmetics.parts === null ? { ears: null } : userInfo.cosmetics.parts
+        const hasEars = parts.ears === null ? false : userInfo.cosmetics.parts.ears
+
         const cosmeticInfo = `\`\`\`
-Cape:   ${!userInfo.cosmetics.isElytra ? '🟩 Enabled' : '🟥 Disabled'}
-Elytra: ${userInfo.cosmetics.isElytra ? '🟩 Enabled' : '🟥 Disabled'}
-Ears:   ${userInfo.cosmetics.parts.ears ? '🟩 Enabled' : '🟥 Disabled'}\`\`\`
+Cape:   ${isCape ? '🟩 Enabled' : '🟥 Disabled'}
+Elytra: ${isElytra ? '🟩 Enabled' : '🟥 Disabled'}
+Ears:   ${hasEars ? '🟩 Enabled' : '🟥 Disabled'}\`\`\`
             `
 
         const timestamp = Math.max(...Object.keys(userInfo.versions.used).map(k => userInfo.versions.used[k]))
         const lastActive = Math.floor(timestamp / 1000)
 
         embed.setTitle(`${userInfo.username}'s Info`)
-        embed.setColor(0x72ed9e)
+        embed.setColor(Colors.GREEN)
         embed.setThumbnail(`https://minotar.net/helm/${userInfo.uuid}/100.png`)
         embed.setDescription(userInfo.uuid)
         embed.addFields(
@@ -99,6 +105,5 @@ Ears:   ${userInfo.cosmetics.parts.ears ? '🟩 Enabled' : '🟥 Disabled'}\`\`\
         )
 
         return { embeds: [embed.toJSON()] }
-
     }
 }
