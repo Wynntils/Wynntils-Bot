@@ -22,4 +22,4 @@ RUN npm install --only=production
 COPY --from=builder /home/node/app/dist ./dist
 
 # Start
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "prod" ]

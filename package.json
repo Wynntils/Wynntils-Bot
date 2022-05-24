@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node -r dotenv/config ./dist/index.js",
+    "prod": "node ./dist/index.js",
     "build": "tsc",
     "lint": "eslint . --ext .ts"
   },
@@ -42,7 +43,6 @@
     "bufferutil": "^4.0.3",
     "consola": "^2.15.3",
     "discord.js": "^13.6.0",
-    "dotenv": "^10.0.0",
     "erlpack": "github:discord/erlpack",
     "fastest-levenshtein": "^1.0.12",
     "mongodb": "^3.7.3",
@@ -54,6 +54,7 @@
     "zlib-sync": "^0.1.7"
   },
   "devDependencies": {
+    "dotenv": "^10.0.0",
     "@types/node": "^15.6.0",
     "@types/node-fetch": "^2.5.10",
     "@types/require-all": "^3.0.2",
