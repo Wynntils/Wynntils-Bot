@@ -2,6 +2,7 @@ version: "3.5"
 services:
   bot:
     container_name: wynntils-bot
+    restart: always
     networks:
       - database
     build:
