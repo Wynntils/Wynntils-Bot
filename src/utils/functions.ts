@@ -1,13 +1,15 @@
 import { GuildBasedChannel, Message, MessageEmbed, TextChannel } from 'discord.js'
 import { client } from '../index'
 import consola from 'consola'
-import { Colors } from '../constants/Colors'
-import { DMOptions } from '../constants/types/DMOptions'
 import { distance } from 'fastest-levenshtein'
+import { DMOptions } from '../constants/types/DMOptions'
 
 export const styledEmbed: () => MessageEmbed = () => {
     return new MessageEmbed()
-        .setFooter({ text: client.user?.username ?? 'Wynntils', iconURL: (client.user?.avatarURL() ?? client.user?.defaultAvatarURL) })
+        .setFooter({
+            text: client.user?.username ?? 'Wynntils',
+            iconURL: (client.user?.avatarURL() ?? client.user?.defaultAvatarURL)
+        })
         .setTimestamp(Date.now())
 }
 
@@ -20,27 +22,29 @@ export const logError: (error: Error) => void = async (error: Error) => {
         if (!channel)
             continue
 
-        const embed = styledEmbed().setColor(Colors.RED).setTitle('An error occurred with the bot').setDescription(error.message + '```' + error.stack + '```')
+        const embed = styledEmbed().setColor('RED').setTitle('An error occurred with the bot').setDescription(error.message + '```' + error.stack + '```')
 
         await channel.send({ embeds: [embed] }).catch(consola.error)
     }
 
 }
 
-export const respondToMisspelledWynntils = async(message: Message): Promise<void> => {
-    for (const word of message.content.split(' ')) {
+export const respondToMisspelledWynntils = async (message: Message): Promise<void> => {
+    const matches = message.content.match(/\b\w+\b/g)
+    if (matches === null) return
+    for (const word of matches) {
         if (
-            word.toLowerCase().startsWith('w')
-            && word.toLowerCase() !== 'wynntils'
+            !['wynntils', 'wanytails', 'wynnter'].includes(word.toLowerCase())
+            && word.toLowerCase().startsWith('w')
             && distance(word.toLowerCase(), 'wynntils') <= 3
         ) {
-            await message.reply('You spelled Wynntils wrong.')
+            await message.reply(`It's Wynntils, not ${word}!`)
             return
         }
     }
 }
 
-export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }:  DMOptions) => {
+export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }: DMOptions) => {
     const user = await client.users.cache.find(u => u.id === userId)
     if (user) {
         try {

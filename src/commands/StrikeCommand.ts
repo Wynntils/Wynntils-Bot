@@ -212,7 +212,7 @@ export class StrikeCommand extends WynntilsBaseCommand {
         const userPunishmentEmbed = styledEmbed()
             .setColor(Colors.BLUE)
             .setDescription(`Found ${punishments.length} punishments for <@${this.opts.user}> \`(${user.username}#${user.discriminator})\``)
-            
+
         punishments.forEach(punishment => userPunishmentEmbed.addField(`${punishment.id}`, `**${punishment.type}** • ${punishment.reason}`, false))
 
         if (!punishments || punishments.length === 0)

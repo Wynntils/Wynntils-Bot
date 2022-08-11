@@ -20,7 +20,10 @@ export const action = async (oldMessage: Message, newMessage: Message): Promise<
 
         const embed = styledEmbed()
             .setColor(Colors.YELLOW)
-            .setAuthor({ name: `${oldMessage.author.username}#${oldMessage.author.discriminator} (${oldMessage.author.id})`, iconURL: oldMessage.author.avatarURL() })
+            .setAuthor({
+                name: `${oldMessage.author.username}#${oldMessage.author.discriminator} (${oldMessage.author.id})`,
+                iconURL: oldMessage.author.avatarURL()
+            })
             .setDescription(`Message ${oldMessage.id} edited in <#${oldMessage.channel.id}>`)
             .addFields([
                 {

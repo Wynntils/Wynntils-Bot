@@ -4,7 +4,7 @@ import WynntilsBaseCommand from '../classes/WynntilsCommand'
 import { Colors } from '../constants/Colors'
 import { Staff } from '../constants/Role'
 import { Punishment } from '../models/Punishment'
-import { styledEmbed, logPunishment, dmUser } from '../utils/functions'
+import { dmUser, logPunishment, styledEmbed } from '../utils/functions'
 
 export class MuteCommand extends WynntilsBaseCommand {
 
@@ -18,7 +18,7 @@ export class MuteCommand extends WynntilsBaseCommand {
                     name: 'give',
                     description: 'Mute an user',
                     type: CommandOptionType.SUB_COMMAND,
-                    options:[
+                    options: [
                         {
                             name: 'user',
                             description: 'The user you want to mute',
@@ -41,7 +41,7 @@ export class MuteCommand extends WynntilsBaseCommand {
                     name: 'remove',
                     description: 'Remove a mute from an user',
                     type: CommandOptionType.SUB_COMMAND,
-                    options:[
+                    options: [
                         {
                             name: 'user',
                             description: 'The user you want to unmute',
@@ -60,16 +60,16 @@ export class MuteCommand extends WynntilsBaseCommand {
         const duration = this.opts.duration * 60 * 60 * 1000
 
         if (Staff.some(sr => user?.roles.cache.some(r => r.name === sr)))
-            return { content: 'You cannot mute a staff member.' }
+            return { content: 'You cannot mute a staff member.', ephemeral: true }
 
         if (this.opts.user === ctx.member?.id)
-            return { content: 'You cannot mute yourself.' }
+            return { content: 'You cannot mute yourself.', ephemeral: true }
 
         if (this.opts.user === client.user?.id)
-            return { content: 'Hey! You cannot put me in a timeout! :(' }
+            return { content: 'Hey! You cannot put me in a timeout! :(', ephemeral: true }
 
         if (!user)
-            return { content: 'User does not exist.' }
+            return { content: 'User does not exist.', ephemeral: true }
 
         const reason = this.opts.reason ? this.opts.reason : 'No reason given'
         const punishment = new Punishment()

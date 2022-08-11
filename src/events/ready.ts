@@ -11,7 +11,7 @@ export const action = async (): Promise<void> => {
     try {
         await createConnection()
         consola.success('Connected to database')
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
         consola.error(e.message)
         consola.fatal('Unable to create database connection')

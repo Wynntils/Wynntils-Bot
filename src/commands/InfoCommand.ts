@@ -58,10 +58,15 @@ export class InfoCommand extends WynntilsBaseCommand {
 
         const userInfo = data.result as UserInfo
 
+        const isCape = typeof userInfo.cosmetics.isElytra === null ? false : !userInfo.cosmetics.isElytra
+        const isElytra = !isCape
+        const parts = userInfo.cosmetics.parts === null ? { ears: null } : userInfo.cosmetics.parts
+        const hasEars = parts.ears === null ? false : userInfo.cosmetics.parts.ears
+
         const cosmeticInfo = `\`\`\`
-Cape:   ${!userInfo.cosmetics.isElytra ? '🟩 Enabled' : '🟥 Disabled'}
-Elytra: ${userInfo.cosmetics.isElytra ? '🟩 Enabled' : '🟥 Disabled'}
-Ears:   ${userInfo.cosmetics.parts.ears ? '🟩 Enabled' : '🟥 Disabled'}\`\`\`
+Cape:   ${isCape ? '🟩 Enabled' : '🟥 Disabled'}
+Elytra: ${isElytra ? '🟩 Enabled' : '🟥 Disabled'}
+Ears:   ${hasEars ? '🟩 Enabled' : '🟥 Disabled'}\`\`\`
             `
 
         const timestamp = Math.max(...Object.keys(userInfo.versions.used).map(k => userInfo.versions.used[k]))
@@ -99,13 +104,6 @@ Ears:   ${userInfo.cosmetics.parts.ears ? '🟩 Enabled' : '🟥 Disabled'}\`\`\
             },
         )
 
-            return { embeds: [embed.toJSON()] }
         return { embeds: [embed.toJSON()] }
-
-        embed.setColor(Colors.RED)
-            .setTitle(':x: Oops! Error D;')
-            .setDescription(data.message)
-
-        return { embeds: [embed.toJSON()], ephemeral: true }
     }
 }

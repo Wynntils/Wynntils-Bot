@@ -15,6 +15,7 @@ export default class WynntilsBaseCommand extends Command {
     private readonly _client: Client
     protected opts: any
     protected channel: TextChannel | undefined
+
     public get client(): Client {
         return this._client
     }

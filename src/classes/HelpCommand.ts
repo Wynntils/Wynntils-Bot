@@ -44,7 +44,12 @@ export class HelpCommand extends WynntilsBaseCommand {
         const search: string = <string>ctx.options.command
         const command = this.creator.commands.find(v => v.commandName === search) as WynntilsBaseCommand
 
-        if (command.hasPermission(ctx) !== true) return { content: 'You do not have permission to use this command', ephemeral: true }
+        if (command.hasPermission(ctx) !== true) {
+            return {
+                content: 'You do not have permission to use this command',
+                ephemeral: true
+            }
+        }
 
         const embed = styledEmbed()
             .setTitle('Help: ' + search)
@@ -58,7 +63,7 @@ export class HelpCommand extends WynntilsBaseCommand {
                     case CommandOptionType.SUB_COMMAND:
                         return `**${search} ${cmd.name} ` + cmd.options?.map((opt) => {
                             return `<${opt.required === true ? '' : '?'}${opt.name}>`
-                        } ) + `** - ${cmd.description}`
+                        }) + `** - ${cmd.description}`
                     case CommandOptionType.STRING:
                         return `**${search} <${cmd.name}>** - ${cmd.description}`
                     default:
