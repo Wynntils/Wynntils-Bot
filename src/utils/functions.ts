@@ -29,21 +29,6 @@ export const logError: (error: Error) => void = async (error: Error) => {
 
 }
 
-export const respondToMisspelledWynntils = async (message: Message): Promise<void> => {
-    const matches = message.content.match(/\b\w+\b/g)
-    if (matches === null) return
-    for (const word of matches) {
-        if (
-            !['wynntils', 'wanytails', 'wynnter'].includes(word.toLowerCase())
-            && word.toLowerCase().startsWith('w')
-            && distance(word.toLowerCase(), 'wynntils') <= 3
-        ) {
-            await message.reply(`It's Wynntils, not ${word}!`)
-            return
-        }
-    }
-}
-
 export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }: DMOptions) => {
     const user = await client.users.cache.find(u => u.id === userId)
     if (user) {
