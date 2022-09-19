@@ -43,5 +43,15 @@
         "name": "streams",
         "title": "Release Streams",
         "value": "Wynntils has two different release streams:\n\n**Stable**: The mod will only update when a new version is released. Stable versions are generally more stable than Cutting Edge builds.\n\n**Cutting Edge (CE)**: The mod will update whenever a new build is released. Cutting Edge builds will include features that are not yet in Stable versions and are currently in development but may also be less stable than Stable versions.\n\nYou can change your release stream by going into the mod settings (default key: `P`) and look in the Core category."
+    },
+    {
+        "name": "artemis",
+        "title": "Artemis",
+        "value": "Artemis is the **1.18.2** rewrite of Wynntils.\nIt will support **Forge, Fabric and Quilt**.\nIt is currently in early development and there is **no** ETA.\n\nPlease keep suggestions and discussions in <#946471329857675307>"
+    },
+    {
+        "name": "missingids",
+        "title": "Missing Identifications",
+        "value": "If you are experiencing issues with missing item identifications, do **/wynntils reloadapi**.\nUsing the CE (Cutting Edge) update stream (/faq streams) might also help"
     }
 ]
