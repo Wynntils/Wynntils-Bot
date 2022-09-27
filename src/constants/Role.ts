@@ -7,6 +7,7 @@ export enum Role {
     BotRoles = '556627417171755028',
     DJ = '645113312597639168',
     ModUpdates = '424996873091284992',
+    ArtemisUpdates = '1024367005702311999',
     ReactionRoles = '597206145467154432',
     Gamer = '538399903022579732',
     DecentGamer = '538400041942122527',
@@ -47,4 +48,4 @@ export enum Role {
 
 export const Staff = ['Moderator', 'Developer', 'Senior Developer', 'Administrator']
 export const DonatorRoles = ['Level 0 Donator', 'Level 1 Donator', 'Level 2 Donator', 'Level 3 Donator', 'Level 4 Donator']
-export const FreeRoles = [Role.ModUpdates]
+export const FreeRoles = [Role.ModUpdates, Role.ArtemisUpdates]
