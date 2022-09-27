@@ -7,7 +7,7 @@ export enum Role {
     BotRoles = '556627417171755028',
     DJ = '645113312597639168',
     ModUpdates = '424996873091284992',
-    ArtemisUpdates = '1024367005702311999',
+    ArtemisUpdates = '1024369596767154218',
     ReactionRoles = '597206145467154432',
     Gamer = '538399903022579732',
     DecentGamer = '538400041942122527',
