@@ -33,7 +33,8 @@ export const action = async (reaction: MessageReaction, user: User): Promise<voi
         if (reaction.message.channel.id === Channel.Self_Roles) {
             if (reaction.emoji.identifier === Emoji.ARROWS_COUNTERCLOCKWISE)
                 guildMember.roles.add(Role.ModUpdates, 'Reacted in #self-roles').catch(logError)
-
+            if (reaction.emoji.identifier === Emoji.ROCKET)
+                guildMember.roles.add(Role.ArtemisUpdates, 'Reacted in #self-roles').catch(logError)
         }
     } else
         logError(Error(`Unable to find user (${user.id}) in Wynntils Discord server.`))

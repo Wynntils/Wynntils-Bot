@@ -62,8 +62,10 @@ export class InfoCommand extends WynntilsBaseCommand {
         const isElytra = !isCape
         const parts = userInfo.cosmetics.parts === null ? { ears: null } : userInfo.cosmetics.parts
         const hasEars = parts.ears === null ? false : userInfo.cosmetics.parts.ears
+        const textureID = userInfo.cosmetics.texture ? userInfo.cosmetics.texture : 'no texture set'
 
         const cosmeticInfo = `\`\`\`
+Texture ID ${textureID}
 Cape:   ${isCape ? '🟩 Enabled' : '🟥 Disabled'}
 Elytra: ${isElytra ? '🟩 Enabled' : '🟥 Disabled'}
 Ears:   ${hasEars ? '🟩 Enabled' : '🟥 Disabled'}\`\`\`
