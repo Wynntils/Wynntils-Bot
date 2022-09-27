@@ -26,7 +26,20 @@ export const logError: (error: Error) => void = async (error: Error) => {
 
         await channel.send({ embeds: [embed] }).catch(consola.error)
     }
+}
 
+export const logReady: () => void = async () => {
+
+    for (const guild of client.guilds.cache) {
+        const channel = guild[1].channels.cache.find((c: GuildBasedChannel) => c.name === 'console-log') as TextChannel
+
+        if (!channel)
+            continue
+
+        const embed = styledEmbed().setColor('GREEN').setTitle('Update').setDescription('The bot has just started.')
+
+        await channel.send({ embeds: [embed] }).catch(consola.error)
+    }
 }
 
 export const dmUser: ({ userId, content, embed }: DMOptions) => void = async ({ userId, content, embed }: DMOptions) => {

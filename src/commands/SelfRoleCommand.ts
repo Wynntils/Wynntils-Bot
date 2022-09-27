@@ -20,6 +20,10 @@ export class SelfRoleCommand extends WynntilsBaseCommand {
                             name: 'Development Updates',
                             value: 'Development Updates'
                         },
+                        {
+                            name: 'Artemis Development Updates',
+                            value: 'Artemis Development Updates'
+                        },
                     ]
                 }
             ]
