@@ -2,7 +2,7 @@
     {
         "name": "sockets",
         "title": "Viewing Friend & Party Members through the Map",
-        "value": "Yes, we're planning to implement it. Yes, it was already in CE for a short while. However, we decided to remove it as a better solution is possible (for both better performance and file size)."
+        "value": "You can currently view your Friends and Party Members on Artemis (Our 1.18.2 version) using build 505 or above."
     },
     {
         "name": "guildcolor",
