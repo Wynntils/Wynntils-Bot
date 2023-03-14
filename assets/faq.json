@@ -37,7 +37,7 @@
     {
         "name": "download",
         "title": "Downloads",
-        "value": "You can download Wynntils at these following locations:\n**Modrinth** - [Download](https://modrinth.com/mod/wynntils)\n**CurseForge** - [Download](https://minecraft.curseforge.com/projects/wynntils)\n**Wynntils (Stable)** - [Download](http://ci.wynntils.com/job/Wynntils/lastSuccessfulBuild/)\n**Wynntils (Cutting Edge)** - [Download](http://ci.wynntils.com/job/Wynntils-DEV/lastSuccessfulBuild/)"
+        "value": "You can download Wynntils at these following locations:\n**Modrinth** - [Download](https://modrinth.com/mod/wynntils)\n**CurseForge** - [Download](https://minecraft.curseforge.com/projects/wynntils)\n**GitHub (Legacy)** - [Download](https://github.com/Wynntils/Wynntils/releases/latest)\n**GitHub (Artemis)** - [Download](https://github.com/Wynntils/Artemis/releases/latest)"
     },
     {
         "name": "streams",
