@@ -8,6 +8,8 @@ export const action = async (message: Message): Promise<void> => {
             c => c.name === 'server-logs'
         ) as TextChannel
 
+
+        //TODO: Find reason why author is sometimes null
         const embed = styledEmbed()
             .setColor(Colors.RED)
             .setAuthor({
