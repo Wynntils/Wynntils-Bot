@@ -4,8 +4,6 @@ import { Colors } from '../constants/Colors'
 
 export const action = async (message: Message): Promise<void> => {
     try {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         const serverLogChannel = message.guild.channels.cache.find(
             c => c.name === 'server-logs'
         ) as TextChannel
