@@ -49,7 +49,7 @@
     "node-fetch": "^2.6.7",
     "require-all": "^3.0.0",
     "slash-create": "^5.1.0",
-    "typeorm": "^0.3.6",
+    "typeorm": "^0.3.14",
     "utf-8-validate": "^5.0.5",
     "zlib-sync": "^0.1.7"
   },
