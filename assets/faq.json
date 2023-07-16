@@ -1,8 +1,8 @@
 [
     {
-        "name": "sockets",
-        "title": "Viewing Friend & Party Members through the Map",
-        "value": "You can currently view your Friends and Party Members on Artemis (Our 1.19.3 version)"
+        "name": "logs",
+        "title": "Sending logs",
+        "value": "If you have experienced a bug or if you have crashed, we may ask you to upload your `latest.log` file or a crash report.\n\nYou can find:\n- `latest.log` in your `.minecraft/logs` folder;\n- `crash reports` in the `.minecraft/crash-reports` folder.\n## Where do I find `.minecraft`?`\n- Windows - `%appdata%\\.minecraft\\`\n- MacOS - `~/Library/Application Support/minecraft`\n- Linux - `~/.minecraft`"
     },
     {
         "name": "guildcolor",
@@ -37,11 +37,11 @@
     {
         "name": "download",
         "title": "Downloads",
-        "value": "You can download Wynntils at these following locations:\n**Modrinth** - [Download](https://modrinth.com/mod/wynntils)\n**CurseForge** - [Download](https://minecraft.curseforge.com/projects/wynntils)\n**GitHub (Legacy)** - [Download](https://github.com/Wynntils/Wynntils/releases/latest)\n**GitHub (Artemis)** - [Download](https://github.com/Wynntils/Artemis/releases/latest)"
+        "value": "You can download Wynntils at these following locations:\n- **Modrinth** - [Download](https://modrinth.com/mod/wynntils)\n- **CurseForge** - [Download](https://minecraft.curseforge.com/projects/wynntils)\n- **GitHub (Artemis)** - [Download](https://github.com/Wynntils/Artemis/releases/latest)"
     },
     {
         "name": "version",
         "title": "Wynntils Versions",
-        "value": "We currently maintain two versions of Wynntils.\n* [Legacy](https://github.com/Wynntils/Wynntils/releases/latest) - The original version that runs on Forge 1.12.2 and receives minimal updates and support. Only critical bug fixes and the occasional backport of a feature.\n* [Artemis](https://github.com/Wynntils/Artemis/releases/latest) - The newer version of Wynntils where we try an keep up with the current version of the mod loaders Fabric, Forge, and Quilt."
+        "value": "We currently maintain one version of Wynntils.\n* [Artemis](https://github.com/Wynntils/Artemis/releases/latest) - The newer version of Wynntils where we try an keep up with the current version of the mod loaders Fabric, Forge, and Quilt."
     }
 ]
