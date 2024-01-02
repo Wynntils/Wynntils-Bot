@@ -12,11 +12,12 @@ export const action = async (oldMessage: Message, newMessage: Message): Promise<
         return
 
     try {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         const serverLogChannel = oldMessage.guild.channels.cache.find(
             c => c.name === 'server-logs'
         ) as TextChannel
+
+        const oldCleanContent = oldMessage.cleanContent.replace(/`/g, '\'')
+        const newCleanConent = oldMessage.cleanContent.replace(/`/g, '\'')
 
         const embed = styledEmbed()
             .setColor(Colors.YELLOW)
@@ -28,11 +29,11 @@ export const action = async (oldMessage: Message, newMessage: Message): Promise<
             .addFields([
                 {
                     name: 'Before',
-                    value: `\`\`\`${oldMessage.cleanContent}\`\`\``
+                    value: `\`\`\`${oldCleanContent}\`\`\``
                 },
                 {
                     name: 'After',
-                    value: `\`\`\`${newMessage.cleanContent}\`\`\``
+                    value: `\`\`\`${newCleanConent}\`\`\``
                 }
             ])
             .setTimestamp()
