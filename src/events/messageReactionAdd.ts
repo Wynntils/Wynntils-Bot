@@ -35,7 +35,7 @@ export const action = async (reaction: MessageReaction, user: User): Promise<voi
                 guildMember.roles.add(Role.ModUpdates, 'Reacted in #self-roles').catch(logError)
             if (reaction.emoji.identifier === Emoji.ROCKET)
                 guildMember.roles.add(Role.ArtemisUpdates, 'Reacted in #self-roles').catch(logError)
-            if(reaction.emoji.identifier == Emoji.DETECTIVE) 
+            if (reaction.emoji.identifier == Emoji.DETECTIVE) 
                 guildMember.roles.add(Role.DataDetectives, 'Reacted in #self-roles').catch(logError)
         }
     } else
