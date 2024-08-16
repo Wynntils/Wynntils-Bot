@@ -12,7 +12,7 @@
 	{
 		"name": "install",
 		"title": "Installing Wynntils",
-		"value": "Wynntils is installed like every other mod for Minecraft. If you never installed mods for minecraft, don't worry, we have a solution for you\n\n- **Manual**: Here is a [video tutorial](https://youtu.be/cmotq0OWYqk?si=t0keAil9zACZpS42) by Looni, make sure to set Minecraft version to the supported Wynntils version.\n- **Automated**: We have created Wynntils Mod Installer app which can install and update Wynntils as well as many commonly used mods, not only that but you can customize which mods are downloaded to your liking. You can find it [here](https://github.com/Wynntils/launchy?tab=readme-ov-file#wynntils-mod-installer)"
+		"value": "Wynntils is installed like every other mod for Minecraft. If you have never installed mods for minecraft before, don't worry, we have a solution for you\n\n- **Manual**: Here is a [video tutorial](https://youtu.be/cmotq0OWYqk) by Looni, make sure to set Minecraft version to the supported Wynntils version.\n- **Automated**: We have created Wynntils Mod Installer app which can install and update Wynntils as well as many commonly used mods, not only that but you can customize which mods are downloaded to your liking. You can find it [here](https://github.com/Wynntils/launchy?tab=readme-ov-file#wynntils-mod-installer)"
 	},
 	{
 		"name": "capes",
@@ -32,7 +32,7 @@
 	{
 		"name": "support",
 		"title": "Crash, Bug, and Support",
-		"value": "You can ask for help in the <#1023353867158687744> channel, other users will be able to see your question and may answer it. If you want to ask in private, you create a ticket in the <#521320092747825164> channel, tickets can only be seen by you and moderation.\nTo report bugs you go to the <#1257255311589511189> channel and if you want to make suggestions go to the <#1257255390551343184> channel"
+		"value": "You can ask for help in the <#1023353867158687744> channel, other users will be able to see your question and may answer it. If you want to ask in private, you create a ticket in the <#521320092747825164> channel, tickets can only be seen by you and moderators.\nTo report bugs you can go to the <#1257255311589511189> channel and if you want to make suggestions for the mod go to the <#1257255390551343184> channel"
 	},
 	{
 		"name": "download",
@@ -42,6 +42,6 @@
 	{
 		"name": "version",
 		"title": "Wynntils Versions",
-		"value": "We currently maintain one version of [Wynntils](https://github.com/Wynntils/Artemis/releases/latest) which currently supports Minecraft 1.21 and 1.21.1 and supports Fabric and Neoforge mod loaders.\n\nIn the past we developed now archived [Legacy Wynntils](https://github.com/Wynntils/Wynntils-Legacy) for Minecraft 1.12. Current version of Wynntils is full rewrite of the mod"
+		"value": "We currently maintain one version of [Wynntils](https://github.com/Wynntils/Artemis/releases/latest) which currently supports Minecraft 1.21 and 1.21.1 and supports Fabric and Neoforge mod loaders."
 	}
 ]
