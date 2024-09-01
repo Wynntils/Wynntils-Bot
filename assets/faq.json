@@ -12,7 +12,7 @@
     {
         "name": "install",
         "title": "Installing Wynntils",
-        "value": "Here are some guides to help you get started with using the mod.\n\n[Wynncraft Forums](https://forums.wynncraft.com/threads/197716/) or [Wynntils' Install Page](https://wynntils.com/#install/).\n\nPlease make sure you're installing the recommended build of Forge 1.21 while setting up Wynntils."
+        "value": "Here are some guides to help you get started with using the mod.\n\n[Wynncraft Forums](https://forums.wynncraft.com/threads/197716/) or [Wynntils' Install Page](https://wynntils.com/#install/).\n\nPlease make sure you're installing the recommended build of NeoForge 1.21 while setting up Wynntils."
     },
     {
         "name": "capes",
