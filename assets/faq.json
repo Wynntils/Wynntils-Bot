@@ -12,7 +12,7 @@
     {
         "name": "install",
         "title": "Installing Wynntils",
-        "value": "Here are some guides to help you get started with using the mod.\n\n[Wynncraft Forums](https://forums.wynncraft.com/threads/197716/) or [Wynntils' Install Page](https://wynntils.com/#install/).\n\nPlease make sure you're installing the recommended build of Forge 1.12.2 while setting up Wynntils."
+        "value": "Here are some guides to help you get started with using the mod.\n\n[Wynncraft Forums](https://forums.wynncraft.com/threads/197716/) or [Wynntils' Install Page](https://wynntils.com/#install/).\n\nPlease make sure you're installing the recommended build of Forge 1.21 while setting up Wynntils."
     },
     {
         "name": "capes",
@@ -37,11 +37,11 @@
     {
         "name": "download",
         "title": "Downloads",
-        "value": "You can download Wynntils at these following locations:\n- **Modrinth** - [Download](https://modrinth.com/mod/wynntils)\n- **CurseForge** - [Download](https://minecraft.curseforge.com/projects/wynntils)\n- **GitHub (Artemis)** - [Download](https://github.com/Wynntils/Artemis/releases/latest)"
+        "value": "You can download Wynntils at these following locations:\n- **Modrinth** - [Download](https://modrinth.com/mod/wynntils)\n- **CurseForge** - [Download](https://minecraft.curseforge.com/projects/wynntils)\n- **GitHub (Wynntils)** - [Download](https://github.com/Wynntils/Wynntils/releases/latest)"
     },
     {
         "name": "version",
         "title": "Wynntils Versions",
-        "value": "We currently maintain one version of Wynntils.\n* [Artemis](https://github.com/Wynntils/Artemis/releases/latest) - The newer version of Wynntils where we try an keep up with the current version of the mod loaders Fabric, Forge, and Quilt."
+        "value": "We currently maintain one version of Wynntils.\n* [Wynntils](https://github.com/Wynntils/Wynntils/releases/latest) - The newer version of Wynntils where we try an keep up with the current version of the mod loaders Fabric, NeoForge."
     }
 ]
