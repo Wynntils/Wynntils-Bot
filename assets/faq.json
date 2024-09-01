@@ -42,6 +42,6 @@
     {
         "name": "version",
         "title": "Wynntils Versions",
-        "value": "We currently maintain one version of Wynntils.\n* [Wynntils](https://github.com/Wynntils/Wynntils/releases/latest) - The newer version of Wynntils where we try an keep up with the current version of the mod loaders Fabric, NeoForge."
+        "value": "We currently maintain one version of Wynntils.\n* [Wynntils](https://github.com/Wynntils/Wynntils/releases/latest) - The newer version of Wynntils where we try an keep up with the current version of the mod loaders Fabric, and NeoForge."
     }
 ]
