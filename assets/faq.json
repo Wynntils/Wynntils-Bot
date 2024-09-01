@@ -2,7 +2,7 @@
     {
         "name": "logs",
         "title": "Sending logs",
-        "value": "If you have experienced a bug or if you have crashed, we may ask you to upload your `latest.log` file or a crash report.\n\nYou can find:\n- `latest.log` in your `.minecraft/logs` folder;\n- `crash reports` in the `.minecraft/crash-reports` folder.\n## Where do I find `.minecraft`?`\n- Windows - `%appdata%\\.minecraft\\`\n- MacOS - `~/Library/Application Support/minecraft`\n- Linux - `~/.minecraft`"
+        "value": "If you have experienced a bug or if you have crashed, we may ask you to upload your `latest.log` file or a crash report.\n\nYou can find:\n- `latest.log` in your `.minecraft/logs` folder or the `.wynntils/logs` folder if you use Wynntils Mod Installer;\n- `crash reports` in the `.minecraft/crash-reports` folder or the `.wynntils/crash-reports` folder if you use Wynntils Mod Installer.\n## Where do I find `.minecraft` and `.wynntils`?`\n- Windows - `%appdata%\\.minecraft\\` and `%appdata%\\.wynntils\\`\n- MacOS - `~/Library/Application Support/minecraft` and `~/Library/Application Support/wynntils`\n- Linux - `~/.minecraft` and `~/.wynntils`"
     },
     {
         "name": "guildcolor",
@@ -12,12 +12,12 @@
     {
         "name": "install",
         "title": "Installing Wynntils",
-        "value": "Here are some guides to help you get started with using the mod.\n\n[Wynncraft Forums](https://forums.wynncraft.com/threads/197716/) or [Wynntils' Install Page](https://wynntils.com/#install/).\n\nPlease make sure you're installing the recommended build of NeoForge 1.21 while setting up Wynntils."
+        "value": "Wynntils is installed like every other mod for Minecraft. If you have never installed mods for minecraft before, don't worry, we have a solution for you\n\n- **Manual**: Here is a [Video Tutorial](https://youtu.be/cmotq0OWYqk) by Looni, make sure to set Minecraft version to the supported Wynntils version.\n- **Automated**: We have created Wynntils Mod Installer app which can install and update Wynntils as well as many commonly used mods, not only that but you can customize which mods are downloaded to your liking. You can find it [here](https://github.com/Wynntils/launchy?tab=readme-ov-file#wynntils-mod-installer)"
     },
     {
         "name": "capes",
         "title": "Wynntils Capes",
-        "value": "In order to upload a cape you'll need to setup a Wynntils account first. You can do so by either going in-game (with Wynntils installed) and using the command `/token`. This will give you a clickable token that will allow you to create your account. You can now log in at [Wynntils Accounts](https://account.wynntils.com/) with your Minecraft username as the  username.\n\n*Please note that capes and elytraas have to be uploaded as a 64x32 or 128x64 image.*"
+        "value": "In order to upload a cape you'll need to setup a Wynntils account first. You can do so by using the `/wynntils token` command in the game. This will give you a clickable token that will allow you to create your account. You can now log in at [Wynntils Accounts](https://account.wynntils.com/) with your Minecraft username as the username.\n\n*Please note that capes and elytras have to be uploaded as a 64x32 or 128x64 image.*"
     },
     {
         "name": "highlights",
@@ -32,16 +32,16 @@
     {
         "name": "support",
         "title": "Crash, Bug, and Support",
-        "value": "To request for support, please ask the community if it is something that can be easily answered by our users, otherwise, please go to <#521320092747825164> and click on the appropriate button. Upon doing so, a channel will be created for you to submit your inquiry."
+        "value": "You can ask for help in the <#1023353867158687744> channel, other users will be able to see your question and may answer it. If you want to ask in private, you create a ticket in the <#521320092747825164> channel, tickets can only be seen by you and moderators.\nTo report bugs you can go to the <#1257255311589511189> channel and if you want to make suggestions for the mod go to the <#1257255390551343184> channel"
     },
     {
         "name": "download",
         "title": "Downloads",
-        "value": "You can download Wynntils at these following locations:\n- **Modrinth** - [Download](https://modrinth.com/mod/wynntils)\n- **CurseForge** - [Download](https://minecraft.curseforge.com/projects/wynntils)\n- **GitHub (Wynntils)** - [Download](https://github.com/Wynntils/Wynntils/releases/latest)"
+        "value": "You can download Wynntils at these following locations:\n- **Modrinth** - [Download](https://modrinth.com/mod/wynntils)\n- **CurseForge** - [Download](https://minecraft.curseforge.com/projects/wynntils)\n- **GitHub** - [Download](https://github.com/Wynntils/Wynntils/releases/latest)"
     },
     {
         "name": "version",
         "title": "Wynntils Versions",
-        "value": "We currently maintain one version of Wynntils.\n* [Wynntils](https://github.com/Wynntils/Wynntils/releases/latest) - The newer version of Wynntils where we try an keep up with the current version of the mod loaders Fabric, and NeoForge."
+        "value": "We currently maintain one version of [Wynntils](https://github.com/Wynntils/Wynntils/releases/latest) which currently supports Minecraft 1.21, and 1.21.1 and supports Fabric, and Neoforge mod loaders."
     }
 ]
