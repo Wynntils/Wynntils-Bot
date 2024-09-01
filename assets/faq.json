@@ -2,7 +2,7 @@
     {
         "name": "logs",
         "title": "Sending logs",
-        "value": "If you have experienced a bug or if you have crashed, we may ask you to upload your `latest.log` file or a crash report.\n\nYou can find:\n- `latest.log` in your `.minecraft/logs` folder or the `.wynntils/logs` folder if you use Wynntils Mod Installer;\n- `crash reports` in the `.minecraft/crash-reports` folder or the `.wynntils/crash-reports` folder if you use Wynntils Mod Installer.\n## Where do I find `.minecraft` and `.wynntils`?`\n- Windows - `%appdata%\\.minecraft\\` and `%appdata%\\.wynntils\\`\n- MacOS - `~/Library/Application Support/minecraft` and `~/Library/Application Support/wynntils`\n- Linux - `~/.minecraft` and `~/.wynntils`"
+        "value": "If you have experienced a bug and/or if you have crashed, we may ask you to upload your `latest.log` file and/or a crash report.\n\nYou can find:\n- `latest.log` in your `.minecraft/logs` folder or the `.wynntils/logs` folder if you use Wynntils (Launchy) Mod Installer;\n- `crash reports` in the `.minecraft/crash-reports` folder or the `.wynntils/crash-reports` folder if you use Wynntils (Launchy) Mod Installer.\n## Where do I find `.minecraft` and `.wynntils`?`\n- Windows - `%appdata%\\.minecraft\\` and `%appdata%\\.wynntils\\`\n- MacOS - `~/Library/Application Support/minecraft` and `~/Library/Application Support/wynntils`\n- Linux - `~/.minecraft` and `~/.wynntils`"
     },
     {
         "name": "guildcolor",
@@ -12,7 +12,7 @@
     {
         "name": "install",
         "title": "Installing Wynntils",
-        "value": "Wynntils is installed like every other mod for Minecraft. If you have never installed mods for minecraft before, don't worry, we have a solution for you\n\n- **Manual**: Here is a [Video Tutorial](https://youtu.be/cmotq0OWYqk) by Looni, make sure to set Minecraft version to the supported Wynntils version.\n- **Automated**: We have created Wynntils Mod Installer app which can install and update Wynntils as well as many commonly used mods, not only that but you can customize which mods are downloaded to your liking. You can find it [here](https://github.com/Wynntils/launchy?tab=readme-ov-file#wynntils-mod-installer)"
+        "value": "Wynntils is installed like every other mod for Minecraft. If you have never installed mods for minecraft before, don't worry, we have a solution for you\n\n- **Manual**: Here is a [Video Tutorial](https://youtu.be/cmotq0OWYqk) by Looni, make sure to set Minecraft version to the supported Wynntils version.\n- **Automated**: We have created Wynntils Mod Installer app which can install and update Wynntils as well as many commonly used mods called Launchy, not only that but you can customize which mods are downloaded to your liking. You can find it [Here](https://github.com/Wynntils/launchy?tab=readme-ov-file#wynntils-mod-installer)"
     },
     {
         "name": "capes",
