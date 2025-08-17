@@ -14,6 +14,6 @@ export class PingCommand extends WynntilsBaseCommand {
     }
 
     public async execute(interaction: ChatInputCommandInteraction): Promise<void> {
-        await interaction.reply({ content: 'Pong! :ping_pong:', ephemeral: true });
+        await interaction.reply({ content: 'Pong! :ping_pong:', flags: ['Ephemeral'] });
     }
 }

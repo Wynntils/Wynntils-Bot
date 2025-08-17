@@ -27,14 +27,14 @@ export class SelfRoleCommand extends WynntilsBaseCommand {
         const roleName = interaction.options.getString('role', true);
         const guild = interaction.guild;
         if (!guild)  {
-            interaction.reply({ content: 'This command can only be used in a server.', ephemeral: true });
+            interaction.reply({ content: 'This command can only be used in a server.', flags: ['Ephemeral'] });
         };
 
         let member;
         try {
             member = await guild.members.fetch(interaction.user.id);
         } catch {
-            interaction.reply({ content: 'Could not fetch your member data.', ephemeral: true });
+            interaction.reply({ content: 'Could not fetch your member data.', flags: ['Ephemeral'] });
         }
 
         const role = guild.roles.cache.find(r => r.name === roleName);
@@ -46,7 +46,7 @@ export class SelfRoleCommand extends WynntilsBaseCommand {
                         .setTitle(':x: Oops! Error D;')
                         .setDescription(`Role \`${roleName}\` not found in server.`)
                 ],
-                ephemeral: true
+                flags: ['Ephemeral']
             });
         }
 
@@ -76,7 +76,7 @@ export class SelfRoleCommand extends WynntilsBaseCommand {
                         .setTitle('Success!')
                         .setDescription(successMsg)
                 ],
-                ephemeral: true
+                flags: ['Ephemeral']
             });
         } catch (err) {
             logError(err);
@@ -87,7 +87,7 @@ export class SelfRoleCommand extends WynntilsBaseCommand {
                         .setTitle(':x: Oops! Error D;')
                         .setDescription(errorMsg)
                 ],
-                ephemeral: true
+                flags: ['Ephemeral']
             });
         }
     }

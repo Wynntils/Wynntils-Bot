@@ -33,13 +33,13 @@ export class FaqCommand extends WynntilsBaseCommand {
             embed.setColor(Colors.Green)
                 .setAuthor({ name: 'Wynntils FAQ', iconURL: this.client.user?.avatarURL() ?? this.client.user?.defaultAvatarURL })
                 .addFields({ name: faq.title, value: faq.value });
-            await interaction.reply({ embeds: [embed], ephemeral: true });
+            await interaction.reply({ embeds: [embed], flags: ['Ephemeral'] });
             return;
         }
 
         embed.setColor(Colors.Red)
             .setTitle(':x: Invalid Entry')
             .setDescription(`Unable to find entry for ${value}.`);
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.reply({ embeds: [embed], flags: ['Ephemeral'] });
     }
 }

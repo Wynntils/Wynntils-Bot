@@ -41,17 +41,17 @@ export class HelpCommand extends WynntilsBaseCommand {
                 .setTitle('Wynntils Help Commands')
                 .addFields(fields)
                 .setColor(Colors.GREEN);
-            await interaction.reply({ embeds: [embed], ephemeral: true });
+            await interaction.reply({ embeds: [embed], flags: ['Ephemeral'] });
             return;
         }
 
         const command = this.commands.get(commandName);
         if (!command) {
-            await interaction.reply({ content: `Command \"/${commandName}\" not found.`, ephemeral: true });
+            await interaction.reply({ content: `Command \"/${commandName}\" not found.`, flags: ['Ephemeral'] });
             return;
         }
         if (command.hasPermission && !command.hasPermission(interaction)) {
-            await interaction.reply({ content: 'You do not have permission to use this command.', ephemeral: true });
+            await interaction.reply({ content: 'You do not have permission to use this command.', flags: ['Ephemeral'] });
             return;
         }
 
@@ -60,6 +60,6 @@ export class HelpCommand extends WynntilsBaseCommand {
             .setDescription(command.helpText)
             .setColor(Colors.GREEN);
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
+        await interaction.reply({ embeds: [embed], flags: ['Ephemeral'] });
     }
 }
