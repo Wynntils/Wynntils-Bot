@@ -4,7 +4,8 @@ export enum Emoji {
     ARROWS_COUNTERCLOCKWISE = '%F0%9F%94%84',
     AYAYA = 'ayaya:611252163108274210',
     ARROW_UP = 'arrowup:718125161659891783',
-    ARROW_DOWN = 'arrowdown:718125161643245609'
+    ARROW_DOWN = 'arrowdown:718125161643245609',
+    DETECTIVE = '%F0%9F%95%B5%EF%B8%8F'
 }
 
 export const watchedEmotes: string[] = [Emoji.WHITE_CHECKMARK, Emoji.ARROWS_COUNTERCLOCKWISE, Emoji.AYAYA, Emoji.ROCKET]
