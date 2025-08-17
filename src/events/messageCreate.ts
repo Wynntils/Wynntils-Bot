@@ -1,4 +1,4 @@
-import { Message } from 'discord.js'
+import { GuildChannel, GuildTextBasedChannel, Message } from 'discord.js'
 import { client } from '..'
 import { Channel } from '../constants/Channel'
 import { Emoji } from '../constants/Emoji'
@@ -15,14 +15,17 @@ export const action = (message: Message): void => {
     // Check for illegal mod sites
     stopIllegalModRepostsService.hasIllegalModRepostSite(message.content).then((site) => {
         if (site) {
+            const channel = message.channel as GuildTextBasedChannel
             message.delete().catch(logError)
             const embed = styledEmbed()
                 .setTitle(':warning: Illegal Mod Website Detected :warning:')
                 .setColor(7531934)
                 .setDescription(`A message by ${message.author.username} has been deleted as it has been found to link a malicious Minecraft mod repost site.`)
-                .addField('Categorized Offense Severities', `**Advertising**: ${site.advertising}\n**Redistribution**: ${site.redistribution}\n**Miscellaneous**: ${site.miscellaneous}` + (site.notes ? `\n**Notes**: ${site.notes}` : ''))
+                .addFields(
+                    { name: 'Categorized Offense Severities', value: `**Advertising**: ${site.advertising}\n**Redistribution**: ${site.redistribution}\n**Miscellaneous**: ${site.miscellaneous}` + (site.notes ? `\n**Notes**: ${site.notes}` : '') }
+                )
                 .setFooter({ text: 'Find out more at https://stopmodreposts.org' })
-            message.channel.send({ embeds: [embed] })
+            channel.send({ embeds: [embed] })
         }
     })
 

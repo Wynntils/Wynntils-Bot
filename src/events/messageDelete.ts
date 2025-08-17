@@ -17,7 +17,9 @@ export const action = async (message: Message): Promise<void> => {
                 iconURL: message.author.avatarURL()
             })
             .setDescription(`Message ${message.id} deleted from <#${message.channel.id}>`)
-            .addField('Content', `\`\`\`${message.cleanContent}\`\`\``)
+            .addFields(
+                { name: 'Content', value: `\`\`\`${message.cleanContent}\`\`\`` }
+            )
             .setTimestamp()
 
         if (serverLogChannel) serverLogChannel.send({ embeds: [embed.toJSON()] })

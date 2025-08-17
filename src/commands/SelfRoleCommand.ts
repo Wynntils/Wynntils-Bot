@@ -1,87 +1,95 @@
-import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
-import { client } from '..'
-import { logError, styledEmbed } from '../utils/functions'
-import WynntilsBaseCommand from '../classes/WynntilsCommand'
-import { Colors } from '../constants/Colors'
+
+import { ChatInputCommandInteraction, Client, SlashCommandBuilder, Colors, EmbedBuilder } from 'discord.js';
+import { logError } from '../utils/functions';
+import { WynntilsBaseCommand } from '../classes/WynntilsCommand';
 
 export class SelfRoleCommand extends WynntilsBaseCommand {
-    constructor(creator: SlashCreator) {
-        super(creator, {
-            name: 'selfrole',
-            description: 'Either adds or removes a given role',
-            options: [
-                {
-                    name: 'role',
-                    description: 'Role to be toggled',
-                    type: CommandOptionType.STRING,
-                    required: true,
-                    choices: [
-                        {
-                            name: 'Development Updates',
-                            value: 'Development Updates'
-                        },
-                        {
-                            name: 'Artemis Development Updates',
-                            value: 'Artemis Development Updates'
-                        },
-                        {
-                            name: 'Data Detectives',
-                            value: 'Data Detectives'
-                        },
-                    ]
-                }
-            ]
-        })
-
-        this.filePath = __filename
+    constructor(client: Client) {
+        super(
+            client,
+            (new SlashCommandBuilder()
+                .setName('selfrole')
+                .setDescription('Toggle a self-assignable role')
+                .addStringOption(option =>
+                    option.setName('role')
+                        .setDescription('Role to toggle')
+                        .setRequired(true)
+                        .addChoices(
+                            { name: 'Development Updates', value: 'Development Updates' },
+                            { name: 'Feedback Updates', value: 'Feedback Updates' },
+                            { name: 'Release Updates', value: 'Release Updates' }
+                        )
+                )) as SlashCommandBuilder,
+            { helpText: 'Toggle a self-assignable role' }
+        );
     }
 
-    async run(ctx: CommandContext): Promise<MessageOptions> {
-        const embed = styledEmbed()
+    public async execute(interaction: ChatInputCommandInteraction): Promise<void> {
+        const roleName = interaction.options.getString('role', true);
+        const guild = interaction.guild;
+        if (!guild)  {
+            interaction.reply({ content: 'This command can only be used in a server.', flags: ['Ephemeral'] });
+        };
 
-        const guild = await client.guilds.fetch(ctx.guildID!)
-        const member = await guild.members.fetch(ctx.user.id)
+        let member;
+        try {
+            member = await guild.members.fetch(interaction.user.id);
+        } catch {
+            interaction.reply({ content: 'Could not fetch your member data.', flags: ['Ephemeral'] });
+        }
 
-        const role = guild.roles.cache.find(r => r.name === ctx.options.role.toString())
+        const role = guild.roles.cache.find(r => r.name === roleName);
         if (!role) {
-            embed.setColor(Colors.RED)
-                .setTitle(':x: Oops! Error D;')
-                .setDescription(`Role \`${ctx.options.role}\` not found in server.`)
-
-            return { embeds: [embed.toJSON()], ephemeral: true }
+            interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setColor(Colors.Red)
+                        .setTitle(':x: Oops! Error D;')
+                        .setDescription(`Role \`${roleName}\` not found in server.`)
+                ],
+                flags: ['Ephemeral']
+            });
         }
 
+        let action: 'add' | 'remove';
+        let successMsg: string;
+        let errorMsg: string;
         if (!member.roles.cache.has(role.id)) {
-            try {
-                await member.roles.add(role)
-
-                embed.setColor(Colors.GREEN)
-                    .setTitle('Success!')
-                    .setDescription('Succesfully given you the role.')
-            } catch (err) {
-                logError(err)
-                embed.setColor(Colors.RED)
-                    .setTitle(':x: Oops! Error D;')
-                    .setDescription('Ran into an error while applying the role to you.')
-
-                return { embeds: [embed.toJSON()], ephemeral: true }
-            }
-
+            action = 'add';
+            successMsg = 'Successfully given you the role.';
+            errorMsg = 'Ran into an error while applying the role to you.';
         } else {
-            try {
-                await member.roles.remove(role)
-
-                embed.setColor(Colors.GREEN)
-                    .setTitle('Success!')
-                    .setDescription('Succesfully removed the role from you.')
-            } catch (err) {
-                logError(err)
-                embed.setColor(Colors.RED)
-                    .setTitle(':x: Oops! Error D;')
-                    .setDescription('Ran into an error while removing the role from you.')
-            }
+            action = 'remove';
+            successMsg = 'Successfully removed the role from you.';
+            errorMsg = 'Ran into an error while removing the role from you.';
         }
 
-        return { embeds: [embed.toJSON()], ephemeral: true }
+        try {
+            if (action === 'add') {
+                await member.roles.add(role);
+            } else {
+                await member.roles.remove(role);
+            }
+            await interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setColor(Colors.Green)
+                        .setTitle('Success!')
+                        .setDescription(successMsg)
+                ],
+                flags: ['Ephemeral']
+            });
+        } catch (err) {
+            logError(err);
+            await interaction.reply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setColor(Colors.Red)
+                        .setTitle(':x: Oops! Error D;')
+                        .setDescription(errorMsg)
+                ],
+                flags: ['Ephemeral']
+            });
+        }
     }
 }
