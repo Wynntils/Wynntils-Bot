@@ -5,6 +5,7 @@ import { faqService } from './services/FaqService'
 import { logError } from './utils/functions'
 import path from 'path'
 import { HelpCommand } from './classes/HelpCommand'
+import { guildColorService } from './services/GuildColorService'
 
 const client = new Client({
     presence: { activities: [{ name: 'Here to help!' }], status: 'online' },
@@ -34,6 +35,7 @@ Object.keys(events).forEach((eventName) => {
 
 client.login(process.env.BOT_TOKEN).then(async () => {
     await faqService.init();
+    await guildColorService.init();
 
     process.on('unhandledRejection', (error: Error) => logError(error));
     process.on('uncaughtException', (error: Error) => logError(error));

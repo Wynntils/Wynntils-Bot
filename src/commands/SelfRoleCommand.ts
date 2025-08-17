@@ -16,7 +16,8 @@ export class SelfRoleCommand extends WynntilsBaseCommand {
                         .setRequired(true)
                         .addChoices(
                             { name: 'Development Updates', value: 'Development Updates' },
-                            { name: 'Artemis Development Updates', value: 'Artemis Development Updates' }
+                            { name: 'Feedback Updates', value: 'Feedback Updates' },
+                            { name: 'Release Updates', value: 'Release Updates' }
                         )
                 )) as SlashCommandBuilder,
             { helpText: 'Toggle a self-assignable role' }

@@ -41,6 +41,7 @@
   "homepage": "https://wynntils.com",
   "dependencies": {
     "bufferutil": "^4.0.3",
+    "canvas": "^3.1.2",
     "consola": "^2.15.3",
     "discord.js": "^14.21.0",
     "erlpack": "github:discord/erlpack",
@@ -51,7 +52,6 @@
     "require-all": "^3.0.0",
     "semver": "^7.7.2",
     "sharp": "^0.34.3",
-    "slash-create": "^6.5.0",
     "typeorm": "^0.2.30",
     "utf-8-validate": "^5.0.5",
     "zlib-sync": "^0.1.7"

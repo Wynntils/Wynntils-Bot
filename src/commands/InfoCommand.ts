@@ -19,10 +19,11 @@ import {
   fetchBuffer,
   getFirstFramePNG,
   buildCapeGif,
-} from "../utils/imageUtils";
+} from "../utils/gif";
 import { AthenaAPI } from "../api/AthenaAPI";
 import { WynncraftAPI } from "../api/WynncraftAPI";
 import { UserInfo } from "../interfaces/api/athena/UserInfo";
+import { Staff } from "../constants/Role";
 
 const athena = new AthenaAPI(process.env.ATHENA_API_KEY ?? "");
 const wynn = new WynncraftAPI();
@@ -40,7 +41,7 @@ export class InfoCommand extends WynntilsBaseCommand {
             .setDescription("MC username or UUID")
             .setRequired(true)
         ) as SlashCommandBuilder,
-      { helpText: "Returns user info" }
+      { helpText: "Returns user info", roles: Staff }
     );
   }
 
