@@ -1,49 +1,45 @@
-import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
-import { client } from '..'
-import { faqService } from '../services/FaqService'
-import { styledEmbed } from '../utils/functions'
-import WynntilsBaseCommand from '../classes/WynntilsCommand'
-import { Colors } from '../constants/Colors'
+
+
+
+import { SlashCommandBuilder, ChatInputCommandInteraction, Client, EmbedBuilder, Colors, ApplicationCommandOptionChoiceData } from 'discord.js';
+import { WynntilsBaseCommand } from '../classes/WynntilsCommand';
 
 export class FaqCommand extends WynntilsBaseCommand {
-    constructor(creator: SlashCreator) {
-        super(creator, {
-            name: 'faq',
-            description: 'Provides information on frequently asked question',
-            options: [
-                {
-                    name: 'value',
-                    description: 'Name of FAQ entry',
-                    type: CommandOptionType.STRING,
-                    required: true,
-                    choices: Array.from(faqService.cache.keys()).map(k => {
-                        return { name: k, value: k }
-                    })
-                }
-            ]
-        })
-
-        this.filePath = __filename
+    constructor(client: Client, choices: ApplicationCommandOptionChoiceData<string>[]) {
+        const builder = new SlashCommandBuilder()
+            .setName('faq')
+            .setDescription('Provides information on frequently asked questions')
+            .addStringOption(option =>
+                option.setName('value')
+                    .setDescription('Name of FAQ entry')
+                    .setRequired(true)
+                    .addChoices(...choices)
+            );
+        super(
+            client,
+            builder as SlashCommandBuilder,
+            { helpText: 'Provides information on frequently asked questions' }
+        );
     }
 
-    async run(ctx: CommandContext): Promise<MessageOptions> {
-        const faq = (await faqService.get()).get(ctx.options.value.toString())
+    public async execute(interaction: ChatInputCommandInteraction): Promise<void> {
+        const value = interaction.options.getString('value', true);
+        const faq = (await (await import('../services/FaqService')).faqService.get()).get(value);
 
-        const embed = styledEmbed()
-            .setFooter({ text: `By: ${ctx.user.username}#${ctx.user.discriminator} - Please read #faq` })
+        const embed = new EmbedBuilder()
+            .setFooter({ text: `By: ${interaction.user.tag} - Please read #faq` });
 
         if (faq) {
-            embed.setColor(Colors.GREEN)
-                .setAuthor({ name: 'Wynntils FAQ', iconURL: client.user?.avatarURL() ?? client.user?.defaultAvatarURL })
-                .addField(faq.title, faq.value)
-
-            return { embeds: [embed.toJSON()] }
+            embed.setColor(Colors.Green)
+                .setAuthor({ name: 'Wynntils FAQ', iconURL: this.client.user?.avatarURL() ?? this.client.user?.defaultAvatarURL })
+                .addFields({ name: faq.title, value: faq.value });
+            await interaction.reply({ embeds: [embed], ephemeral: true });
+            return;
         }
 
-        embed.setColor(Colors.RED)
+        embed.setColor(Colors.Red)
             .setTitle(':x: Invalid Entry')
-            .setDescription(`Unable to find entry for ${ctx.options.value.toString()}.`)
-
-        return { embeds: [embed.toJSON()], ephemeral: true }
+            .setDescription(`Unable to find entry for ${value}.`);
+        await interaction.reply({ embeds: [embed], ephemeral: true });
     }
 }

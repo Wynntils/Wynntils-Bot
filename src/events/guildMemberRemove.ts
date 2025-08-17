@@ -11,7 +11,9 @@ export const action = async (member: GuildMember): Promise<void> => {
             .setTitle('Leave notification')
             .setThumbnail(member.user.avatarURL())
             .setDescription(`<@${member.user.id}> (\`${member.displayName}#${member.user.discriminator}\`) has left the server!`)
-            .addField('Creation date', `${member.user.createdAt}\n<t:${Math.floor(member.user.createdTimestamp / 1000)}:R>`)
+            .addFields(
+                { name: 'Creation date', value: `${member.user.createdAt}\n<t:${Math.floor(member.user.createdTimestamp / 1000)}:R>` }
+            )
 
         serverLogChannel.send({ embeds: [embed.toJSON()] })
     } catch (err) {

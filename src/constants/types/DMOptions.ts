@@ -1,7 +1,7 @@
-import { MessageEmbed } from 'discord.js'
+import { EmbedBuilder } from 'discord.js'
 
 export interface DMOptions {
     userId: string,
     content?: string,
-    embed?: MessageEmbed
+    embed?: EmbedBuilder
 }

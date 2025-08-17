@@ -1,111 +1,218 @@
-import fetch from 'node-fetch'
-import { CommandContext, CommandOptionType, MessageOptions, SlashCreator } from 'slash-create'
-import { Staff } from '../constants/Role'
-import { UserInfo } from '../interfaces/api/athena/UserInfo'
-import { logError, styledEmbed } from '../utils/functions'
-import WynntilsBaseCommand from '../classes/WynntilsCommand'
-import { Colors } from '../constants/Colors'
+import {
+  AttachmentBuilder,
+  ChatInputCommandInteraction,
+  Client,
+  Colors,
+  ContainerBuilder,
+  MediaGalleryBuilder,
+  MediaGalleryItemBuilder,
+  MessageFlags,
+  SectionBuilder,
+  SeparatorSpacingSize,
+  SlashCommandBuilder,
+  TextDisplayBuilder,
+  ThumbnailBuilder,
+} from "discord.js";
+import { WynntilsBaseCommand } from "../classes/WynntilsCommand";
+import { logError, buildLoadingContainer } from "../utils/functions";
+import {
+  fetchBuffer,
+  getFirstFramePNG,
+  buildCapeGif,
+} from "../utils/imageUtils";
+import { AthenaAPI } from "../api/AthenaAPI";
+import { WynncraftAPI } from "../api/WynncraftAPI";
+import { UserInfo } from "../interfaces/api/athena/UserInfo";
+
+const athena = new AthenaAPI(process.env.ATHENA_API_KEY ?? "");
+const wynn = new WynncraftAPI();
 
 export class InfoCommand extends WynntilsBaseCommand {
-    constructor(creator: SlashCreator) {
-        super(creator, {
-            name: 'info',
-            description: 'Returns user info',
-            roles: Staff,
-            options: [
-                {
-                    name: 'user',
-                    description: 'MC username or UUID',
-                    type: CommandOptionType.STRING,
-                    required: true
-                }
-            ]
-        })
+  constructor(client: Client) {
+    super(
+      client,
+      new SlashCommandBuilder()
+        .setName("info")
+        .setDescription("Returns user info")
+        .addStringOption((opt) =>
+          opt
+            .setName("user")
+            .setDescription("MC username or UUID")
+            .setRequired(true)
+        ) as SlashCommandBuilder,
+      { helpText: "Returns user info" }
+    );
+  }
 
-        this.filePath = __filename
+  public async execute(
+    interaction: ChatInputCommandInteraction
+  ): Promise<void> {
+    const usernameOrUuid = interaction.options.getString("user", true);
+
+    await interaction.reply({
+      components: [buildLoadingContainer(usernameOrUuid)],
+      flags: MessageFlags.IsComponentsV2,
+    });
+
+    let userInfo: UserInfo;
+    try {
+      userInfo = await athena.getUser(usernameOrUuid);
+    } catch (err) {
+      await logError(err);
+      const errorContainer = new ContainerBuilder()
+        .setAccentColor(Colors.Red)
+        .addTextDisplayComponents(
+          new TextDisplayBuilder().setContent(
+            [
+              "## Oops! Error D;",
+              ":x: Something went wrong while fetching the user info.",
+              "-# Try again in a moment, or check the username/UUID.",
+            ].join("\n")
+          )
+        );
+
+      await interaction.editReply({
+        components: [errorContainer],
+        flags: MessageFlags.IsComponentsV2,
+        files: [],
+      });
+      return;
     }
 
-    async run(ctx: CommandContext): Promise<MessageOptions> {
-        const embed = styledEmbed()
+    let guildLine = "No guild";
+    try {
+      const id = userInfo.uuid || usernameOrUuid
+      guildLine = await wynn.getGuildLine(id)
+    } catch {
+    }
 
-        let data
-        let response
+    // ---- View model ----
+    const isElytra = Boolean(userInfo?.cosmetics?.isElytra);
+    const isCape =
+      userInfo?.cosmetics?.isElytra == null
+        ? false
+        : !userInfo.cosmetics.isElytra;
+    const textureID = userInfo?.cosmetics?.texture ?? null;
 
-        try {
-            response = await fetch('https://athena.wynntils.com/api/getUser/' + process.env.ATHENA_API_KEY, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ user: ctx.options.user.toString() })
-            })
-            data = await response.json()
-        } catch (err: any) {
-            logError(err)
-            embed.setColor(Colors.RED)
-                .setTitle(':x: Oops! Error D;')
-                .setDescription('Something went wrong when fetching the user info.')
+    const cosmeticInfo =
+      `Cape:   ${isCape ? "🟩" : "🟥"}\n` + `Elytra: ${isElytra ? "🟩" : "🟥"}`;
 
-            return { embeds: [embed.toJSON()], ephemeral: true }
-        }
+    const usedVals = Object.values(userInfo?.versions?.used ?? {}) as number[];
+    const lastActive = usedVals.length
+      ? Math.floor(Math.max(...usedVals) / 1000)
+      : undefined;
 
-        if (!response.ok) {
-            embed.setColor(0xff5349)
-                .setTitle(':x: Oops! Error D;')
-                .setDescription(data.message)
-            return { embeds: [embed.toJSON()], ephemeral: true }
-        }
-
-        const userInfo = data.result as UserInfo
-
-        const isCape = typeof userInfo.cosmetics.isElytra === null ? false : !userInfo.cosmetics.isElytra
-        const isElytra = !isCape
-        const parts = userInfo.cosmetics.parts === null ? { ears: null } : userInfo.cosmetics.parts
-        const hasEars = parts.ears === null ? false : userInfo.cosmetics.parts.ears
-        const textureID = userInfo.cosmetics.texture ? userInfo.cosmetics.texture : 'no texture set'
-
-        const cosmeticInfo = `\`\`\`
-Texture ID ${textureID}
-Cape:   ${isCape ? '🟩 Enabled' : '🟥 Disabled'}
-Elytra: ${isElytra ? '🟩 Enabled' : '🟥 Disabled'}
-Ears:   ${hasEars ? '🟩 Enabled' : '🟥 Disabled'}\`\`\`
-            `
-
-        const timestamp = Math.max(...Object.keys(userInfo.versions.used).map(k => userInfo.versions.used[k]))
-        const lastActive = Math.floor(timestamp / 1000)
-
-        embed.setTitle(`${userInfo.username}'s Info`)
-        embed.setColor(Colors.GREEN)
-        embed.setThumbnail(`https://minotar.net/helm/${userInfo.uuid}/100.png`)
-        embed.setDescription(userInfo.uuid)
-        embed.addFields(
-            {
-                name: 'Account Type',
-                value: userInfo.accountType,
-                inline: true
-            },
-            {
-                name: 'Latest Version',
-                value: userInfo.versions.latest,
-                inline: true
-            },
-            {
-                name: 'Last Online',
-                value: `<t:${lastActive}:R>`,
-                inline: true
-            },
-            {
-                name: 'Discord',
-                value: userInfo.discord.id ? `<@${userInfo.discord.id}>` : 'Not linked',
-                inline: false
-            },
-            {
-                name: 'Cosmetics',
-                value: cosmeticInfo,
-                inline: false
-            },
+    // ---- Builders ----
+    const header = new SectionBuilder()
+      .addTextDisplayComponents(
+        new TextDisplayBuilder().setContent(
+          [
+            `## User Info for \`${userInfo.username}\``,
+            `${userInfo.accountType}\n`,
+            `-# UUID: ${userInfo.uuid}`,
+          ].join("\n")
         )
+      )
+      .setThumbnailAccessory(
+        new ThumbnailBuilder().setURL(
+          `https://minotar.net/helm/${userInfo.uuid}/100.png`
+        )
+      );
 
-        return { embeds: [embed.toJSON()] }
+    const mainInfo = new TextDisplayBuilder().setContent(
+      `**Latest Version:** ${userInfo.versions.latest}\n` +
+        `**Last Online:** ${lastActive ? `<t:${lastActive}:R>` : "Unknown"}\n` +
+        `**Discord:** ${
+          userInfo.discord.id ? `<@${userInfo.discord.id}>` : "Not linked"
+        }\n` +
+        `**Guild:** ${guildLine}`
+    );
+
+    const cosmetics = new TextDisplayBuilder().setContent(
+      "**Cosmetics**\n" + cosmeticInfo
+    );
+
+    const buildBaseContainer = () =>
+      new ContainerBuilder()
+        .addSectionComponents(header)
+        .addSeparatorComponents((s) => s.setSpacing(SeparatorSpacingSize.Large))
+        .addTextDisplayComponents(mainInfo)
+        .addSeparatorComponents((s) => s.setSpacing(SeparatorSpacingSize.Large))
+        .addTextDisplayComponents(cosmetics);
+
+    const capeURL = textureID
+      ? `https://athena.wynntils.com/capes/get/${textureID}`
+      : null;
+    if (capeURL) {
+      try {
+        const sheet = await fetchBuffer(capeURL);
+        const { buffer: firstFramePng, meta } = await getFirstFramePNG(
+          sheet,
+          1024
+        );
+        const frameCount = meta.frameCount;
+
+        const firstAttachmentName = "cape.png";
+        const firstFiles = [
+          new AttachmentBuilder(firstFramePng).setName(firstAttachmentName),
+        ];
+
+        const firstContainer = buildBaseContainer().addMediaGalleryComponents(
+          new MediaGalleryBuilder().addItems(
+            new MediaGalleryItemBuilder()
+              .setURL(`attachment://${firstAttachmentName}`)
+              .setDescription(
+                frameCount > 1 ? `Cape (frame 1 of ${frameCount})` : "Cape"
+              )
+          )
+        );
+
+        await interaction.editReply({
+          components: [firstContainer],
+          files: firstFiles,
+          flags: MessageFlags.IsComponentsV2,
+        });
+
+        if (frameCount > 1) {
+          try {
+            const { buffer: gifBuf } = await buildCapeGif(sheet, {
+              targetWidth: 1024,
+              delayMs: 80,
+              loop: 0,
+              quality: 10,
+            });
+
+            const gifName = "cape.gif";
+            const gifContainer = buildBaseContainer().addMediaGalleryComponents(
+              new MediaGalleryBuilder().addItems(
+                new MediaGalleryItemBuilder()
+                  .setURL(`attachment://${gifName}`)
+                  .setDescription("Cape (animated)")
+              )
+            );
+
+            await interaction.editReply({
+              components: [gifContainer],
+              files: [new AttachmentBuilder(gifBuf).setName(gifName)],
+              flags: MessageFlags.IsComponentsV2,
+            });
+          } catch (e) {
+            await logError(e);
+            // leave the first-frame reply as-is
+          }
+        }
+        return;
+      } catch (e) {
+        await logError(e);
+        // fall through to reply without gallery
+      }
     }
+
+    // No texture or failed to load → reply without media gallery
+    const container = buildBaseContainer();
+    await interaction.editReply({
+      components: [container],
+      flags: MessageFlags.IsComponentsV2,
+    });
+  }
 }
