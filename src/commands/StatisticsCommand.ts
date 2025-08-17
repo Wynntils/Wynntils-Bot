@@ -18,6 +18,7 @@ import {
 } from "../utils/functions";
 import semver from "semver";
 import consola from "consola";
+import { Staff } from "../constants/Role";
 
 const EXTRACT_RE = /^Av(\d+\.\d+\.\d+)\s+(FABRIC|FORGE)$/;
 
@@ -148,6 +149,7 @@ export class StatisticsCommand extends WynntilsBaseCommand {
       {
         helpText:
           "Shows user counts, optional version-range filter, platform split, and top Av versions",
+        roles: Staff,
       }
     );
   }
@@ -198,8 +200,10 @@ export class StatisticsCommand extends WynntilsBaseCommand {
       let forge = 0;
       let unknown = 0;
 
-      
-      const versionSplits = new Map<string, { FABRIC: number; FORGE: number }>();
+      const versionSplits = new Map<
+        string,
+        { FABRIC: number; FORGE: number }
+      >();
 
       for await (const doc of cursor) {
         const versionString = (doc as any).latestVersion as string;
@@ -225,7 +229,6 @@ export class StatisticsCommand extends WynntilsBaseCommand {
       const matching = fabric + forge;
       const hasFilter = Boolean(min || max);
 
-    
       const allVersionsSorted = [...versionSplits.entries()].sort((a, b) =>
         semver.compare(a[0], b[0])
       );
@@ -258,7 +261,6 @@ export class StatisticsCommand extends WynntilsBaseCommand {
         };
       });
 
-    
       if (unknown > 0) {
         rows.push({
           Version: "Unknown",
@@ -296,7 +298,6 @@ export class StatisticsCommand extends WynntilsBaseCommand {
             }** more versions not shown.`
           : "";
 
-    
       const summaryLine =
         `Totals — FABRIC: ${fabric.toLocaleString()} • ` +
         `NEOFORGE: ${forge.toLocaleString()} • ` +
@@ -307,7 +308,6 @@ export class StatisticsCommand extends WynntilsBaseCommand {
         .filter(Boolean)
         .join("\n");
 
-      
       const statsContainer = buildStatsContainer({
         sinceMs,
         min,
