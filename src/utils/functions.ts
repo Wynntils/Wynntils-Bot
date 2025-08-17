@@ -12,6 +12,7 @@ import { client } from "../index";
 import { inspect } from "util";
 import consola from "consola";
 import { DMOptions } from "../constants/types/DMOptions";
+import semver from "semver";
 
 const toError = (err: unknown): Error => {
   if (err instanceof Error) return err;
@@ -127,3 +128,21 @@ export const logPunishment: (embed: EmbedBuilder) => void = async (
     await channel.send({ embeds: [embed] }).catch(consola.error);
   }
 };
+
+export function parseSince(input?: string | null): number {
+  if (!input || !input.trim()) {
+    return Date.now() - 30 * 24 * 60 * 60 * 1000
+  }
+  if (/^\d+$/.test(input)) return Number(input)
+  const t = Date.parse(input)
+  if (Number.isFinite(t)) return t
+  throw new Error('Invalid `since` value. Use ms since epoch or a valid date string.')
+}
+
+export function inVersionRange(v: string, min?: string | null, max?: string | null): boolean {
+  if (min && !semver.valid(min)) return false
+  if (max && !semver.valid(max)) return false
+  if (min && semver.lt(v, min)) return false
+  if (max && semver.gt(v, max)) return false
+  return true
+}
