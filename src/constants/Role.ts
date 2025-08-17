@@ -44,10 +44,11 @@ export enum Role {
     Owner = '394189673678766091',
     Wynntils = '543176400757325839',
     Scyu = '537671536094740481',
+    Administrator = '538125811308560394',
 
     DataDetectives = '1269705007310049280'
 }
 
-export const Staff = ['Moderator', 'Developer', 'Senior Developer', 'Administrator']
+export const Staff = [Role.Moderator, Role.ModDeveloper,  Role.SeniorDeveloper, Role.Administrator]
 export const DonatorRoles = ['Level 0 Donator', 'Level 1 Donator', 'Level 2 Donator', 'Level 3 Donator', 'Level 4 Donator']
 export const FreeRoles = [Role.ModUpdates, Role.ArtemisUpdates, Role.DataDetectives]
