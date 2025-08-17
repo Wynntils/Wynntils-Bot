@@ -1,4 +1,4 @@
-FROM node:16 as builder
+FROM node:22 as builder
 
 WORKDIR /home/node/app
 
@@ -10,7 +10,7 @@ RUN npm install
 
 RUN npm run build
 
-FROM node:16 as runner
+FROM node:22 as runner
 
 WORKDIR /home/node/app
 
