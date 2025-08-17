@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, Client, PermissionResolvable, SlashCommandBuilder, TextChannel } from 'discord.js'
+import { ChatInputCommandInteraction, Client, GuildMemberRoleManager, PermissionResolvable, SlashCommandBuilder, TextChannel } from 'discord.js'
 import { client } from '..'
 import consola from 'consola'
 
@@ -28,12 +28,15 @@ export abstract class WynntilsBaseCommand {
     public abstract execute(interaction: ChatInputCommandInteraction): Promise<void>;
 
     public hasPermission(interaction: ChatInputCommandInteraction): boolean {
-        if (!interaction.guild) return true;
-        if (this.roles.length === 0) return true;
         const member = interaction.member;
+        const roles = member.roles as GuildMemberRoleManager;
+
+        if (!interaction.guild) return false;
+        if (this.roles.length === 0) return true;
+        if (interaction.guildId === '541709702136856613' || interaction.guildId === '942560349817831435') return true
+
         if (member && 'roles' in member) {
-            const memberRoles = Array.from(member.roles instanceof Array ? member.roles : member.roles.cache.keys());
-            return this.roles.some(role => memberRoles.includes(role));
+            return this.roles.some((roleId) => roles.cache.has(roleId));
         }
         return false;
     }
