@@ -36,11 +36,6 @@ export class PostgresService {
     return this._instance
   }
 
-  /** Optional: quick health check */
-  public async ping(): Promise<void> {
-    await this.query('SELECT 1')
-  }
-
   public async query<T = any>(text: string, params: any[] = []): Promise<QueryResult<T>> {
     return this.pool.query<T>(text, params)
   }
