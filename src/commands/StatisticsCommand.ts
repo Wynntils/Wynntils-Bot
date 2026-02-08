@@ -10,7 +10,7 @@ import {
   TextDisplayBuilder,
 } from "discord.js";
 import { WynntilsBaseCommand } from "../classes/WynntilsCommand";
-import { MongoService } from "../services/MongoService";
+import { PostgresService } from "../services/PostgresService";
 import {
   buildLoadingContainer,
   parseSince,
@@ -20,7 +20,12 @@ import semver from "semver";
 import consola from "consola";
 import { Staff } from "../constants/Role";
 
-const EXTRACT_RE = /^Av(\d+\.\d+\.\d+)\s+(FABRIC|FORGE)$/;
+/**
+ * Examples:
+ * - Av3.0.0 FORGE
+ * - Av4.0.0-beta.2 FABRIC
+ */
+const EXTRACT_RE = /^Av(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)\s+(FABRIC|FORGE)$/;
 
 const buildErrorContainer = (lines: string[]) =>
   new ContainerBuilder()
@@ -81,7 +86,7 @@ const buildStatsContainer = (opts: {
   const fTotal = Math.max(
     1,
     hasFilter ? fabric + forge : fabric + forge + unknown
-  ); // avoid /0
+  );
   const fPct = ((fabric / fTotal) * 100).toFixed(2);
   const nPct = ((forge / fTotal) * 100).toFixed(2);
   const uPct = hasFilter ? null : ((unknown / fTotal) * 100).toFixed(2);
@@ -179,21 +184,22 @@ export class StatisticsCommand extends WynntilsBaseCommand {
         return;
       }
 
-      const usersCol = await MongoService.instance().getCollection(
-        "users",
-        "Athena"
-      );
+      const db = PostgresService.instance();
 
       // High-level counts
-      const [totalUsers, activeSince] = await Promise.all([
-        usersCol.estimatedDocumentCount(),
-        usersCol.countDocuments({ lastActivity: { $gt: sinceMs } }),
+      const [totalUsersResult, activeSinceResult] = await Promise.all([
+        db.query<{ count: string }>("SELECT COUNT(*) AS count FROM users"),
+        db.query<{ count: string }>(
+          "SELECT COUNT(*) AS count FROM users WHERE last_activity > $1",
+          [sinceMs]
+        ),
       ]);
-
-      // Stream active users and aggregate with optional version bounds
-      const cursor = usersCol.find(
-        { lastActivity: { $gt: sinceMs }, latestVersion: { $type: "string" } },
-        { projection: { latestVersion: 1 } }
+      const totalUsers = Number(totalUsersResult.rows[0]?.count ?? 0);
+      const activeSince = Number(activeSinceResult.rows[0]?.count ?? 0);
+      
+      const { rows: versionRows } = await db.query<{ latest_version: string | null }>(
+        "SELECT latest_version FROM users WHERE last_activity > $1 AND latest_version IS NOT NULL",
+        [sinceMs]
       );
 
       let fabric = 0;
@@ -205,8 +211,12 @@ export class StatisticsCommand extends WynntilsBaseCommand {
         { FABRIC: number; FORGE: number }
       >();
 
-      for await (const doc of cursor) {
-        const versionString = (doc as any).latestVersion as string;
+      for (const row of versionRows) {
+        const versionString = row.latest_version;
+        if (!versionString || typeof versionString !== "string") {
+          unknown++;
+          continue;
+        }
         const modLoaderMatch = EXTRACT_RE.exec(versionString);
         if (!modLoaderMatch) {
           unknown++;
@@ -247,7 +257,7 @@ export class StatisticsCommand extends WynntilsBaseCommand {
 
       type Row = Record<(typeof headers)[number], string | number>;
 
-      const rows: Row[] = preview.map(([ver, { FABRIC, FORGE }]) => {
+      const tableRows: Row[] = preview.map(([ver, { FABRIC, FORGE }]) => {
         const Total = FABRIC + FORGE;
         const fPct = Total ? ((FABRIC / Total) * 100).toFixed(2) : "0.00";
         const nPct = Total ? ((FORGE / Total) * 100).toFixed(2) : "0.00";
@@ -262,7 +272,7 @@ export class StatisticsCommand extends WynntilsBaseCommand {
       });
 
       if (unknown > 0) {
-        rows.push({
+        tableRows.push({
           Version: "Unknown",
           FABRIC: 0,
           NEOFORGE: 0,
@@ -273,18 +283,18 @@ export class StatisticsCommand extends WynntilsBaseCommand {
       }
 
       const widths = headers.map((h) =>
-        Math.max(h.length, ...rows.map((r) => String(r[h]).length))
+        Math.max(h.length, ...tableRows.map((r) => String(r[h]).length))
       );
       const pad = (s: string | number, i: number) =>
         String(s).padEnd(widths[i]);
 
       const codeTable =
-        rows.length > 0
+        tableRows.length > 0
           ? "```\n" +
             [
               headers.map((h, i) => pad(h, i)).join(" | "),
               headers.map((_, i) => "-".repeat(widths[i])).join("-|-"),
-              ...rows.map((r) =>
+              ...tableRows.map((r) =>
                 headers.map((h, i) => pad(r[h], i)).join(" | ")
               ),
             ].join("\n") +
