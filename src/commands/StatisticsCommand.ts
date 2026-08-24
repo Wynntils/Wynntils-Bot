@@ -25,7 +25,7 @@ import { Staff } from "../constants/Role";
  * - Av3.0.0 FORGE
  * - Av4.0.0-beta.2 FABRIC
  */
-const EXTRACT_RE = /^Av(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)\s+(FABRIC|FORGE)$/;
+const EXTRACT_RE = /^Av(\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?)\s+(FABRIC|NEOFORGE)$/;
 
 const buildErrorContainer = (lines: string[]) =>
   new ContainerBuilder()
